@@ -37,7 +37,7 @@ void* CMemory::allocate(const u64& size, c8 const * label)
         return nullptr;
     }
     
-    memset(ptr, 0, size + sizeof(SMemoryBlock));
+    std::memset(ptr, 0, size + sizeof(SMemoryBlock));
     
     block = (SMemoryBlock*)ptr;
     block->id = MEM_ID;

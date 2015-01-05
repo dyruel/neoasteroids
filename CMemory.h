@@ -20,7 +20,7 @@
 #define CMEMORY_H
 
 #include <cstdlib>
-#include <memory>
+#include <cstring>
 
 #include "CFileLogger.h"
 #include "Types.h"
