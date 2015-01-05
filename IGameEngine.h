@@ -23,28 +23,8 @@
 #include <vector>
 
 #include "IVideoDevice.h"
+#include "IGameState.h"
 
-class IGameEngine;
-
-class IGameState
-{
-    friend class IGameEngine;
-    
-public:
-    IGameState() : m_gameEngine(nullptr) {}
-    ~IGameState() {}
-    
-    virtual void init()     = 0;
-    virtual void pause()    = 0;
-    virtual void resume()   = 0;
-    virtual void shutdown() = 0;
-    
-    virtual void display() = 0;
-    virtual void update(const glm::u32& delta) = 0;
-    
-protected:
-    IGameEngine* m_gameEngine;
-};
 
 class IGameEngine
 {

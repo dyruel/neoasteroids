@@ -170,8 +170,6 @@ bool COGLVideoDevice::init()
 
 bool COGLVideoDevice::shutdown()
 {
-
-    SDL_Delay(2000);
     SDL_GL_DeleteContext( m_glcontext );
     SDL_DestroyWindow( m_window ); // m_screen is freed by SDL_DestroyWindow
     m_window = nullptr;

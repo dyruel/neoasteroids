@@ -58,11 +58,15 @@ void CPlayGameState::update(const glm::u32& delta)
     for (i = 0; i < m_numAsteroids && i < MAX_ASTEROIDS; ++i) {
         m_asteroids[i].update(delta);
     }
+    
+    m_gameEngine->quit();
 }
 
 void CPlayGameState::display()
 {
     glm::u32 i;
+    
+    m_gameEngine->getVideoDevice()->beginFrame();
     
     m_spaceship.display();
     
@@ -70,7 +74,9 @@ void CPlayGameState::display()
         m_asteroids[i].display();
     }
     
-    m_gameEngine->quit();
+    m_gameEngine->getVideoDevice()->endFrame();
+    
+//    SDL_Delay(2000);
 }
 
 void CPlayGameState::nextLevel()

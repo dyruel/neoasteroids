@@ -16,67 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#if 0
+#ifndef IGAMESTATE_H
+#define IGAMESTATE_H
 
-#include "CGameStateManager.h"
+class IGameEngine;
 
-
-void CGameStateManager::change(IGameState* state)
+class IGameState
 {
-    if ( !m_gameStates.empty() )
-    {
-        m_gameStates.back()->shutdown();
-        m_gameStates.pop_back();
-    }
+    friend class IGameEngine;
     
-    m_gameStates.push_back(state);
-    m_gameStates.back()->init();
+public:
+    IGameState() : m_gameEngine(nullptr) {}
+    ~IGameState() {}
     
-    state->m_gameEngine = this;
-}
-
-void CGameStateManager::push(IGameState* state)
-{
-    if ( !m_gameStates.empty() )
-    {
-        m_gameStates.back()->pause();
-    }
+    virtual void init()     = 0;
+    virtual void pause()    = 0;
+    virtual void resume()   = 0;
+    virtual void shutdown() = 0;
     
-    m_gameStates.push_back(state);
-    m_gameStates.back()->init();
+    virtual void display() = 0;
+    virtual void update(const glm::u32& delta) = 0;
     
-    state->m_gameStateManager = this;
-}
+protected:
+    IGameEngine* m_gameEngine;
+};
 
-void CGameStateManager::pop()
-{
-    if ( !m_gameStates.empty() )
-    {
-        m_gameStates.back()->shutdown();
-        m_gameStates.pop_back();
-    }
-    
-    if ( !m_gameStates.empty() )
-    {
-        m_gameStates.back()->resume();
-    }
-}
-
-CGameStateManager::IGameState* CGameStateManager::current()
-{
-    return m_gameStates.back();
-}
-
-bool CGameStateManager::empty()
-{
-    return m_gameStates.empty();
-}
-
-void CGameStateManager::clear()
-{
-    while ( !m_gameStates.empty() ) {
-        m_gameStates.back()->shutdown();
-        m_gameStates.pop_back();
-    }
-}
 #endif
