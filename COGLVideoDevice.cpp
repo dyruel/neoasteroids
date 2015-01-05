@@ -18,7 +18,6 @@
 
 #include "COGLVideoDevice.h"
 
-COGLVideoDevice COGLVideoDevice::m_videoDevice;
 
 bool COGLVideoDevice::init()
 {
@@ -34,9 +33,9 @@ bool COGLVideoDevice::init()
         return false;
     }
     
-//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-//    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-    //    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     
     m_window = SDL_CreateWindow( "NeoAsteroids",
                                 SDL_WINDOWPOS_UNDEFINED,
@@ -58,14 +57,14 @@ bool COGLVideoDevice::init()
     }
     //m_screen = SDL_GetWindowSurface( m_window );
     
-    int maj, min;
-    glGetIntegerv(GL_MAJOR_VERSION, &maj);
-    glGetIntegerv(GL_MINOR_VERSION, &min);
-    std::cout << maj << " " << min << std::endl;
+    //int maj = 0, min = 0;
+    //glGetIntegerv(GL_MAJOR_VERSION, &maj);
+    //glGetIntegerv(GL_MINOR_VERSION, &min);
+    //std::cout << maj << " " << min << std::endl;
     
     glClearColor( 0.f, 1.f, 0.f, 1.f );
     
-    GLuint gProgramID = glCreateProgram();
+    m_basicProgram = glCreateProgram();
     
     GLuint vertexShader = glCreateShader( GL_VERTEX_SHADER );
     
@@ -89,7 +88,7 @@ bool COGLVideoDevice::init()
     }
     else
     {
-        glAttachShader( gProgramID, vertexShader );
+        glAttachShader( m_basicProgram, vertexShader );
         
         GLuint fragmentShader = glCreateShader( GL_FRAGMENT_SHADER );
         
@@ -113,13 +112,13 @@ bool COGLVideoDevice::init()
         }
         else
         {
-            glAttachShader( gProgramID, fragmentShader );
+            glAttachShader( m_basicProgram, fragmentShader );
             
-            glLinkProgram( gProgramID );
+            glLinkProgram( m_basicProgram );
             
 
             GLint programSuccess = GL_TRUE;
-            glGetProgramiv( gProgramID, GL_LINK_STATUS, &programSuccess );
+            glGetProgramiv( m_basicProgram, GL_LINK_STATUS, &programSuccess );
             
             if( programSuccess != GL_TRUE )
             {
@@ -172,6 +171,7 @@ bool COGLVideoDevice::init()
 bool COGLVideoDevice::shutdown()
 {
 
+    SDL_Delay(2000);
     SDL_GL_DeleteContext( m_glcontext );
     SDL_DestroyWindow( m_window ); // m_screen is freed by SDL_DestroyWindow
     m_window = nullptr;
@@ -186,10 +186,11 @@ void COGLVideoDevice::beginFrame() const
 {
     glClear( GL_COLOR_BUFFER_BIT );
     
-    
+    glUseProgram( m_basicProgram );
 }
 
 void COGLVideoDevice::endFrame() const
 {
-    
+    glUseProgram( NULL );
+    SDL_GL_SwapWindow( m_window );
 }

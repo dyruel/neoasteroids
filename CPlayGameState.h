@@ -30,10 +30,10 @@
 
 
 #include "CSDLInputDevice.h"
-#include "CGameStateManager.h"
+#include "IGameEngine.h"
 //#include "Types.h"
 
-class CPlayGameState : public CGameStateManager::IGameState
+class CPlayGameState : public IGameState
 {
 public:
     

@@ -26,7 +26,7 @@ int main(int argc, char** argv)
     
     neoAsteroids.init(argc, argv);
     
-    neoAsteroids.getGameStateManager().change( &CIntroGameState::instance() );
+    neoAsteroids.changeState( &CIntroGameState::instance() );
     
     while ( neoAsteroids.running() )
     {

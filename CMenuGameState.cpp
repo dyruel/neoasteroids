@@ -49,5 +49,5 @@ void CMenuGameState::display()
 void CMenuGameState::update(const glm::u32& delta)
 {
     std::cout << "Menu" << std::endl;
-    m_gameStateManager->push( &CPlayGameState::instance() );
+    m_gameEngine->pushState( &CPlayGameState::instance() );
 }

@@ -19,10 +19,12 @@
 #ifndef CGAMESTATEMANAGER_H
 #define CGAMESTATEMANAGER_H
 
+#if 0
+
 #include <glm/common.hpp>
 #include <vector>
 
-//#include "IGameState.h"
+#include "IGameEngine.h"
 
 
 class CGameStateManager
@@ -33,7 +35,7 @@ public:
     {
          friend class CGameStateManager;
     public:
-        IGameState() : m_gameStateManager(nullptr) {}
+        IGameState() : m_gameEngine(nullptr) {}
         ~IGameState() {}
         
         virtual void init()     = 0;
@@ -45,7 +47,7 @@ public:
         virtual void update(const glm::u32& delta) = 0;
         
     protected:
-        CGameStateManager* m_gameStateManager;
+        IGameEngine* m_gameEngine;
     };
     
     CGameStateManager() {}
@@ -68,5 +70,6 @@ private:
     std::vector<IGameState*> m_gameStates;
     
 };
+#endif
 
 #endif

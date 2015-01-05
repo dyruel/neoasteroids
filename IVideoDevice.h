@@ -22,17 +22,14 @@
 class IVideoDevice {
     
 public:
+    IVideoDevice() {};
+    virtual ~IVideoDevice() {};
     
     virtual bool init()     = 0;
     virtual bool shutdown() = 0;
     
     virtual void beginFrame() const = 0;
     virtual void endFrame() const = 0;
-    
-protected:
-    virtual ~IVideoDevice() {};
-    
-private:
     
 };
 

@@ -25,7 +25,7 @@ bool CNeoAsteroids::init(int& argc, char** argv)
     
 //    srand(time(0));
     
-    m_videoDevice = &COGLVideoDevice::instance();
+    m_videoDevice = new COGLVideoDevice();
     
     m_videoDevice->init();
     
@@ -48,9 +48,9 @@ void CNeoAsteroids::update()
     
     while (m_lastTime + m_deltaTime <= presentTime) {
         
-        if(!m_gameStateManager.empty())
+        if(hasStates())
         {
-            m_gameStateManager.current()->update(m_deltaTime);
+            currentState()->update(m_deltaTime);
         }
         
         m_lastTime += m_deltaTime;
@@ -60,23 +60,8 @@ void CNeoAsteroids::update()
 
 void CNeoAsteroids::display()
 {
-    if(!m_gameStateManager.empty())
+    if(hasStates())
     {
-        m_gameStateManager.current()->display();
+        currentState()->display();
     }
-}
-
-void CNeoAsteroids::quit()
-{
-    m_running = false;
-}
-
-bool CNeoAsteroids::running()
-{
-    return m_running && !m_gameStateManager.empty();
-}
-
-CGameStateManager& CNeoAsteroids::getGameStateManager()
-{
-    return m_gameStateManager;
 }

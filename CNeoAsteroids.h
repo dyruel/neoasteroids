@@ -23,16 +23,17 @@
 #include <vector>
 #include <glm/common.hpp>
 
+#include "IGameEngine.h"
 #include "COGLVideoDevice.h"
 #include "CMemory.h"
-#include "CGameStateManager.h"
 #include "CSystem.h"
 
-class CNeoAsteroids {
+class CNeoAsteroids : public IGameEngine
+{
  
 public:
     CNeoAsteroids()
-    : m_videoDevice(nullptr), m_running(true), m_lastTime(0) {}
+    : m_lastTime(0) {}
     ~CNeoAsteroids() {}
 
     bool init(int& argc, char** argv);
@@ -41,22 +42,11 @@ public:
     void update();
     void display();
     
-    void quit();
-    
-    bool running();
-    
-    CGameStateManager& getGameStateManager();
-    
 private:
-    
-    bool m_running;
+
     constexpr static const glm::f32 m_deltaTime = 10.f;
     glm::u32    m_lastTime;
     
-    CGameStateManager m_gameStateManager;
-    
-    IVideoDevice* m_videoDevice;
-
 };
 
 #endif

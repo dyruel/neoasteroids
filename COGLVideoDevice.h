@@ -39,28 +39,31 @@
 
 class COGLVideoDevice : public IVideoDevice
 {
+    
 public:
+    COGLVideoDevice() {};
+    ~COGLVideoDevice() {};
+    
     bool init();
     bool shutdown();
     
     void beginFrame() const;
     void endFrame() const;
     
-    static COGLVideoDevice& instance()
-    {
-        return m_videoDevice;
-    }
-    
 private:
-    COGLVideoDevice() {};
+    
     COGLVideoDevice(const COGLVideoDevice&){};
     COGLVideoDevice& operator=(const COGLVideoDevice& ){ return *this;};
     
+    // OpenGL
+    GLuint  m_basicProgram;
+    
+    
+    // SDL
     SDL_Window*  m_window;
 //    SDL_Surface* m_screen;
     SDL_GLContext m_glcontext;
     
-    static COGLVideoDevice m_videoDevice;
 };
 
 #endif

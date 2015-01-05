@@ -22,10 +22,10 @@
 //#include "IGameState.h"
 #include <iostream>
 
-#include "CGameStateManager.h"
+#include "IGameEngine.h"
 #include "CMenuGameState.h"
 
-class CIntroGameState : public CGameStateManager::IGameState
+class CIntroGameState : public IGameState
 {
 public:
     void init();

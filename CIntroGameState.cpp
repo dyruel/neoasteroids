@@ -50,5 +50,5 @@ void CIntroGameState::display()
 void CIntroGameState::update(const glm::u32& delta)
 {
     std::cout << "Intro" << std::endl;
-    m_gameStateManager->change( &CMenuGameState::instance() );
+    m_gameEngine->changeState( &CMenuGameState::instance() );
 }

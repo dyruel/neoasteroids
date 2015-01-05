@@ -70,7 +70,7 @@ void CPlayGameState::display()
         m_asteroids[i].display();
     }
     
-    m_gameStateManager->clear();
+    m_gameEngine->quit();
 }
 
 void CPlayGameState::nextLevel()

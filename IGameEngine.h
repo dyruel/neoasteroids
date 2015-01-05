@@ -16,67 +16,78 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#if 0
+#ifndef IGAMEENGINE_H
+#define IGAMEENGINE_H
 
-#include "CGameStateManager.h"
+#include <glm/common.hpp>
+#include <vector>
 
+#include "IVideoDevice.h"
 
-void CGameStateManager::change(IGameState* state)
+class IGameEngine;
+
+class IGameState
 {
-    if ( !m_gameStates.empty() )
-    {
-        m_gameStates.back()->shutdown();
-        m_gameStates.pop_back();
-    }
+    friend class IGameEngine;
     
-    m_gameStates.push_back(state);
-    m_gameStates.back()->init();
+public:
+    IGameState() : m_gameEngine(nullptr) {}
+    ~IGameState() {}
     
-    state->m_gameEngine = this;
-}
-
-void CGameStateManager::push(IGameState* state)
-{
-    if ( !m_gameStates.empty() )
-    {
-        m_gameStates.back()->pause();
-    }
+    virtual void init()     = 0;
+    virtual void pause()    = 0;
+    virtual void resume()   = 0;
+    virtual void shutdown() = 0;
     
-    m_gameStates.push_back(state);
-    m_gameStates.back()->init();
+    virtual void display() = 0;
+    virtual void update(const glm::u32& delta) = 0;
     
-    state->m_gameStateManager = this;
-}
+protected:
+    IGameEngine* m_gameEngine;
+};
 
-void CGameStateManager::pop()
+class IGameEngine
 {
-    if ( !m_gameStates.empty() )
-    {
-        m_gameStates.back()->shutdown();
-        m_gameStates.pop_back();
-    }
+public:
     
-    if ( !m_gameStates.empty() )
-    {
-        m_gameStates.back()->resume();
-    }
-}
+    IGameEngine()
+    : m_running(true), m_videoDevice(nullptr) {}
+    virtual ~IGameEngine(){}
+    
+    // Main game engine methods
+    
+    virtual bool init(int& argc, char** argv) = 0;
+    
+    virtual bool shutdown() = 0;
+    
+    virtual void quit();
+    
+    virtual bool running();
+    
+    // Game states management
+    
+    void changeState(IGameState* state);
+    
+    void pushState(IGameState* state);
+    
+    void popState();
+    
+    IGameState* currentState();
+    
+    bool hasStates();
+    
+    void removeAllStates();
+    
+    // Getters
+    
+    IVideoDevice* getVideoDevice();
+    
+protected:
+    bool m_running;
+    
+    IVideoDevice* m_videoDevice;
+    
+    std::vector<IGameState*> m_gameStates;
+};
 
-CGameStateManager::IGameState* CGameStateManager::current()
-{
-    return m_gameStates.back();
-}
-
-bool CGameStateManager::empty()
-{
-    return m_gameStates.empty();
-}
-
-void CGameStateManager::clear()
-{
-    while ( !m_gameStates.empty() ) {
-        m_gameStates.back()->shutdown();
-        m_gameStates.pop_back();
-    }
-}
 #endif
