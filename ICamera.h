@@ -33,7 +33,7 @@ protected:
     glm::vec3 m_up;
     
 public:
-    ICamera(){}
+    ICamera() {};
 //    ICamera(const glm::f32& fov, const glm::f32& aspect, const glm::f32& near, const glm::f32& far)
 //    : m_fov(fov), m_far(far), m_aspect(aspect), m_near(near) {}
     virtual ~ICamera() {};

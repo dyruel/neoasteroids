@@ -16,24 +16,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CUFO_H
-#define CUFO_H
+#include "CWorld.h"
 
-#include "IEntity.h"
+CWorld::CWorld()
+{
+    for (glm::u32 i = 0; i < MAX_ENTITIES; ++i) {
+        mask[i] = COMPONENT_NONE;
+    }
+}
 
-class CUFO : public IEntity
+CWorld::~CWorld()
 {
     
-    void init();
-    
-    void update(const glm::u32& delta);
-    
-    void display();
-    
-public:
-    CUFO() {}
-    ~CUFO() {}
-    
-};
+}
 
-#endif
+glm::u32 CWorld::addEntity()
+{
+    for (glm::u32 i = 0; i < MAX_ENTITIES; ++i)
+    {
+        if(mask[i] == COMPONENT_NONE)
+        {
+            return i;
+        }
+    }
+    
+    CFileLogger::log( "No more entities left.\n");
+    
+    return MAX_ENTITIES;
+}
+
+void CWorld::removeEntity(const glm::u32& id)
+{
+    assert(id < MAX_ENTITIES);
+    mask[id] = COMPONENT_NONE;
+}

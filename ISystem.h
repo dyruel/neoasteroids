@@ -16,4 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "IEntity.h"
+#ifndef ISYSTEM_H
+#define ISYSTEM_H
+
+class ISystem
+{
+public:
+    ISystem() {};
+    virtual ~ISystem() {};
+
+    virtual bool init() = 0;
+    
+    virtual bool shutdown() = 0;
+    
+    virtual bool update() = 0;
+};
+
+
+#endif

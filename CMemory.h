@@ -19,18 +19,18 @@
 #ifndef CMEMORY_H
 #define CMEMORY_H
 
+#include <glm/common.hpp>
 #include <cstdlib>
 #include <cstring>
 
 #include "CFileLogger.h"
-#include "Types.h"
 
 class CMemory
 {
 
 public:
     
-    static void* allocate(const u64& size, c8 const * label);
+    static void* allocate(const glm::u64& size, char const * label);
     
     static void free(void* ptr);
     
@@ -45,17 +45,17 @@ private:
     
     typedef struct _SMemoryBlock
     {
-        u64				id;
+        glm::u64		id;
         void*           ptr;
-        u64				size;
-        c8 const*		label;
+        glm::u64		size;
+        char const*		label;
         struct _SMemoryBlock *prev, *next;
     } SMemoryBlock;
     
     static SMemoryBlock* m_headBlock;
-    static s32 m_numBlocks;
+    static glm::i32 m_numBlocks;
     
-    static s32 m_totalMemorySize;
+    static glm::i32 m_totalMemorySize;
     
     static void pushMemoryBlock(SMemoryBlock* block);
     static void popMemoryBlock(SMemoryBlock* block);

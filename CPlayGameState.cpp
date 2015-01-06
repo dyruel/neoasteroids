@@ -22,16 +22,19 @@ CPlayGameState CPlayGameState::m_playGameState;
 
 void CPlayGameState::init()
 {
-    glm::u32 i;
+//    glm::u32 i;
     
     m_level = 1;
     m_lives = 3;
     m_score = 0;
+/*
     m_numAsteroids = 4;
-    
     for (i = 0; i < m_numAsteroids && i < MAX_ASTEROIDS; ++i) {
         m_asteroids[i].init();
     }
+    
+    m_numBullets = 0;
+ */
 }
 
 void CPlayGameState::pause()
@@ -51,30 +54,37 @@ void CPlayGameState::shutdown()
 
 void CPlayGameState::update(const glm::u32& delta)
 {
-    glm::u32 i;
-    
+//    glm::u32 i;
+/*
     m_spaceship.update(delta);
+    
+    m_ufo.update(delta);
     
     for (i = 0; i < m_numAsteroids && i < MAX_ASTEROIDS; ++i) {
         m_asteroids[i].update(delta);
     }
     
+    for (i = 0; i < m_numBullets && i < MAX_BULLETS; ++i) {
+        m_bullets[i].update(delta);
+    }
+ */
     m_gameEngine->quit();
 }
 
 void CPlayGameState::display()
 {
-    glm::u32 i;
+//    glm::u32 i;
+    IVideoDevice* videoDevice = m_gameEngine->getVideoDevice();
     
-    m_gameEngine->getVideoDevice()->beginFrame();
-    
+    videoDevice->beginFrame();
+/*
     m_spaceship.display();
     
     for (i = 0; i < m_numAsteroids && i < MAX_ASTEROIDS; ++i) {
         m_asteroids[i].display();
     }
-    
-    m_gameEngine->getVideoDevice()->endFrame();
+*/
+    videoDevice->endFrame();
     
 //    SDL_Delay(2000);
 }

@@ -21,15 +21,13 @@
 
 #include <fstream>
 
-#include "Types.h"
-
 class CFileLogger
 {
 public:
 
-    static void log(const c8 * msg);
+    static void log(const char * msg);
 
-    static void logFormat( const c8 * format, ... );
+    static void logFormat( const char * format, ... );
 
 private:
     CFileLogger() {};
@@ -38,7 +36,7 @@ private:
 
     static std::ofstream m_file;
     
-    static CFileLogger* m_instance;
+//    static CFileLogger* m_instance;
 };
 
 #endif

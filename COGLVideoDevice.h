@@ -27,7 +27,6 @@
 #else
 #define GL3_PROTOTYPES 1
 #include <GL3/gl3.h>
-
 #endif
 
 #include <SDL2/SDL.h>

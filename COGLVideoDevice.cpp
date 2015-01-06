@@ -62,7 +62,7 @@ bool COGLVideoDevice::init()
     //glGetIntegerv(GL_MINOR_VERSION, &min);
     //std::cout << maj << " " << min << std::endl;
     
-    glClearColor( 0.f, 1.f, 0.f, 1.f );
+    glClearColor( 0.5f, 0.5f, 0.5f, 1.f );
     
     m_basicProgram = glCreateProgram();
     
@@ -70,7 +70,7 @@ bool COGLVideoDevice::init()
     
     const GLchar* vertexShaderSource[] =
     {
-        "#version 140\nin vec2 LVertexPos2D; void main() { gl_Position = vec4( LVertexPos2D.x, LVertexPos2D.y, 0, 1 ); }"
+        "#version 150\nin vec4 position; void main() { gl_Position = position; }"
     };
     
 
@@ -94,7 +94,7 @@ bool COGLVideoDevice::init()
         
         const GLchar* fragmentShaderSource[] =
         {
-            "#version 140\nout vec4 LFragment; void main() { LFragment = vec4( 1.0, 1.0, 1.0, 1.0 ); }"
+            "#version 150\nout vec4 out_color; void main() { out_color = vec4( 1.0, 1.0, 1.0, 1.0 ); }"
         };
         
         glShaderSource( fragmentShader, 1, fragmentShaderSource, NULL );

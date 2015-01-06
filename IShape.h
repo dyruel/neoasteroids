@@ -16,37 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CASTEROID_H
-#define CASTEROID_H
+#ifndef ISHAPE_H
+#define ISHAPE_H
 
-#include "IEntity.h"
-
-enum EASTEROID_SIZE
+class IShape
 {
-    AST_LARGE = 0,
-    AST_MEDIUM,
-    AST_SMALL,
-    AST_SIZE_COUNT
-};
-
-class CAsteroid : public IEntity
-{
-    
 public:
-    CAsteroid() {}
-    ~CAsteroid() {}
+    IShape() {};
+    virtual ~IShape() {};
     
-    void init();
+protected:
     
-    void update(const glm::u32& delta);
     
-    void display();
-    
-    void setSize(const EASTEROID_SIZE& size);
-    
-private:
-    
-    EASTEROID_SIZE m_size;
 };
 
 #endif

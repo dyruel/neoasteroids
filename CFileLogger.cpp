@@ -8,10 +8,10 @@
 
 #include "CFileLogger.h"
 
-CFileLogger* CFileLogger::m_instance = nullptr;
+//CFileLogger* CFileLogger::m_instance = nullptr;
 std::ofstream CFileLogger::m_file("log.txt");
 
-void CFileLogger::logFormat( const c8 * format, ...)
+void CFileLogger::logFormat( const char * format, ...)
 {
     char buf[256];
     
@@ -23,7 +23,7 @@ void CFileLogger::logFormat( const c8 * format, ...)
     m_file << buf;
 }
 
-void CFileLogger::log( const c8* msg )
+void CFileLogger::log( const char* msg )
 {
     m_file << msg;
 }

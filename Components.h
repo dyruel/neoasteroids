@@ -16,20 +16,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CSpaceship.h"
+#ifndef COMPONENTS_H
+#define COMPONENTS_H
 
+#include <glm/common.hpp>
 
-void CSpaceship::init()
+typedef enum
 {
-    
-}
+    COMPONENT_NONE      = 0,
+    COMPONENT_MOVABLE   = 1 << 0,
+    COMPONENT_DRAWABLE  = 1 << 1,
+} ComponentId;
 
-void CSpaceship::update(const glm::u32 &delta)
+class CMovableComponent
 {
+public:
+    CMovableComponent() {};
+    ~CMovableComponent() {};
     
-}
+    glm::vec3 m_position;
+    glm::vec3 m_direction;
+    glm::f32  m_speed;
+};
 
-void CSpaceship::display()
+class CDrawableComponent
 {
+public:
+    CDrawableComponent() {};
+    ~CDrawableComponent() {};
     
-}
+};
+
+#endif

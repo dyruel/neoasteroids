@@ -22,11 +22,11 @@
 #define MEM_ID	0x12345678l
 
 CMemory::SMemoryBlock* CMemory::m_headBlock = nullptr;
-s32 CMemory::m_numBlocks = 0;
-s32 CMemory::m_totalMemorySize = 0;
+glm::i32 CMemory::m_numBlocks = 0;
+glm::i32 CMemory::m_totalMemorySize = 0;
 
 
-void* CMemory::allocate(const u64& size, c8 const * label)
+void* CMemory::allocate(const glm::u64& size, char const * label)
 {
     void* ptr = nullptr;
     SMemoryBlock* block = nullptr;
@@ -41,7 +41,7 @@ void* CMemory::allocate(const u64& size, c8 const * label)
     
     block = (SMemoryBlock*)ptr;
     block->id = MEM_ID;
-    block->ptr = (u8*)ptr + sizeof(SMemoryBlock);
+    block->ptr = (char*)ptr + sizeof(SMemoryBlock);
     block->size = size + sizeof(SMemoryBlock);
     block->label = label;
     
@@ -120,7 +120,7 @@ CMemory::SMemoryBlock* CMemory::getBlockFromPointer(void* ptr)
         return nullptr;
     }
     
-    block = (SMemoryBlock*)((u8*)ptr - sizeof(SMemoryBlock));
+    block = (SMemoryBlock*)((char*)ptr - sizeof(SMemoryBlock));
     
     if (block->id != MEM_ID) {
         CFileLogger::log("ERROR in CMemory::allocate -> invalid memory block\n");

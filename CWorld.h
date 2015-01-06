@@ -16,30 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef IENTITY_H
-#define IENTITY_H
+#ifndef CWORLD_H
+#define CWORLD_H
 
-#include <glm/common.hpp>
-#include <glm/vec2.hpp>
+#include "CFileLogger.h"
+#include "Components.h"
 
-
-class IEntity {
-    
+class CWorld
+{
 public:
-    IEntity() {}
-    ~IEntity() {}
+    CWorld();
+    virtual ~CWorld();
     
-    virtual void init() = 0;
+    constexpr static const glm::u32 MAX_ENTITIES = 100;
     
-    virtual void update(const glm::u32& delta) = 0;
+    glm::u32                mask[MAX_ENTITIES];
     
-    virtual void display() = 0;
+    CMovableComponent       movable[MAX_ENTITIES];
+    CDrawableComponent      drawable[MAX_ENTITIES];
     
-protected:
-
-    glm::vec2   m_position;
-    glm::vec2   m_direction;
-    glm::f32    m_speed;
+    
+    glm::u32    addEntity       ();
+    void        removeEntity    (const glm::u32& id);
 };
 
 #endif

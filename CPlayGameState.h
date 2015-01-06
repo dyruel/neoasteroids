@@ -22,16 +22,9 @@
 //#include "IGameState.h"
 #include <iostream>
 
-
-
-#include "CAsteroid.h"
-#include "CUFO.h"
-#include "CSpaceship.h"
-
-
 #include "CSDLInputDevice.h"
 #include "IGameEngine.h"
-//#include "Types.h"
+#include "CWorld.h"
 
 class CPlayGameState : public IGameState
 {
@@ -55,7 +48,10 @@ public:
 private:
     CPlayGameState(){}
     
+    // Constants
     constexpr static const glm::f32 m_deltaTime = 10.f;
+    constexpr static const glm::u32 MAX_ASTEROIDS = 100;
+    constexpr static const glm::u32 MAX_BULLETS = 100;
     
     glm::u32    m_level;
     glm::u32    m_lastTime;
@@ -64,15 +60,19 @@ private:
     glm::u32    m_lives;
     glm::u32    m_score;
     
-    // Game entities
-    constexpr static const glm::u32 MAX_ASTEROIDS = 100;
-    CAsteroid m_asteroids[MAX_ASTEROIDS];
-    glm::u32 m_numAsteroids;
+    // Game world
+    CWorld      m_world;
+    /*
+    CSpaceship  m_spaceship;
     
-    CSpaceship m_spaceship;
+    CUFO        m_ufo;
     
-    CUFO m_ufo;
+    glm::u32    m_numAsteroids;
+    CAsteroid   m_asteroids[MAX_ASTEROIDS];
     
+    glm::u32    m_numBullets;
+    CBullet     m_bullets[MAX_BULLETS];
+    */
     //
     static CPlayGameState m_playGameState;
 };
