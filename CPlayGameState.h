@@ -24,7 +24,7 @@
 
 #include "CSDLInputDevice.h"
 #include "IGameEngine.h"
-#include "CWorld.h"
+#include "CEntityManager.h"
 
 class CPlayGameState : public IGameState
 {
@@ -61,7 +61,7 @@ private:
     glm::u32    m_score;
     
     // Game world
-    CWorld      m_world;
+    CEntityManager  m_entityManager;
     /*
     CSpaceship  m_spaceship;
     

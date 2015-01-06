@@ -16,18 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef ISHAPE_H
-#define ISHAPE_H
+#ifndef CSCENEGRAPH_H
+#define CSCENEGRAPH_H
 
-class IShape
+
+class CSceneNode
 {
 public:
-    IShape() {};
-    virtual ~IShape() {};
+//   glm::u32 children[];
+};
+
+class CSceneGraph
+{
+public:
+    CSceneGraph(){};
+    ~CSceneGraph(){};
     
-protected:
-    
-    
+private:
+ //   glm::u32 ;
 };
 
 #endif

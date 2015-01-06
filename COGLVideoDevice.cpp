@@ -37,6 +37,9 @@ bool COGLVideoDevice::init()
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
     
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    
     m_window = SDL_CreateWindow( "NeoAsteroids",
                                 SDL_WINDOWPOS_UNDEFINED,
                                 SDL_WINDOWPOS_UNDEFINED,
@@ -62,111 +65,52 @@ bool COGLVideoDevice::init()
     //glGetIntegerv(GL_MINOR_VERSION, &min);
     //std::cout << maj << " " << min << std::endl;
     
+    glViewport(0, 0, 800, 600);
     glClearColor( 0.5f, 0.5f, 0.5f, 1.f );
     
-    m_basicProgram = glCreateProgram();
-    
-    GLuint vertexShader = glCreateShader( GL_VERTEX_SHADER );
-    
-    const GLchar* vertexShaderSource[] =
-    {
-        "#version 150\nin vec4 position; void main() { gl_Position = position; }"
-    };
-    
-
-    glShaderSource( vertexShader, 1, vertexShaderSource, NULL );
-    
-    glCompileShader( vertexShader );
-    
-    GLint vShaderCompiled = GL_FALSE;
-    glGetShaderiv( vertexShader, GL_COMPILE_STATUS, &vShaderCompiled );
-    
-    if( vShaderCompiled != GL_TRUE )
-    {
-        CFileLogger::logFormat( "Unable to compile vertex shader.\n");
-        return false;
-    }
-    else
-    {
-        glAttachShader( m_basicProgram, vertexShader );
-        
-        GLuint fragmentShader = glCreateShader( GL_FRAGMENT_SHADER );
-        
-        const GLchar* fragmentShaderSource[] =
-        {
-            "#version 150\nout vec4 out_color; void main() { out_color = vec4( 1.0, 1.0, 1.0, 1.0 ); }"
-        };
-        
-        glShaderSource( fragmentShader, 1, fragmentShaderSource, NULL );
-        
-        glCompileShader( fragmentShader );
-        
-
-        GLint fShaderCompiled = GL_FALSE;
-        glGetShaderiv( fragmentShader, GL_COMPILE_STATUS, &fShaderCompiled );
-        
-        if( fShaderCompiled != GL_TRUE )
-        {
-            CFileLogger::log( "Unable to compile fragment shader.\n");
-            return false;
-        }
-        else
-        {
-            glAttachShader( m_basicProgram, fragmentShader );
-            
-            glLinkProgram( m_basicProgram );
-            
-
-            GLint programSuccess = GL_TRUE;
-            glGetProgramiv( m_basicProgram, GL_LINK_STATUS, &programSuccess );
-            
-            if( programSuccess != GL_TRUE )
-            {
-                CFileLogger::log( "Error linking program.\n");
-                return false;
-            }
-            else
-            {
-                /*
-                gVertexPos2DLocation = glGetAttribLocation( gProgramID, "LVertexPos2D" );
-                if( gVertexPos2DLocation == -1 )
-                {
-                    printf( "LVertexPos2D is not a valid glsl program variable!\n" );
-                    success = false;
-                }
-                else
-                {
-
-                    glClearColor( 0.f, 0.f, 0.f, 1.f );
-                    
-                    GLfloat vertexData[] =
-                    {
-                        -0.5f, -0.5f,
-                        0.5f, -0.5f,
-                        0.5f,  0.5f,
-                        -0.5f,  0.5f
-                    };
-                    
-
-                    GLuint indexData[] = { 0, 1, 2, 3 };
-                    
-
-                    glGenBuffers( 1, &gVBO );
-                    glBindBuffer( GL_ARRAY_BUFFER, gVBO );
-                    glBufferData( GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), vertexData, GL_STATIC_DRAW );
-                    
-
-                    glGenBuffers( 1, &gIBO );
-                    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, gIBO );
-                    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), indexData, GL_STATIC_DRAW );
-                }
-                 */
-            }
-        }
-    }
+    m_basicProgram = createProgram(
+                                   "#version 150\nin vec4 position; void main() { gl_Position = position; }",
+                                   "#version 150\nout vec4 out_color; void main() { out_color = vec4( 1.0, 1.0, 1.0, 1.0 ); }"
+                                   );
+    glUseProgram(m_basicProgram);
     
     return true;
 }
+
+/*
+ gVertexPos2DLocation = glGetAttribLocation( gProgramID, "LVertexPos2D" );
+ if( gVertexPos2DLocation == -1 )
+ {
+ printf( "LVertexPos2D is not a valid glsl program variable!\n" );
+ success = false;
+ }
+ else
+ {
+ 
+ glClearColor( 0.f, 0.f, 0.f, 1.f );
+ 
+ GLfloat vertexData[] =
+ {
+ -0.5f, -0.5f,
+ 0.5f, -0.5f,
+ 0.5f,  0.5f,
+ -0.5f,  0.5f
+ };
+ 
+ 
+ GLuint indexData[] = { 0, 1, 2, 3 };
+ 
+ 
+ glGenBuffers( 1, &gVBO );
+ glBindBuffer( GL_ARRAY_BUFFER, gVBO );
+ glBufferData( GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), vertexData, GL_STATIC_DRAW );
+ 
+ 
+ glGenBuffers( 1, &gIBO );
+ glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, gIBO );
+ glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), indexData, GL_STATIC_DRAW );
+ }
+ */
 
 bool COGLVideoDevice::shutdown()
 {
@@ -183,12 +127,121 @@ bool COGLVideoDevice::shutdown()
 void COGLVideoDevice::beginFrame() const
 {
     glClear( GL_COLOR_BUFFER_BIT );
-    
-    glUseProgram( m_basicProgram );
 }
 
 void COGLVideoDevice::endFrame() const
 {
-    glUseProgram( NULL );
+    glFlush();
     SDL_GL_SwapWindow( m_window );
 }
+
+
+glm::u32 COGLVideoDevice::createProgram(const char *vertexShaderSource, const char *fragmentShaderSource)
+{
+    GLuint shaderProgram = 0;
+    
+    if(!vertexShaderSource && !vertexShaderSource)
+    {
+        return 0;
+    }
+    
+    shaderProgram = glCreateProgram();
+    
+    if(vertexShaderSource)
+    {
+        GLuint vertexShader = glCreateShader( GL_VERTEX_SHADER );
+        
+        glShaderSource( vertexShader, 1, &vertexShaderSource, NULL);
+        glCompileShader( vertexShader );
+        
+        GLint status = GL_FALSE;
+        glGetShaderiv( vertexShader, GL_COMPILE_STATUS, &status );
+        
+        if( status != GL_TRUE )
+        {
+            glDeleteShader(vertexShader);
+            glDeleteProgram(shaderProgram);
+            CFileLogger::logFormat( "Unable to compile vertex shader %s.\n", vertexShaderSource);
+            return 0;
+        }
+        
+        glAttachShader(shaderProgram, vertexShader);
+        glDeleteShader(vertexShader);
+    }
+
+    if(fragmentShaderSource)
+    {
+        GLuint fragmentShader = glCreateShader( GL_FRAGMENT_SHADER );
+        
+        glShaderSource( fragmentShader, 1, &fragmentShaderSource, NULL);
+        glCompileShader( fragmentShader );
+        
+        GLint status = GL_FALSE;
+        glGetShaderiv( fragmentShader, GL_COMPILE_STATUS, &status );
+        
+        if( status != GL_TRUE )
+        {
+            glDeleteShader(fragmentShader);
+            glDeleteProgram(shaderProgram);
+            CFileLogger::logFormat( "Unable to compile fragment shader %s.\n", fragmentShaderSource);
+            return 0;
+        }
+        
+        glAttachShader(shaderProgram, fragmentShader);
+        glDeleteShader(fragmentShader);
+    }
+    
+    
+    glLinkProgram(shaderProgram);
+    
+    GLint status = GL_TRUE;
+    glGetProgramiv( shaderProgram, GL_LINK_STATUS, &status );
+    
+    if( status != GL_TRUE )
+    {
+        glDeleteProgram(shaderProgram);
+        CFileLogger::log( "Error linking program.\n");
+        return 0;
+    }
+    
+    return shaderProgram;
+}
+
+void COGLVideoDevice::useProgram(const glm::u32& programId) const
+{
+    if(programId > 0)
+    {
+        glUseProgram(programId);
+    }
+    else
+    {
+        glUseProgram(m_basicProgram);
+    }
+}
+
+
+/*
+glm::u32 COGLVideoDevice::createBuffer(const glm::u64& size, const EBufferType& type)
+{
+    GLuint id = 0;
+    glGenBuffers(1, &id);
+    GLenum buffType;
+    
+    switch (type) {
+        case VERTEX_BUFFER:
+            buffType = GL_ARRAY_BUFFER;
+            break;
+        case INDEX_BUFFER:
+            buffType = GL_ELEMENT_ARRAY_BUFFER;
+            break;
+        default:
+            return 0;
+            break;
+    }
+    
+    glBindBuffer(buffType, id);
+    glBufferData(buffType, size, nullptr, GL_STATIC_DRAW);
+    
+    return id;
+}
+*/

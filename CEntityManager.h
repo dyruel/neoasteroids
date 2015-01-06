@@ -16,28 +16,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CWORLD_H
-#define CWORLD_H
+#ifndef CENTITYMANAGER_H
+#define CENTITYMANAGER_H
 
 #include "CFileLogger.h"
 #include "Components.h"
 
-class CWorld
+class CEntityManager
 {
 public:
-    CWorld();
-    virtual ~CWorld();
+    CEntityManager();
+    virtual ~CEntityManager();
     
+    
+    // Systems
+    void display();
+    
+    // Entities management
+    glm::u32    addEntity       ();
+    void        removeEntity    (const glm::u32& id);
+    
+    glm::u32    addAsteroid     ();
+    glm::u32    addSpaceship    ();
+    glm::u32    addUfo          ();
+    glm::u32    addBullet       ();
+    
+private:
     constexpr static const glm::u32 MAX_ENTITIES = 100;
     
     glm::u32                mask[MAX_ENTITIES];
     
-    CMovableComponent       movable[MAX_ENTITIES];
-    CDrawableComponent      drawable[MAX_ENTITIES];
-    
-    
-    glm::u32    addEntity       ();
-    void        removeEntity    (const glm::u32& id);
+    CPositionComponent      position[MAX_ENTITIES];
+    CVelocityComponent      velocity[MAX_ENTITIES];
+    CGeometryComponent      geometry[MAX_ENTITIES];
+
 };
 
 #endif

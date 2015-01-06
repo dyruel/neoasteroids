@@ -24,27 +24,51 @@
 typedef enum
 {
     COMPONENT_NONE      = 0,
-    COMPONENT_MOVABLE   = 1 << 0,
-    COMPONENT_DRAWABLE  = 1 << 1,
-} ComponentId;
+    COMPONENT_POSITION   = 1 << 0,
+    COMPONENT_VELOCITY   = 1 << 1,
+    COMPONENT_GEOMETRY  = 1 << 2,
+} EComponentId;
 
-class CMovableComponent
+
+class CGeometryComponent
 {
 public:
-    CMovableComponent() {};
-    ~CMovableComponent() {};
+    CGeometryComponent()
+    : m_numIndices(0), m_numVertices(0) {};
+    ~CGeometryComponent() {};
     
-    glm::vec3 m_position;
-    glm::vec3 m_direction;
+    constexpr static const glm::u32 MAX_VERTICES    = 100;
+    constexpr static const glm::u32 MAX_INDICES     = 100;
+    
+    glm::u32    m_numVertices;
+    glm::vec4   m_vertices[MAX_VERTICES];
+    
+    glm::u32    m_numIndices;
+    glm::f32    m_indices[MAX_INDICES];
+
+};
+
+
+class CPositionComponent
+{
+public:
+    CPositionComponent()  {};
+    ~CPositionComponent() {};
+    
+    glm::vec4 m_position;
+};
+
+class CVelocityComponent
+{
+public:
+    CVelocityComponent()  {};
+    ~CVelocityComponent() {};
+    
+    glm::vec4 m_direction;
     glm::f32  m_speed;
 };
 
-class CDrawableComponent
-{
-public:
-    CDrawableComponent() {};
-    ~CDrawableComponent() {};
-    
-};
+
+
 
 #endif

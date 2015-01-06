@@ -43,12 +43,25 @@ public:
     COGLVideoDevice() {};
     ~COGLVideoDevice() {};
     
-    bool init();
-    bool shutdown();
+    bool        init        ();
+    bool        shutdown    ();
     
-    void beginFrame() const;
-    void endFrame() const;
+    void        beginFrame  () const;
+    void        endFrame    () const;
     
+    // Matrices : projection, view, model
+    
+    
+    
+    // Shaders management
+    
+    glm::u32    createProgram   (const char *vertexShader, const char *fragmentShader);
+    void        useProgram      (const glm::u32& programId) const;
+
+    // Buffers management
+    
+//    glm::u32    createBuffer    (const glm::u64& size, const EBufferType& type);
+//    void        fillBuffer      (const glm::u32& id, const void* data);
 private:
     
     COGLVideoDevice(const COGLVideoDevice&){};
@@ -57,10 +70,8 @@ private:
     // OpenGL
     GLuint  m_basicProgram;
     
-    
     // SDL
     SDL_Window*  m_window;
-//    SDL_Surface* m_screen;
     SDL_GLContext m_glcontext;
     
 };
