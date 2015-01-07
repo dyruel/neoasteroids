@@ -34,7 +34,7 @@ bool CNeoAsteroids::init(int& argc, char** argv)
     
     m_videoDevice->init();
     
-    m_lastTime = CSystem::getTime();
+    m_lastTime = CUtils::getTime();
 
     return true;
 }
@@ -54,7 +54,7 @@ bool CNeoAsteroids::shutdown()
 
 void CNeoAsteroids::update()
 {
-    glm::u32 presentTime = CSystem::getTime();
+    glm::u32 presentTime = CUtils::getTime();
     
     while (m_lastTime + m_deltaTime <= presentTime) {
         

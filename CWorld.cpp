@@ -16,35 +16,51 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CEntityManager.h"
+#include "CWorld.h"
 
-CEntityManager::CEntityManager()
+CWorld::CWorld()
 {
-    for (glm::u32 id = 0; id < MAX_ENTITIES; ++id) {
-        mask[id] = COMPONENT_NONE;
+    for (glm::u32 id = 0; id < MAX_ENTITIES; ++id)
+    {
+        m_entities[id].mask = COMPONENT_NONE;
     }
 }
 
-CEntityManager::~CEntityManager()
+CWorld::~CWorld()
 {
     
 }
 
-void CEntityManager::display()
+void CWorld::addSystem(std::unique_ptr<ISystem>& system)
 {
-    for (glm::u32 id = 0; id < MAX_ENTITIES; ++id)
+    assert(system != nullptr);
+    
+    system->init(this);
+    
+    m_systems.push_back(std::move(system));
+}
+
+void CWorld::broadcast(const glm::i32& msg)
+{
+    for(auto & system : m_systems)
     {
-        if (mask[id] & (COMPONENT_GEOMETRY | COMPONENT_POSITION)) {
-            
-        }
+        system->receive(msg);
     }
 }
 
-glm::u32 CEntityManager::addEntity()
+void CWorld::update()
+{
+    for(auto & system : m_systems)
+    {
+        system->update();
+    }
+}
+
+glm::u32 CWorld::addEntity()
 {
     for (glm::u32 id = 0; id < MAX_ENTITIES; ++id)
     {
-        if(mask[id] == COMPONENT_NONE)
+        if(m_entities[id].mask == COMPONENT_NONE)
         {
             return id;
         }
@@ -55,14 +71,14 @@ glm::u32 CEntityManager::addEntity()
     return MAX_ENTITIES;
 }
 
-void CEntityManager::removeEntity(const glm::u32& id)
+void CWorld::removeEntity(const glm::u32& id)
 {
     assert(id < MAX_ENTITIES);
-    mask[id] = COMPONENT_NONE;
+    m_entities[id].mask = COMPONENT_NONE;
 }
 
 
-glm::u32 CEntityManager::addAsteroid()
+glm::u32 CWorld::addAsteroid()
 {
     glm::u32 id = addEntity();
     
@@ -70,36 +86,36 @@ glm::u32 CEntityManager::addAsteroid()
         return MAX_ENTITIES;
     }
     
-    mask[id] = COMPONENT_POSITION | COMPONENT_VELOCITY | COMPONENT_GEOMETRY;
+    m_entities[id].mask = COMPONENT_POSITION | COMPONENT_VELOCITY | COMPONENT_GEOMETRY;
     
-    velocity[id].m_speed = .5f;
+    m_entities[id].velocity.m_speed = .5f;
     
-    geometry[id].m_numVertices = 4;
-    geometry[id].m_vertices[0].x = 0.f; geometry[id].m_vertices[0].y = 0.f;
-    geometry[id].m_vertices[1].x = 0.f; geometry[id].m_vertices[1].y = 1.f;
-    geometry[id].m_vertices[2].x = 1.f; geometry[id].m_vertices[2].y = 1.f;
-    geometry[id].m_vertices[3].x = 1.f; geometry[id].m_vertices[3].y = 0.f;
+    m_entities[id].geometry.m_numVertices = 4;
+    m_entities[id].geometry.m_vertices[0].x = 0.f; m_entities[id].geometry.m_vertices[0].y = 0.f;
+    m_entities[id].geometry.m_vertices[1].x = 0.f; m_entities[id].geometry.m_vertices[1].y = 1.f;
+    m_entities[id].geometry.m_vertices[2].x = 1.f; m_entities[id].geometry.m_vertices[2].y = 1.f;
+    m_entities[id].geometry.m_vertices[3].x = 1.f; m_entities[id].geometry.m_vertices[3].y = 0.f;
     
-    geometry[id].m_numIndices = 4;
-    geometry[id].m_indices[0] = 0;
-    geometry[id].m_indices[1] = 1;
-    geometry[id].m_indices[2] = 2;
-    geometry[id].m_indices[3] = 3;
+    m_entities[id].geometry.m_numIndices = 4;
+    m_entities[id].geometry.m_indices[0] = 0;
+    m_entities[id].geometry.m_indices[1] = 1;
+    m_entities[id].geometry.m_indices[2] = 2;
+    m_entities[id].geometry.m_indices[3] = 3;
 
     return id;
 }
 
-glm::u32 CEntityManager::addSpaceship()
+glm::u32 CWorld::addSpaceship()
 {
     return MAX_ENTITIES;
 }
 
-glm::u32 CEntityManager::addUfo()
+glm::u32 CWorld::addUfo()
 {
     return MAX_ENTITIES;
 }
 
-glm::u32 CEntityManager::addBullet()
+glm::u32 CWorld::addBullet()
 {
     return MAX_ENTITIES;
 }

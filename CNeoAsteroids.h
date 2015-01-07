@@ -26,7 +26,7 @@
 #include "IGameEngine.h"
 #include "COGLVideoDevice.h"
 #include "CMemory.h"
-#include "CSystem.h"
+#include "CUtils.h"
 
 class CNeoAsteroids : public IGameEngine
 {

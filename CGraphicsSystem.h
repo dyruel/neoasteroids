@@ -16,20 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CSYSTEM_H
-#define CSYSTEM_H
+#ifndef CGRAPHICSSYSTEM_H
+#define CGRAPHICSSYSTEM_H
 
-#include <SDL2/SDL.h>
-#include <glm/common.hpp>
+#include "ISystem.h"
+#include "CWorld.h"
 
-
-class CSystem
+class CGraphicsSystem : public ISystem
 {
+
 public:
-    static glm::u32 getTime();
+    
+    void init(CWorld* world);
+    
+    void shutdown();
+    
+    void update();
+    
+    void receive(const glm::i32& msg);
     
 private:
-    
+    CWorld* m_world;
 };
 
 #endif

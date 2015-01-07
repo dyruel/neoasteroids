@@ -16,40 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CENTITYMANAGER_H
-#define CENTITYMANAGER_H
+#ifndef CUTILS_H
+#define CUTILS_H
 
-#include "CFileLogger.h"
-#include "Components.h"
+#include <SDL2/SDL.h>
+#include <glm/common.hpp>
 
-class CEntityManager
+
+class CUtils 
 {
 public:
-    CEntityManager();
-    virtual ~CEntityManager();
-    
-    
-    // Systems
-    void display();
-    
-    // Entities management
-    glm::u32    addEntity       ();
-    void        removeEntity    (const glm::u32& id);
-    
-    glm::u32    addAsteroid     ();
-    glm::u32    addSpaceship    ();
-    glm::u32    addUfo          ();
-    glm::u32    addBullet       ();
+    static glm::u32 getTime();
     
 private:
-    constexpr static const glm::u32 MAX_ENTITIES = 100;
     
-    glm::u32                mask[MAX_ENTITIES];
-    
-    CPositionComponent      position[MAX_ENTITIES];
-    CVelocityComponent      velocity[MAX_ENTITIES];
-    CGeometryComponent      geometry[MAX_ENTITIES];
-
 };
 
 #endif

@@ -30,13 +30,8 @@ typedef enum
 } EComponentId;
 
 
-class CGeometryComponent
+struct SGeometryComponent
 {
-public:
-    CGeometryComponent()
-    : m_numIndices(0), m_numVertices(0) {};
-    ~CGeometryComponent() {};
-    
     constexpr static const glm::u32 MAX_VERTICES    = 100;
     constexpr static const glm::u32 MAX_INDICES     = 100;
     
@@ -48,27 +43,25 @@ public:
 
 };
 
-
-class CPositionComponent
+struct SPositionComponent
 {
-public:
-    CPositionComponent()  {};
-    ~CPositionComponent() {};
-    
     glm::vec4 m_position;
 };
 
-class CVelocityComponent
+struct SVelocityComponent
 {
-public:
-    CVelocityComponent()  {};
-    ~CVelocityComponent() {};
-    
     glm::vec4 m_direction;
     glm::f32  m_speed;
 };
 
 
-
+struct SComponentsContainer
+{
+    glm::u32 mask;
+    
+    SPositionComponent position;
+    SVelocityComponent velocity;
+    SGeometryComponent geometry;
+};
 
 #endif

@@ -16,55 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CPLAYGAMESTATE_H
-#define CPLAYGAMESTATE_H
+#ifndef ISYSTEMS_H
+#define ISYSTEMS_H
 
-//#include "IGameState.h"
-#include <iostream>
+#include <glm/common.hpp>
 
-#include "CSDLInputDevice.h"
-#include "IGameEngine.h"
-#include "CWorld.h"
+class CWorld;
 
-class CPlayGameState : public IGameState
+class ISystem
 {
+    friend class CWorld;
+    
 public:
+    ISystem() {};
+    virtual ~ISystem() {};
     
-    void init();
-    void pause();
-    void resume();
-    void shutdown();
+    virtual void init(CWorld* world) = 0;
     
-    void display();
-    void update(const glm::u32& delta);
+    virtual void shutdown() = 0;
     
-    void nextLevel();
+    virtual void update() = 0;
     
-    static CPlayGameState& instance()
-    {
-        return m_playGameState;
-    }
+    virtual void receive(const glm::i32& msg) = 0;
     
-private:
-    CPlayGameState(){}
-    
-    // Constants
-    constexpr static const glm::f32 m_deltaTime = 10.f;
-    constexpr static const glm::u32 MAX_ASTEROIDS = 100;
-    constexpr static const glm::u32 MAX_BULLETS = 100;
-    
-    glm::u32    m_level;
-    glm::u32    m_lastTime;
-    
-    // Player infos
-    glm::u32    m_lives;
-    glm::u32    m_score;
-    
-    // Game world
-    CWorld  m_world;
-
-    //
-    static CPlayGameState m_playGameState;
 };
 
 #endif
