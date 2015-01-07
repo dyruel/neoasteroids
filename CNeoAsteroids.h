@@ -24,7 +24,6 @@
 #include <glm/common.hpp>
 
 #include "IGameEngine.h"
-#include "COGLVideoDevice.h"
 #include "CMemory.h"
 #include "CUtils.h"
 

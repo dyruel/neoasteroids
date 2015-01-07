@@ -24,6 +24,7 @@
 #include "CFileLogger.h"
 #include "Components.h"
 #include "ISystem.h"
+#include "CMemory.h"
 
 class CWorld
 {
@@ -31,16 +32,28 @@ public:
     CWorld();
     virtual ~CWorld();
     
+    void init(const glm::u32& numEntities);
+    
+    void shutdown();
+    
     // Systems management
-    void addSystem(std::unique_ptr<ISystem>& system);
+    template <class T>
+    void addSystem()
+    {
+        assert(system != nullptr);
+        
+        std::unique_ptr<ISystem> system(new T());
+        
+        system->init(this);
+        
+        m_systems.push_back(std::move(system));
+    }
     
     void broadcast(const glm::i32& msg);
     
-    void update();
+    void update(const glm::u32& delta);
     
-    // Entities management
-    constexpr static const glm::u32 MAX_ENTITIES = 100;
-    
+    // Entities management    
     glm::u32    addEntity       ();
     
     void        removeEntity    (const glm::u32& id);
@@ -49,14 +62,16 @@ public:
     {
         return m_entities;
     }
-    
+
+    /*
     glm::u32    addAsteroid     ();
     glm::u32    addSpaceship    ();
     glm::u32    addUfo          ();
     glm::u32    addBullet       ();
-    
+    */
 private:
-    SComponentsContainer                    m_entities[MAX_ENTITIES];
+    glm::u32                                m_numEntities;
+    SComponentsContainer*                   m_entities;
     std::vector<std::unique_ptr<ISystem>>   m_systems;
 };
 

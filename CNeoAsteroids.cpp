@@ -23,17 +23,6 @@
 bool CNeoAsteroids::init(int& argc, char** argv)
 {
     
-//    srand(time(0));
-    
-    m_videoDevice = new COGLVideoDevice();
-    
-    if( !m_videoDevice )
-    {
-        return false;
-    }
-    
-    m_videoDevice->init();
-    
     m_lastTime = CUtils::getTime();
 
     return true;
@@ -41,14 +30,7 @@ bool CNeoAsteroids::init(int& argc, char** argv)
 
 bool CNeoAsteroids::shutdown()
 {
-    
-    if( m_videoDevice )
-    {
-        m_videoDevice->shutdown();
-        delete m_videoDevice;
-    }
-    
-    
+        
     return true;
 }
 

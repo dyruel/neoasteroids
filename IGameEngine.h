@@ -22,7 +22,6 @@
 #include <glm/common.hpp>
 #include <vector>
 
-#include "IVideoDevice.h"
 #include "IGameState.h"
 
 
@@ -31,7 +30,7 @@ class IGameEngine
 public:
     
     IGameEngine()
-    : m_running(true), m_videoDevice(nullptr) {}
+    : m_running(true) {}
     virtual ~IGameEngine(){}
     
     // Main game engine methods
@@ -60,13 +59,11 @@ public:
     
     // Getters
     
-    IVideoDevice* getVideoDevice();
+//    IVideoDevice* getVideoDevice();
     
 protected:
     bool m_running;
-    
-    IVideoDevice* m_videoDevice;
-    
+        
     std::vector<IGameState*> m_gameStates;
 };
 

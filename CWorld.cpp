@@ -19,11 +19,9 @@
 #include "CWorld.h"
 
 CWorld::CWorld()
+: m_entities(nullptr), m_numEntities(0)
 {
-    for (glm::u32 id = 0; id < MAX_ENTITIES; ++id)
-    {
-        m_entities[id].mask = COMPONENT_NONE;
-    }
+
 }
 
 CWorld::~CWorld()
@@ -31,14 +29,22 @@ CWorld::~CWorld()
     
 }
 
-void CWorld::addSystem(std::unique_ptr<ISystem>& system)
+void CWorld::init(const glm::u32& numEntities)
 {
-    assert(system != nullptr);
+    m_numEntities = numEntities;
+    m_entities = (SComponentsContainer*) CMemory::allocate(numEntities * sizeof(SComponentsContainer), "World");
     
-    system->init(this);
-    
-    m_systems.push_back(std::move(system));
+    for (glm::u32 id = 0; id < m_numEntities; ++id)
+    {
+        m_entities[id].mask = COMPONENT_NONE;
+    }
 }
+
+void CWorld::shutdown()
+{
+    CMemory::free(m_entities);
+}
+
 
 void CWorld::broadcast(const glm::i32& msg)
 {
@@ -48,17 +54,19 @@ void CWorld::broadcast(const glm::i32& msg)
     }
 }
 
-void CWorld::update()
+void CWorld::update(const glm::u32& delta)
 {
     for(auto & system : m_systems)
     {
-        system->update();
+        system->update(delta);
     }
 }
 
 glm::u32 CWorld::addEntity()
 {
-    for (glm::u32 id = 0; id < MAX_ENTITIES; ++id)
+    assert(m_entities != nullptr);
+    
+    for (glm::u32 id = 0; id < m_numEntities; ++id)
     {
         if(m_entities[id].mask == COMPONENT_NONE)
         {
@@ -68,22 +76,22 @@ glm::u32 CWorld::addEntity()
     
     CFileLogger::log( "No more entities left.\n");
     
-    return MAX_ENTITIES;
+    return m_numEntities;
 }
 
 void CWorld::removeEntity(const glm::u32& id)
 {
-    assert(id < MAX_ENTITIES);
+    assert(id < m_numEntities && m_entities != nullptr);
     m_entities[id].mask = COMPONENT_NONE;
 }
 
-
+/*
 glm::u32 CWorld::addAsteroid()
 {
     glm::u32 id = addEntity();
     
-    if (id == MAX_ENTITIES) {
-        return MAX_ENTITIES;
+    if (id == m_numEntities) {
+        return m_numEntities;
     }
     
     m_entities[id].mask = COMPONENT_POSITION | COMPONENT_VELOCITY | COMPONENT_GEOMETRY;
@@ -107,19 +115,19 @@ glm::u32 CWorld::addAsteroid()
 
 glm::u32 CWorld::addSpaceship()
 {
-    return MAX_ENTITIES;
+    return m_numEntities;
 }
 
 glm::u32 CWorld::addUfo()
 {
-    return MAX_ENTITIES;
+    return m_numEntities;
 }
 
 glm::u32 CWorld::addBullet()
 {
-    return MAX_ENTITIES;
+    return m_numEntities;
 }
-
+*/
 
 
 

@@ -52,6 +52,16 @@ void* CMemory::allocate(const glm::u64& size, char const * label)
     return block->ptr;
 }
 
+/*
+template <class T>
+T* CMemory::allocateObject(char const * label)
+{
+    void* ptr = CMemory::allocate(sizeof(T), label);
+    
+    return new (ptr) T();
+}
+*/
+
 void CMemory::free(void* ptr)
 {
     SMemoryBlock *block = nullptr;

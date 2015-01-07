@@ -16,11 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CSDLInputDevice.h"
+#include "CInputSystem.h"
 
-CSDLInputDevice CSDLInputDevice::m_inputDevice;
+bool CInputSystem::init(CWorld* world)
+{
+    return true;
+}
 
-void CSDLInputDevice::_update()
+bool CInputSystem::shutdown()
+{
+    return true;
+}
+
+
+void CInputSystem::receive(const glm::i32& msg)
+{
+    
+}
+
+void CInputSystem::update(const glm::u32& delta)
 {
     SDL_Event event;
     bool is_pressed = false;
@@ -39,7 +53,7 @@ void CSDLInputDevice::_update()
     {
         return;
     }
-    
+    /*
     switch( event.key.keysym.sym )
     {
         case SDLK_LEFT:     m_keys[KEY_LEFT]    = is_pressed; break;
@@ -50,5 +64,5 @@ void CSDLInputDevice::_update()
             
         default:
             break;
-    }
+    }*/
 }

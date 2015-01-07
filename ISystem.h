@@ -31,11 +31,11 @@ public:
     ISystem() {};
     virtual ~ISystem() {};
     
-    virtual void init(CWorld* world) = 0;
+    virtual bool init(CWorld* world) = 0;
     
-    virtual void shutdown() = 0;
+    virtual bool shutdown() = 0;
     
-    virtual void update() = 0;
+    virtual void update(const glm::u32& delta) = 0;
     
     virtual void receive(const glm::i32& msg) = 0;
     

@@ -39,7 +39,7 @@ struct SGeometryComponent
     glm::vec4   m_vertices[MAX_VERTICES];
     
     glm::u32    m_numIndices;
-    glm::f32    m_indices[MAX_INDICES];
+    glm::u32    m_indices[MAX_INDICES];
 
 };
 

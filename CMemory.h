@@ -31,6 +31,9 @@ class CMemory
 public:
     
     static void* allocate(const glm::u64& size, char const * label);
+
+//    template <class T>
+//    static T* allocateObject(char const * label);
     
     static void free(void* ptr);
     

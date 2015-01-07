@@ -19,12 +19,6 @@ bool IGameEngine::running()
     return m_running;
 }
 
-
-IVideoDevice* IGameEngine::getVideoDevice()
-{
-    return m_videoDevice;
-}
-
 void IGameEngine::changeState(IGameState* state)
 {
     if ( !m_gameStates.empty() )

@@ -22,9 +22,12 @@
 //#include "IGameState.h"
 #include <iostream>
 
-#include "CSDLInputDevice.h"
+
 #include "IGameEngine.h"
 #include "CWorld.h"
+
+#include "CGraphicsSystem.h"
+#include "CInputSystem.h"
 
 class CPlayGameState : public IGameState
 {

@@ -27,6 +27,11 @@ void CPlayGameState::init()
     m_level = 1;
     m_lives = 3;
     m_score = 0;
+    
+    m_world.init(20);
+    
+    m_world.addSystem<CGraphicsSystem>();
+    m_world.addSystem<CInputSystem>();
 /*
     m_numAsteroids = 4;
     for (i = 0; i < m_numAsteroids && i < MAX_ASTEROIDS; ++i) {
@@ -68,15 +73,17 @@ void CPlayGameState::update(const glm::u32& delta)
         m_bullets[i].update(delta);
     }
  */
+    m_world.update(delta);
+    
     m_gameEngine->quit();
 }
 
 void CPlayGameState::display()
 {
 //    glm::u32 i;
-    IVideoDevice* videoDevice = m_gameEngine->getVideoDevice();
+//    IVideoDevice* videoDevice = m_gameEngine->getVideoDevice();
     
-    videoDevice->beginFrame();
+//    videoDevice->beginFrame();
 /*
     m_spaceship.display();
     
@@ -84,7 +91,7 @@ void CPlayGameState::display()
         m_asteroids[i].display();
     }
 */
-    videoDevice->endFrame();
+//    videoDevice->endFrame();
     
 //    SDL_Delay(2000);
 }
