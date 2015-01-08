@@ -24,12 +24,15 @@
 namespace PE
 {
     
-    const glm::u32   MAX_GAME_STATES = 3;
+    constexpr const glm::u32   MAX_GAME_STATES = 3;
     
-    const glm::u32   DELTA_TIME      = 10; // in ms
+    constexpr const glm::u32   DELTA_TIME      = 10; // in ms
 
+    constexpr const glm::u32   MAX_ENTITIES    = 20;
 
+    constexpr const glm::u32   MAX_VERTICES    = 10;
     
+    constexpr const glm::u32   MAX_INDICES     = 10;
 }
 
 

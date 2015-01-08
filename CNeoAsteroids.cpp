@@ -22,8 +22,6 @@
 
 bool CNeoAsteroids::init(int& argc, char** argv)
 {
-    
-    m_lastTime = CUtils::getTime();
 
     return true;
 }
@@ -34,28 +32,31 @@ bool CNeoAsteroids::shutdown()
     return true;
 }
 
-void CNeoAsteroids::update()
+void CNeoAsteroids::run()
 {
-    glm::u32 presentTime = CUtils::getTime();
+    glm::u32 lastTime = CUtils::getTime();
     
-    while (m_lastTime + PE::DELTA_TIME <= presentTime) {
+    while (m_running) {
+        
+        glm::u32 presentTime = CUtils::getTime();
+        
+        while (lastTime + PE::DELTA_TIME <= presentTime) {
+            
+            if(hasStates())
+            {
+                m_states[m_currentState]->update(PE::DELTA_TIME);
+            }
+            
+            lastTime += PE::DELTA_TIME;
+        }
         
         if(hasStates())
         {
-            m_states[m_currentState]->update(PE::DELTA_TIME);
+            currentState()->display();
         }
         
-        m_lastTime += PE::DELTA_TIME;
     }
-    
-}
 
-void CNeoAsteroids::display()
-{
-    if(hasStates())
-    {
-        currentState()->display();
-    }
 }
 
 void CNeoAsteroids::quit()

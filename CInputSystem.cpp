@@ -18,7 +18,7 @@
 
 #include "CInputSystem.h"
 
-bool CInputSystem::init(CWorld* world)
+bool CInputSystem::init(SEntityComponents* entities)
 {
     return true;
 }

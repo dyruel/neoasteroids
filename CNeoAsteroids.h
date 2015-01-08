@@ -38,7 +38,7 @@ class CNeoAsteroids
 public:
     
     CNeoAsteroids()
-    : m_running(true), m_lastTime(0), m_currentState(-1) {}
+    : m_running(true), m_currentState(-1) {}
     virtual ~CNeoAsteroids(){}
     
     // Main game engine methods
@@ -51,9 +51,7 @@ public:
     
     bool running();
     
-    void update();
-    
-    void display();
+    void run();
     
     // Game states management
     
@@ -74,7 +72,6 @@ private:
     glm::i32    m_currentState;
     IGameState* m_states[PE::MAX_GAME_STATES];
 
-    glm::u32    m_lastTime;
     glm::u8     m_running;
 };
 

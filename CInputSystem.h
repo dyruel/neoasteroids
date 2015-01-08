@@ -22,7 +22,6 @@
 #include <SDL2/SDL.h>
 
 #include "ISystem.h"
-#include "CWorld.h"
 
 class CInputSystem : public ISystem
 {
@@ -30,7 +29,7 @@ class CInputSystem : public ISystem
 public:
     
     // ISystem specific methods
-    bool        init(CWorld* world);
+    bool        init(SEntityComponents* entities);
     
     bool        shutdown();
     

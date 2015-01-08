@@ -28,11 +28,7 @@ int main(int argc, char** argv)
     
     neoAsteroids.changeState( &CIntroGameState::instance() );
     
-    while ( neoAsteroids.running() )
-    {
-        neoAsteroids.update();
-        neoAsteroids.display();
-    }
+    neoAsteroids.run();
     
     return neoAsteroids.shutdown();
 }

@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef COMPONENTS_H
-#define COMPONENTS_H
+#ifndef SENTITYCOMPONENTS_H
+#define SENTITYCOMPONENTS_H
 
-#include <glm/common.hpp>
+#include "Common.h"
 
 typedef enum
 {
@@ -32,14 +32,11 @@ typedef enum
 
 struct SGeometryComponent
 {
-    constexpr static const glm::u32 MAX_VERTICES    = 10;
-    constexpr static const glm::u32 MAX_INDICES     = 10;
-    
     glm::u32    m_numVertices;
-    glm::vec4   m_vertices[MAX_VERTICES];
+    glm::vec4   m_vertices[PE::MAX_VERTICES];
     
     glm::u32    m_numIndices;
-    glm::u32    m_indices[MAX_INDICES];
+    glm::u32    m_indices[PE::MAX_INDICES];
 
 };
 
@@ -55,7 +52,7 @@ struct SVelocityComponent
 };
 
 
-struct SComponentsContainer
+struct SEntityComponents
 {
     glm::u32 mask;
     
@@ -63,5 +60,6 @@ struct SComponentsContainer
     SVelocityComponent velocity;
     SGeometryComponent geometry;
 };
+
 
 #endif

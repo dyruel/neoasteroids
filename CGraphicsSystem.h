@@ -19,9 +19,6 @@
 #ifndef CGRAPHICSSYSTEM_H
 #define CGRAPHICSSYSTEM_H
 
-#include "ISystem.h"
-#include "CWorld.h"
-
 #ifdef WIN32
 #include <GL/glew.h>
 #elif __APPLE__
@@ -36,13 +33,16 @@
 #include <SDL2_ttf/SDL_ttf.h>
 #include <iostream>
 
+#include "ISystem.h"
+#include "CFileLogger.h"
+
 class CGraphicsSystem : public ISystem
 {
 
 public:
     
     // ISystem specific methods
-    bool        init(CWorld* world);
+    bool        init(SEntityComponents* entities);
     
     bool        shutdown();
     
@@ -63,7 +63,7 @@ public:
     void        useProgram      (const glm::u32& programId) const;
     
 private:
-    CWorld* m_world;
+    SEntityComponents* m_entities;
     
     // OpenGL
     GLuint  m_basicProgram;

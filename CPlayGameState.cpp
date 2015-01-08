@@ -30,11 +30,16 @@ void CPlayGameState::init(CNeoAsteroids* neoAsteroids)
     m_lives = 3;
     m_score = 0;
     
+    m_graphicsSystem.init(m_entities);
+    m_inputSystem.init(m_entities);
+/*
     m_world.init(20);
     
+ 
     m_world.addSystem<CGraphicsSystem>();
     m_world.addSystem<CInputSystem>();
-/*
+*/
+ /*
     m_numAsteroids = 4;
     for (i = 0; i < m_numAsteroids && i < MAX_ASTEROIDS; ++i) {
         m_asteroids[i].init();
@@ -56,7 +61,8 @@ void CPlayGameState::resume()
 
 void CPlayGameState::shutdown()
 {
-    m_world.shutdown();
+    m_graphicsSystem.shutdown();
+    m_inputSystem.shutdown();
 }
 
 void CPlayGameState::update(const glm::u32& delta)
@@ -75,7 +81,8 @@ void CPlayGameState::update(const glm::u32& delta)
         m_bullets[i].update(delta);
     }
  */
-    m_world.update(delta);
+    m_graphicsSystem.update(delta);
+    m_inputSystem.update(delta);
     
     m_neoAsteroids->quit();
 }
@@ -98,23 +105,55 @@ void CPlayGameState::display()
 //    SDL_Delay(2000);
 }
 
+
+void CPlayGameState::broadcast(const glm::i32& msg)
+{
+    m_graphicsSystem.receive(msg);
+    m_inputSystem.receive(msg);
+}
+
+
+glm::u32 CPlayGameState::addEntity()
+{
+    assert(m_entities != nullptr);
+    
+    for (glm::u32 id = 0; id < m_numEntities; ++id)
+    {
+        if(m_entities[id].mask == COMPONENT_NONE)
+        {
+            return id;
+        }
+    }
+    
+    CFileLogger::log( "No more entities left.\n");
+    
+    return m_numEntities;
+}
+
+void CPlayGameState::removeEntity(const glm::u32& id)
+{
+    assert(id < m_numEntities && m_entities != nullptr);
+    m_entities[id].mask = COMPONENT_NONE;
+}
+
+
 glm::u32 CPlayGameState::addAsteroid()
 {
     return 0;
 }
 
 
-glm::u32 addSpaceship()
+glm::u32 CPlayGameState::addSpaceship()
 {
      return 0;
 }
 
-glm::u32 addUfo()
+glm::u32 CPlayGameState::addUfo()
 {
      return 0;
 }
 
-glm::u32 addBullet()
+glm::u32 CPlayGameState::addBullet()
 {
      return 0;
 }

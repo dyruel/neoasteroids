@@ -19,10 +19,10 @@
 #include "CGraphicsSystem.h"
 
 
-bool CGraphicsSystem::init(CWorld* world)
+bool CGraphicsSystem::init(SEntityComponents* entities)
 {
-    assert(world);
-    m_world = world;
+    assert(entities);
+    m_entities = entities;
     
     if( SDL_Init(SDL_INIT_VIDEO) < 0 )
     {
@@ -188,7 +188,7 @@ void CGraphicsSystem::useProgram(const glm::u32& programId) const
 
 void CGraphicsSystem::update(const glm::u32& delta)
 {
-    SComponentsContainer* entities = m_world->getComponentsContainers();
+//    SComponentsContainer* entities = m_world->getComponentsContainers();
     
 //    glEnableClientState(GL_VERTEX_ARRAY);
 

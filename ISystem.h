@@ -19,19 +19,16 @@
 #ifndef ISYSTEMS_H
 #define ISYSTEMS_H
 
-#include <glm/common.hpp>
-
-class CWorld;
+#include "SEntityComponents.h"
 
 class ISystem
 {
-    friend class CWorld;
     
 public:
     ISystem() {};
     virtual ~ISystem() {};
     
-    virtual bool init(CWorld* world) = 0;
+    virtual bool init(SEntityComponents*) = 0;
     
     virtual bool shutdown() = 0;
     

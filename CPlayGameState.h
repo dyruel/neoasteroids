@@ -23,10 +23,9 @@
 
 #include "CNeoAsteroids.h"
 
-#include "CWorld.h"
-
 #include "CGraphicsSystem.h"
 #include "CInputSystem.h"
+
 
 class CPlayGameState : public IGameState
 {
@@ -40,13 +39,6 @@ public:
     void display();
     void update(const glm::u32& delta);
     
-    void nextLevel();
-    
-    glm::u32 addAsteroid     ();
-    glm::u32 addSpaceship    ();
-    glm::u32 addUfo          ();
-    glm::u32 addBullet       ();
-    
     static CPlayGameState& instance()
     {
         return m_playGameState;
@@ -54,6 +46,7 @@ public:
     
 private:
     CPlayGameState() : m_neoAsteroids(nullptr) {}
+
     
     CNeoAsteroids* m_neoAsteroids;
         
@@ -64,11 +57,33 @@ private:
     glm::u32    m_lives;
     glm::u32    m_score;
     
-    // Game world
-    CWorld  m_world;
-
+    // Game entities
+    glm::u32                m_numEntities;
+    SEntityComponents       m_entities[PE::MAX_ENTITIES];
+    
+    // Game systems
+    CGraphicsSystem         m_graphicsSystem;
+    CInputSystem            m_inputSystem;
+    
     //
-    static CPlayGameState m_playGameState;
+    static CPlayGameState   m_playGameState;
+    
+    // Private methods
+    void        nextLevel();
+    
+    void        broadcast(const glm::i32& msg);
+    
+    glm::u32    addEntity       ();
+    
+    void        removeEntity    (const glm::u32& id);
+    
+    glm::u32    addAsteroid     ();
+    
+    glm::u32    addSpaceship    ();
+    
+    glm::u32    addUfo          ();
+    
+    glm::u32    addBullet       ();
 };
 
 #endif
