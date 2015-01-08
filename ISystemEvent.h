@@ -16,30 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef CSYSTEMEVENT_H
+#define CSYSTEMEVENT_H
 
-#include <glm/common.hpp>
-
-namespace PE
+class ISystemEvent
 {
+public:
     
-    constexpr const glm::u32   MAX_GAME_STATES = 3;
+    ISystemEvent(){};
+    virtual ~ISystemEvent(){};
     
-    constexpr const glm::u32   DELTA_TIME      = 10; // in ms
-
-    constexpr const glm::u32   MAX_ENTITIES    = 20;
-
-    constexpr const glm::u32   MAX_VERTICES    = 10;
+    void setReceivers(const glm::u32& receiverIds)
+    {
+        m_receiverIds = receiverIds;
+    }
     
-    constexpr const glm::u32   MAX_INDICES     = 10;
-}
-
-typedef enum
-{
-    NULL_SYSTEM         = 0,
-    GRAPHICS_SYSTEM     = 1 << 0,
-    INPUT_SYSTEM        = 1 << 1,
-} SystemId;
+protected:
+    
+    glm::u32 m_receiverIds;
+    
+};
 
 #endif

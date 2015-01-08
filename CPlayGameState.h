@@ -58,7 +58,7 @@ private:
     glm::u32    m_score;
     
     // Game entities
-    glm::u32                m_numEntities;
+//    glm::u32                m_numEntities;
     SEntityComponents       m_entities[PE::MAX_ENTITIES];
     
     // Game systems

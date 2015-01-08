@@ -67,21 +67,7 @@ void CPlayGameState::shutdown()
 
 void CPlayGameState::update(const glm::u32& delta)
 {
-//    glm::u32 i;
-/*
-    m_spaceship.update(delta);
-    
-    m_ufo.update(delta);
-    
-    for (i = 0; i < m_numAsteroids && i < MAX_ASTEROIDS; ++i) {
-        m_asteroids[i].update(delta);
-    }
-    
-    for (i = 0; i < m_numBullets && i < MAX_BULLETS; ++i) {
-        m_bullets[i].update(delta);
-    }
- */
-    m_graphicsSystem.update(delta);
+
     m_inputSystem.update(delta);
     
     m_neoAsteroids->quit();
@@ -89,18 +75,8 @@ void CPlayGameState::update(const glm::u32& delta)
 
 void CPlayGameState::display()
 {
-//    glm::u32 i;
-//    IVideoDevice* videoDevice = m_gameEngine->getVideoDevice();
-    
-//    videoDevice->beginFrame();
-/*
-    m_spaceship.display();
-    
-    for (i = 0; i < m_numAsteroids && i < MAX_ASTEROIDS; ++i) {
-        m_asteroids[i].display();
-    }
-*/
-//    videoDevice->endFrame();
+    m_graphicsSystem.update(0);
+
     
 //    SDL_Delay(2000);
 }
@@ -117,9 +93,9 @@ glm::u32 CPlayGameState::addEntity()
 {
     assert(m_entities != nullptr);
     
-    for (glm::u32 id = 0; id < m_numEntities; ++id)
+    for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
     {
-        if(m_entities[id].mask == COMPONENT_NONE)
+        if(m_entities[id].mask == NULL_SYSTEM)
         {
             return id;
         }
@@ -127,19 +103,41 @@ glm::u32 CPlayGameState::addEntity()
     
     CFileLogger::log( "No more entities left.\n");
     
-    return m_numEntities;
+    return PE::MAX_ENTITIES;
 }
 
 void CPlayGameState::removeEntity(const glm::u32& id)
 {
-    assert(id < m_numEntities && m_entities != nullptr);
-    m_entities[id].mask = COMPONENT_NONE;
+    assert(id < PE::MAX_ENTITIES && m_entities != nullptr);
+    m_entities[id].mask = NULL_SYSTEM;
 }
 
 
 glm::u32 CPlayGameState::addAsteroid()
 {
-    return 0;
+    glm::u32 id = addEntity();
+    
+    if (id == PE::MAX_ENTITIES) {
+        return PE::MAX_ENTITIES;
+    }
+    
+    m_entities[id].mask = GRAPHICS_SYSTEM;
+    
+    m_entities[id].velocity.m_speed = .5f;
+    
+    m_entities[id].geometry.m_numVertices = 4;
+    m_entities[id].geometry.m_vertices[0].x = 0.f; m_entities[id].geometry.m_vertices[0].y = 0.f;
+    m_entities[id].geometry.m_vertices[1].x = 0.f; m_entities[id].geometry.m_vertices[1].y = 1.f;
+    m_entities[id].geometry.m_vertices[2].x = 1.f; m_entities[id].geometry.m_vertices[2].y = 1.f;
+    m_entities[id].geometry.m_vertices[3].x = 1.f; m_entities[id].geometry.m_vertices[3].y = 0.f;
+    
+    m_entities[id].geometry.m_numIndices = 4;
+    m_entities[id].geometry.m_indices[0] = 0;
+    m_entities[id].geometry.m_indices[1] = 1;
+    m_entities[id].geometry.m_indices[2] = 2;
+    m_entities[id].geometry.m_indices[3] = 3;
+    
+    return id;
 }
 
 

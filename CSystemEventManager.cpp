@@ -16,30 +16,4 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef COMMON_H
-#define COMMON_H
-
-#include <glm/common.hpp>
-
-namespace PE
-{
-    
-    constexpr const glm::u32   MAX_GAME_STATES = 3;
-    
-    constexpr const glm::u32   DELTA_TIME      = 10; // in ms
-
-    constexpr const glm::u32   MAX_ENTITIES    = 20;
-
-    constexpr const glm::u32   MAX_VERTICES    = 10;
-    
-    constexpr const glm::u32   MAX_INDICES     = 10;
-}
-
-typedef enum
-{
-    NULL_SYSTEM         = 0,
-    GRAPHICS_SYSTEM     = 1 << 0,
-    INPUT_SYSTEM        = 1 << 1,
-} SystemId;
-
-#endif
+#include "CSystemEventManager.h"

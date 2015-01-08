@@ -192,15 +192,15 @@ void CGraphicsSystem::update(const glm::u32& delta)
     
 //    glEnableClientState(GL_VERTEX_ARRAY);
 
-    /*
-    for (glm::u32 id = 0; id < CWorld::MAX_ENTITIES; ++id)
+    
+    for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
     {
-        if (entities[id].mask & (COMPONENT_GEOMETRY | COMPONENT_POSITION))
+        if (m_entities[id].mask & GRAPHICS_SYSTEM)
         {
                 
         }
     }
-     */
+    
     
 }
 

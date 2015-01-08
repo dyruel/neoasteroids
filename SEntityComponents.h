@@ -21,15 +21,6 @@
 
 #include "Common.h"
 
-typedef enum
-{
-    COMPONENT_NONE      = 0,
-    COMPONENT_POSITION   = 1 << 0,
-    COMPONENT_VELOCITY   = 1 << 1,
-    COMPONENT_GEOMETRY  = 1 << 2,
-} EComponentId;
-
-
 struct SGeometryComponent
 {
     glm::u32    m_numVertices;
