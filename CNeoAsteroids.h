@@ -21,31 +21,61 @@
 
 #include <iostream>
 #include <vector>
-#include <glm/common.hpp>
 
-#include "IGameEngine.h"
+#include "Common.h"
 #include "CMemory.h"
 #include "CUtils.h"
+#include "IGameState.h"
 
-class CNeoAsteroids : public IGameEngine
+#include "CIntroGameState.h"
+#include "CMenuGameState.h"
+#include "CPlayGameState.h"
+
+
+
+class CNeoAsteroids
 {
- 
 public:
+    
     CNeoAsteroids()
-    : m_lastTime(0) {}
-    ~CNeoAsteroids() {}
-
+    : m_running(true), m_lastTime(0), m_currentState(-1) {}
+    virtual ~CNeoAsteroids(){}
+    
+    // Main game engine methods
+    
     bool init(int& argc, char** argv);
+    
     bool shutdown();
     
+    void quit();
+    
+    bool running();
+    
     void update();
+    
     void display();
     
-private:
-
-    constexpr static const glm::f32 m_deltaTime = 10.f;
-    glm::u32    m_lastTime;
+    // Game states management
     
+    void changeState(IGameState* state);
+    
+    void pushState(IGameState* state);
+    
+    void popState();
+    
+    IGameState* currentState();
+    
+    bool hasStates();
+    
+    void removeAllStates();
+    
+private:
+    
+    glm::i32    m_currentState;
+    IGameState* m_states[PE::MAX_GAME_STATES];
+
+    glm::u32    m_lastTime;
+    glm::u8     m_running;
 };
 
 #endif

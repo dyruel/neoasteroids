@@ -58,6 +58,12 @@ public:
     
     void        removeEntity    (const glm::u32& id);
     
+    
+    const glm::u32& getNumEntities()
+    {
+        return m_numEntities;
+    }
+    
     SComponentsContainer*   getComponentsContainers()
     {
         return m_entities;
@@ -72,7 +78,7 @@ public:
 private:
     glm::u32                                m_numEntities;
     SComponentsContainer*                   m_entities;
-    std::vector<std::unique_ptr<ISystem>>   m_systems;
+    std::vector<std::unique_ptr<ISystem>>   m_systems; // TODO: Priority queue?
 };
 
 #endif

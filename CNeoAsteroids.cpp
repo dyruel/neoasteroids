@@ -30,7 +30,7 @@ bool CNeoAsteroids::init(int& argc, char** argv)
 
 bool CNeoAsteroids::shutdown()
 {
-        
+    removeAllStates();
     return true;
 }
 
@@ -38,14 +38,14 @@ void CNeoAsteroids::update()
 {
     glm::u32 presentTime = CUtils::getTime();
     
-    while (m_lastTime + m_deltaTime <= presentTime) {
+    while (m_lastTime + PE::DELTA_TIME <= presentTime) {
         
         if(hasStates())
         {
-            currentState()->update(m_deltaTime);
+            m_states[m_currentState]->update(PE::DELTA_TIME);
         }
         
-        m_lastTime += m_deltaTime;
+        m_lastTime += PE::DELTA_TIME;
     }
     
 }
@@ -55,5 +55,76 @@ void CNeoAsteroids::display()
     if(hasStates())
     {
         currentState()->display();
+    }
+}
+
+void CNeoAsteroids::quit()
+{
+    m_running = false;
+}
+
+bool CNeoAsteroids::running()
+{
+    return m_running;
+}
+
+void CNeoAsteroids::changeState(IGameState* state)
+{
+    if ( hasStates() )
+    {
+        m_states[m_currentState]->shutdown();
+    }
+    else
+    {
+        ++m_currentState;
+    }
+    
+    m_states[m_currentState] = state;
+    state->init(this);
+}
+
+void CNeoAsteroids::pushState(IGameState* state)
+{
+    assert( (m_currentState + 1 < PE::MAX_GAME_STATES) && (state != nullptr) );
+    
+    if ( hasStates() )
+    {
+        m_states[m_currentState]->pause();
+    }
+    
+    ++m_currentState;
+    m_states[m_currentState] = state;
+    state->init(this);
+}
+
+void CNeoAsteroids::popState()
+{
+    if ( hasStates() )
+    {
+        m_states[m_currentState]->shutdown();
+        --m_currentState;
+    }
+    
+    if ( hasStates() )
+    {
+        m_states[m_currentState]->resume();
+    }
+}
+
+IGameState* CNeoAsteroids::currentState()
+{
+    return m_states[m_currentState];
+}
+
+bool CNeoAsteroids::hasStates()
+{
+    return m_currentState >= 0;
+}
+
+void CNeoAsteroids::removeAllStates()
+{
+    while ( m_currentState >= 0 ) {
+        m_states[m_currentState]->shutdown();
+        --m_currentState;
     }
 }

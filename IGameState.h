@@ -19,26 +19,23 @@
 #ifndef IGAMESTATE_H
 #define IGAMESTATE_H
 
-class IGameEngine;
+class CNeoAsteroids;
 
 class IGameState
 {
-    friend class IGameEngine;
     
 public:
-    IGameState() : m_gameEngine(nullptr) {}
-    ~IGameState() {}
+    IGameState() {};
+    virtual ~IGameState() {};
     
-    virtual void init()     = 0;
+    virtual void init(CNeoAsteroids*) = 0;
     virtual void pause()    = 0;
     virtual void resume()   = 0;
     virtual void shutdown() = 0;
     
     virtual void display() = 0;
     virtual void update(const glm::u32& delta) = 0;
-    
-protected:
-    IGameEngine* m_gameEngine;
+
 };
 
 #endif

@@ -19,16 +19,15 @@
 #ifndef CMENUSTATE_H
 #define CMENUSTATE_H
 
-//#include "IGameState.h"
+
 #include <iostream>
 
-#include "IGameEngine.h"
-#include "CPlayGameState.h"
+#include "CNeoAsteroids.h"
 
 class CMenuGameState : public IGameState
 {
 public:
-    void init();
+    void init(CNeoAsteroids*);
     void pause();
     void resume();
     void shutdown();
@@ -42,7 +41,9 @@ public:
     }
 
 private:
-    CMenuGameState(){}
+    CMenuGameState() : m_neoAsteroids(nullptr) {}
+    
+    CNeoAsteroids* m_neoAsteroids;
     
     static CMenuGameState m_menuGameState;
 };

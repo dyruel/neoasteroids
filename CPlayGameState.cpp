@@ -20,9 +20,11 @@
 
 CPlayGameState CPlayGameState::m_playGameState;
 
-void CPlayGameState::init()
+void CPlayGameState::init(CNeoAsteroids* neoAsteroids)
 {
 //    glm::u32 i;
+    
+    m_neoAsteroids = neoAsteroids;
     
     m_level = 1;
     m_lives = 3;
@@ -54,7 +56,7 @@ void CPlayGameState::resume()
 
 void CPlayGameState::shutdown()
 {
-    
+    m_world.shutdown();
 }
 
 void CPlayGameState::update(const glm::u32& delta)
@@ -75,7 +77,7 @@ void CPlayGameState::update(const glm::u32& delta)
  */
     m_world.update(delta);
     
-    m_gameEngine->quit();
+    m_neoAsteroids->quit();
 }
 
 void CPlayGameState::display()
@@ -94,6 +96,27 @@ void CPlayGameState::display()
 //    videoDevice->endFrame();
     
 //    SDL_Delay(2000);
+}
+
+glm::u32 CPlayGameState::addAsteroid()
+{
+    return 0;
+}
+
+
+glm::u32 addSpaceship()
+{
+     return 0;
+}
+
+glm::u32 addUfo()
+{
+     return 0;
+}
+
+glm::u32 addBullet()
+{
+     return 0;
 }
 
 void CPlayGameState::nextLevel()

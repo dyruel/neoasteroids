@@ -19,16 +19,14 @@
 #ifndef CINTROGAMESTATE_H
 #define CINTROGAMESTATE_H
 
-//#include "IGameState.h"
 #include <iostream>
 
-#include "IGameEngine.h"
-#include "CMenuGameState.h"
+#include "CNeoAsteroids.h"
 
 class CIntroGameState : public IGameState
 {
 public:
-    void init();
+    void init(CNeoAsteroids*);
     void pause();
     void resume();
     void shutdown();
@@ -42,7 +40,9 @@ public:
     }
     
 private:
-    CIntroGameState(){}
+    CIntroGameState() : m_neoAsteroids(nullptr) {};
+    
+    CNeoAsteroids* m_neoAsteroids;
     
     static CIntroGameState m_introGameState;
 };

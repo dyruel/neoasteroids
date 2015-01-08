@@ -16,55 +16,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef IGAMEENGINE_H
-#define IGAMEENGINE_H
+#ifndef COMMON_H
+#define COMMON_H
 
 #include <glm/common.hpp>
-#include <vector>
 
-#include "IGameState.h"
-
-
-class IGameEngine
+namespace PE
 {
-public:
     
-    IGameEngine()
-    : m_running(true) {}
-    virtual ~IGameEngine(){}
+    const glm::u32   MAX_GAME_STATES = 3;
     
-    // Main game engine methods
+    const glm::u32   DELTA_TIME      = 10; // in ms
+
+
     
-    virtual bool init(int& argc, char** argv) = 0;
-    
-    virtual bool shutdown() = 0;
-    
-    virtual void quit();
-    
-    virtual bool running();
-    
-    // Game states management
-    
-    void changeState(IGameState* state);
-    
-    void pushState(IGameState* state);
-    
-    void popState();
-    
-    IGameState* currentState();
-    
-    bool hasStates();
-    
-    void removeAllStates();
-    
-    // Getters
-    
-//    IVideoDevice* getVideoDevice();
-    
-protected:
-    bool m_running;
-        
-    std::vector<IGameState*> m_gameStates;
-};
+}
+
 
 #endif

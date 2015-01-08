@@ -19,11 +19,10 @@
 #ifndef CPLAYGAMESTATE_H
 #define CPLAYGAMESTATE_H
 
-//#include "IGameState.h"
 #include <iostream>
 
+#include "CNeoAsteroids.h"
 
-#include "IGameEngine.h"
 #include "CWorld.h"
 
 #include "CGraphicsSystem.h"
@@ -33,7 +32,7 @@ class CPlayGameState : public IGameState
 {
 public:
     
-    void init();
+    void init(CNeoAsteroids*);
     void pause();
     void resume();
     void shutdown();
@@ -43,19 +42,21 @@ public:
     
     void nextLevel();
     
+    glm::u32 addAsteroid     ();
+    glm::u32 addSpaceship    ();
+    glm::u32 addUfo          ();
+    glm::u32 addBullet       ();
+    
     static CPlayGameState& instance()
     {
         return m_playGameState;
     }
     
 private:
-    CPlayGameState(){}
+    CPlayGameState() : m_neoAsteroids(nullptr) {}
     
-    // Constants
-    constexpr static const glm::f32 m_deltaTime = 10.f;
-    constexpr static const glm::u32 MAX_ASTEROIDS = 100;
-    constexpr static const glm::u32 MAX_BULLETS = 100;
-    
+    CNeoAsteroids* m_neoAsteroids;
+        
     glm::u32    m_level;
     glm::u32    m_lastTime;
     

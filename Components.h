@@ -32,8 +32,8 @@ typedef enum
 
 struct SGeometryComponent
 {
-    constexpr static const glm::u32 MAX_VERTICES    = 100;
-    constexpr static const glm::u32 MAX_INDICES     = 100;
+    constexpr static const glm::u32 MAX_VERTICES    = 10;
+    constexpr static const glm::u32 MAX_INDICES     = 10;
     
     glm::u32    m_numVertices;
     glm::vec4   m_vertices[MAX_VERTICES];
