@@ -26,7 +26,9 @@ namespace PE
     
     constexpr const glm::u32   MAX_GAME_STATES = 3;
     
-    constexpr const glm::u32   MAX_SYSTEMS     = 4;
+    constexpr const glm::u32   MAX_SYSTEMS     = 3;
+    
+    constexpr const glm::u32   MAX_LISTENERS   = 4;
     
     constexpr const glm::u32   DELTA_TIME      = 10; // in ms
 
@@ -41,6 +43,7 @@ namespace PE
         NULL_SYSTEM         = 0,
         GRAPHICS_SYSTEM     = 1 << 0,
         INPUT_SYSTEM        = 1 << 1,
+        ALL_SYSTEM          = ~0
     } SystemId;
     
     

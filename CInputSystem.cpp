@@ -54,6 +54,7 @@ void CInputSystem::run()
             case SDLK_DOWN:     break;
             case SDLK_SPACE:    break;
             case SDLK_ESCAPE:
+                msg.setReceivers(PE::ALL_SYSTEM);
                 msg.setMessageIds(PE::QUIT_MESSAGE);
                 m_messageHandler->post(msg);
             break;

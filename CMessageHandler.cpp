@@ -21,15 +21,15 @@
 
 void CMessageHandler::attachListener(IListener* listener)
 {
-    assert(m_numSystems < PE::MAX_SYSTEMS);
-    m_systems[m_numSystems] = listener;
-    ++m_numSystems;
+    assert(m_numListeners < PE::MAX_LISTENERS);
+    m_listeners[m_numListeners] = listener;
+    ++m_numListeners;
 }
 
 void CMessageHandler::post(const CMessage& msg) const
 {
-    for (glm::u32 i = 0; i < m_numSystems; ++i)
+    for (glm::u32 i = 0; i < m_numListeners; ++i)
     {
-        m_systems[i]->receive(msg);
+        m_listeners[i]->receive(msg);
     }
 }

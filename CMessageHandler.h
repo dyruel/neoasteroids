@@ -28,7 +28,7 @@
 class CMessageHandler
 {
 public:
-    CMessageHandler() : m_numSystems(0) {};
+    CMessageHandler() : m_numListeners(0) {};
     ~CMessageHandler() {};
     
     void attachListener(IListener* listener);
@@ -37,8 +37,8 @@ public:
     
 private:
     
-    glm::u32     m_numSystems;
-    IListener*   m_systems[PE::MAX_SYSTEMS];
+    glm::u32     m_numListeners;
+    IListener*   m_listeners[PE::MAX_LISTENERS];
 };
 
 #endif
