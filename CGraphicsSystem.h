@@ -42,14 +42,15 @@ class CGraphicsSystem : public ISystem
 public:
     
     // ISystem specific methods
-    bool        init(SEntityComponents* entities);
+    bool    init();
     
-    bool        shutdown();
+    bool    shutdown();
     
-    void        update(const glm::u32& delta);
+    void    run();
     
-    void        receive(const glm::i32& msg);
+    void    receive(const CMessage& msg);
     
+
     // Rendering methods
     
     void        beginFrame  () const;
@@ -63,10 +64,11 @@ public:
     void        useProgram      (const glm::u32& programId) const;
     
 private:
-    SEntityComponents* m_entities;
+    SEntity* m_entities;
     
     // OpenGL
     GLuint  m_basicProgram;
+    GLuint  m_vbos[2*PE::MAX_ENTITIES];
     
     // SDL
     SDL_Window*  m_window;

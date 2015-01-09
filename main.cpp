@@ -18,17 +18,18 @@
 
 #include "CNeoAsteroids.h"
 
-#include "CIntroGameState.h"
-
 int main(int argc, char** argv)
 {
     CNeoAsteroids neoAsteroids;
     
-    neoAsteroids.init(argc, argv);
-    
-    neoAsteroids.changeState( &CIntroGameState::instance() );
+    if( !neoAsteroids.init(argc, argv) )
+    {
+        return -1;
+    }
     
     neoAsteroids.run();
     
-    return neoAsteroids.shutdown();
+    neoAsteroids.shutdown();
+    
+    return 0;
 }

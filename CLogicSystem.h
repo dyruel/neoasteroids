@@ -16,21 +16,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CSYSTEMEVENTMANAGER_H
-#define CSYSTEMEVENTMANAGER_H
+#ifndef CLOGICSYSTEM_H
+#define CLOGICSYSTEM_H
 
-#include "Common.h"
+#include "ISystem.h"
+
+#include "CIntroGameState.h"
 
 
-    
-class CSystemEventManager
+class CLogicSystem : public ISystem
 {
+    
 public:
-    CSystemEventManager() {};
-    ~CSystemEventManager() {};
+    CLogicSystem() : m_currentState(-1) {};
+    ~CLogicSystem() {};
+    
+    // ISystem specific methods
+    bool    init();
+    
+    bool    shutdown();
+    
+    void    run();
+    
+    void    receive(const CMessage& msg);
     
     
+    // Game states management
     
+    void changeState(IGameState* state);
+    
+    void pushState(IGameState* state);
+    
+    void popState();
+    
+    IGameState* currentState();
+    
+    bool hasStates();
+    
+    void removeAllStates();
+    
+private:
+    
+    glm::i32    m_currentState;
+    IGameState* m_states[PE::MAX_GAME_STATES];
 };
-
 #endif

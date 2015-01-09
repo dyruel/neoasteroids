@@ -21,18 +21,16 @@
 
 #include <iostream>
 
-#include "CNeoAsteroids.h"
+#include "CMenuGameState.h"
 
 class CIntroGameState : public IGameState
 {
 public:
-    void init(CNeoAsteroids*);
+    void init();
     void pause();
     void resume();
     void shutdown();
-    
-    void display();
-    void update(const glm::u32& delta);
+    void update();
     
     static CIntroGameState& instance()
     {
@@ -40,9 +38,7 @@ public:
     }
     
 private:
-    CIntroGameState() : m_neoAsteroids(nullptr) {};
-    
-    CNeoAsteroids* m_neoAsteroids;
+    CIntroGameState() {};
     
     static CIntroGameState m_introGameState;
 };

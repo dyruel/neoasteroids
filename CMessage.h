@@ -16,40 +16,45 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CNEOASTEROIDS_H
-#define CNEOASTEROIDS_H
+#ifndef CMESSAGE_H
+#define CMESSAGE_H
 
-#include "CMessageHandler.h"
 
-#include "CLogicSystem.h"
-#include "CGraphicsSystem.h"
-#include "CInputSystem.h"
-
-class CNeoAsteroids : public IListener
+class CMessage
 {
 public:
     
-    CNeoAsteroids()
-    : m_running(1) {}
-    virtual ~CNeoAsteroids(){}
-        
-    bool init(int& argc, char** argv);
+    CMessage(){};
+    virtual ~CMessage(){};
     
-    void shutdown();
-
-    void run();
+    void setSender(const PE::SystemId& systemId)
+    {
+        m_senderId = systemId;
+    }
     
-    void receive(const CMessage& msg);
+    void setReceivers(const PE::SystemId& receiverIds)
+    {
+        m_receiverIds = receiverIds;
+    }
     
-private:
+    void  setMessageIds(const PE::MessageId& messageIds)
+    {
+        m_messageIds = messageIds;
+    }
     
-    CMessageHandler     m_messageHandler;
+    const PE::MessageId&  getMessageIds() const
+    {
+        return m_messageIds;
+    }
     
-    CLogicSystem        m_logicSystem;
-    CGraphicsSystem     m_graphicsSystem;
-    CInputSystem        m_inputSystem;
+protected:
     
-    glm::u8     m_running;
+    PE::SystemId    m_senderId;
+    
+    PE::SystemId    m_receiverIds;
+    
+    PE::MessageId   m_messageIds;
+    
 };
 
 #endif

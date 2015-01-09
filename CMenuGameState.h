@@ -19,32 +19,27 @@
 #ifndef CMENUSTATE_H
 #define CMENUSTATE_H
 
-
 #include <iostream>
 
-#include "CNeoAsteroids.h"
+#include "IGameState.h"
 
 class CMenuGameState : public IGameState
 {
 public:
-    void init(CNeoAsteroids*);
+    void init();
     void pause();
     void resume();
     void shutdown();
-    
-    void display();
-    void update(const glm::u32& delta);
-    
+    void update();
+
     static CMenuGameState& instance()
     {
         return m_menuGameState;
     }
 
 private:
-    CMenuGameState() : m_neoAsteroids(nullptr) {}
-    
-    CNeoAsteroids* m_neoAsteroids;
-    
+    CMenuGameState() {}
+
     static CMenuGameState m_menuGameState;
 };
 

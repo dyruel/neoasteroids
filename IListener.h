@@ -16,25 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CSYSTEMEVENT_H
-#define CSYSTEMEVENT_H
+#ifndef ILISTENER_H
+#define ILISTENER_H
 
-class ISystemEvent
+#include "CMessage.h"
+
+class IListener
 {
+    
 public:
+    IListener(){};
+    virtual ~IListener(){};
     
-    ISystemEvent(){};
-    virtual ~ISystemEvent(){};
-    
-    void setReceivers(const glm::u32& receiverIds)
-    {
-        m_receiverIds = receiverIds;
-    }
-    
-protected:
-    
-    glm::u32 m_receiverIds;
-    
+    virtual void receive(const CMessage& msg) = 0;
 };
-
 #endif

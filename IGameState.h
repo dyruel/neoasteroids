@@ -19,7 +19,7 @@
 #ifndef IGAMESTATE_H
 #define IGAMESTATE_H
 
-class CNeoAsteroids;
+class CLogicSystem;
 
 class IGameState
 {
@@ -28,13 +28,22 @@ public:
     IGameState() {};
     virtual ~IGameState() {};
     
-    virtual void init(CNeoAsteroids*) = 0;
+    virtual void init()     = 0;
     virtual void pause()    = 0;
     virtual void resume()   = 0;
     virtual void shutdown() = 0;
+    virtual void update()   = 0;
     
-    virtual void display() = 0;
-    virtual void update(const glm::u32& delta) = 0;
+    void attachLogicSystem(CLogicSystem* logicSystem)
+    {
+        m_logicSystem = logicSystem;
+    }
+    
+protected:
+    CLogicSystem*  m_logicSystem;
+    
+//    virtual void display() = 0;
+//    virtual void update(const glm::u32& delta) = 0;
 
 };
 

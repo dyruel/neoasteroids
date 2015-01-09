@@ -20,9 +20,9 @@
 
 CIntroGameState CIntroGameState::m_introGameState;
 
-void CIntroGameState::init(CNeoAsteroids* neoAsteroids)
+void CIntroGameState::init()
 {
-    m_neoAsteroids = neoAsteroids;
+
 }
 
 void CIntroGameState::pause()
@@ -40,15 +40,8 @@ void CIntroGameState::shutdown()
     
 }
 
-
-void CIntroGameState::display()
-{
-    
-}
-
-
-void CIntroGameState::update(const glm::u32& delta)
+void CIntroGameState::update()
 {
     std::cout << "Intro" << std::endl;
-    m_neoAsteroids->changeState( &CMenuGameState::instance() );
+//    m_neoAsteroids->changeState( &CMenuGameState::instance() );
 }

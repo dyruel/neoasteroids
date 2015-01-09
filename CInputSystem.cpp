@@ -18,7 +18,7 @@
 
 #include "CInputSystem.h"
 
-bool CInputSystem::init(SEntityComponents* entities)
+bool CInputSystem::init()
 {
     return true;
 }
@@ -29,21 +29,38 @@ bool CInputSystem::shutdown()
 }
 
 
-void CInputSystem::receive(const glm::i32& msg)
+void CInputSystem::receive(const CMessage& msg)
 {
     
 }
 
-void CInputSystem::update(const glm::u32& delta)
+void CInputSystem::run()
 {
+    CMessage  msg;
     SDL_Event event;
     bool is_pressed = false;
+    
+    msg.setSender(PE::INPUT_SYSTEM);
     
     SDL_PollEvent( &event );
     
     if( event.type == SDL_KEYDOWN )
     {
-        is_pressed = true;
+        switch( event.key.keysym.sym )
+        {
+            case SDLK_LEFT:     break;
+            case SDLK_RIGHT:    break;
+            case SDLK_UP:       break;
+            case SDLK_DOWN:     break;
+            case SDLK_SPACE:    break;
+            case SDLK_ESCAPE:
+                msg.setMessageIds(PE::QUIT_MESSAGE);
+                m_messageHandler->post(msg);
+            break;
+                
+            default:
+                break;
+        }
     }
     else if ( event.type == SDL_KEYUP )
     {
@@ -53,16 +70,9 @@ void CInputSystem::update(const glm::u32& delta)
     {
         return;
     }
-    /*
-    switch( event.key.keysym.sym )
-    {
-        case SDLK_LEFT:     m_keys[KEY_LEFT]    = is_pressed; break;
-        case SDLK_RIGHT:    m_keys[KEY_RIGHT]   = is_pressed; break;
-        case SDLK_UP:       m_keys[KEY_UP]      = is_pressed; break;
-        case SDLK_DOWN:     m_keys[KEY_DOWN]    = is_pressed; break;
-        case SDLK_SPACE:    m_keys[KEY_SPACE]   = is_pressed; break;
-            
-        default:
-            break;
-    }*/
+    
+
+    
+    
 }
+

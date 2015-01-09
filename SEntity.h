@@ -16,4 +16,41 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CSystemEventManager.h"
+#ifndef SENTITY_H
+#define SENTITY_H
+
+#include "Common.h"
+
+struct SGeometryComponent
+{
+    glm::u32    m_numVertices;
+    glm::vec4   m_vertices[PE::MAX_VERTICES];
+    
+    glm::u32    m_numIndices;
+    glm::u32    m_indices[PE::MAX_INDICES];
+
+};
+
+struct SPositionComponent
+{
+    glm::vec4 m_position;
+};
+
+struct SVelocityComponent
+{
+    glm::vec4 m_direction;
+    glm::f32  m_speed;
+};
+
+
+struct SEntity
+{
+    glm::u32 mask;
+    
+    SPositionComponent position;
+    SVelocityComponent velocity;
+    SGeometryComponent geometry;
+};
+
+
+#endif

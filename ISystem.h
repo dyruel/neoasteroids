@@ -19,23 +19,39 @@
 #ifndef ISYSTEMS_H
 #define ISYSTEMS_H
 
-#include "SEntityComponents.h"
+#include "SEntity.h"
+#include "CMessageHandler.h"
 
-class ISystem
+class ISystem : public IListener
 {
     
 public:
-    ISystem() {};
+    ISystem() : m_messageHandler(nullptr), m_entities(nullptr) {};
     virtual ~ISystem() {};
     
-    virtual bool init(SEntityComponents*) = 0;
+    virtual bool init()     = 0;
     
     virtual bool shutdown() = 0;
     
-    virtual void update(const glm::u32& delta) = 0;
+    virtual void run()      = 0;
     
-    virtual void receive(const glm::i32& msg) = 0;
+    virtual void attachMessageHandler(CMessageHandler* messageHandler)
+    {
+        assert(messageHandler != nullptr);
+        
+        m_messageHandler = messageHandler;
+    }
     
+    virtual void attachEntities(SEntity* entities)
+    {
+        assert(entities != nullptr);
+        
+        m_entities = entities;
+    }
+    
+protected:
+    CMessageHandler*    m_messageHandler;
+    SEntity*            m_entities;
 };
 
 #endif

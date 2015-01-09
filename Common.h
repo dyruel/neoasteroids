@@ -26,6 +26,8 @@ namespace PE
     
     constexpr const glm::u32   MAX_GAME_STATES = 3;
     
+    constexpr const glm::u32   MAX_SYSTEMS     = 4;
+    
     constexpr const glm::u32   DELTA_TIME      = 10; // in ms
 
     constexpr const glm::u32   MAX_ENTITIES    = 20;
@@ -33,13 +35,21 @@ namespace PE
     constexpr const glm::u32   MAX_VERTICES    = 10;
     
     constexpr const glm::u32   MAX_INDICES     = 10;
+    
+    typedef enum
+    {
+        NULL_SYSTEM         = 0,
+        GRAPHICS_SYSTEM     = 1 << 0,
+        INPUT_SYSTEM        = 1 << 1,
+    } SystemId;
+    
+    
+    typedef enum
+    {
+        QUIT_MESSAGE         = 1,
+    } MessageId;
 }
 
-typedef enum
-{
-    NULL_SYSTEM         = 0,
-    GRAPHICS_SYSTEM     = 1 << 0,
-    INPUT_SYSTEM        = 1 << 1,
-} SystemId;
+
 
 #endif

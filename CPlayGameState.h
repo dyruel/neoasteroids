@@ -23,21 +23,21 @@
 
 #include "CNeoAsteroids.h"
 
-#include "CGraphicsSystem.h"
-#include "CInputSystem.h"
+//#include "CGraphicsSystem.h"
+//#include "CInputSystem.h"
+
+#include "CMessageHandler.h"
 
 
 class CPlayGameState : public IGameState
 {
 public:
     
-    void init(CNeoAsteroids*);
+    void init();
     void pause();
     void resume();
     void shutdown();
-    
-    void display();
-    void update(const glm::u32& delta);
+    void update();
     
     static CPlayGameState& instance()
     {
@@ -45,10 +45,8 @@ public:
     }
     
 private:
-    CPlayGameState() : m_neoAsteroids(nullptr) {}
+    CPlayGameState() {}
 
-    
-    CNeoAsteroids* m_neoAsteroids;
         
     glm::u32    m_level;
     glm::u32    m_lastTime;
@@ -59,11 +57,9 @@ private:
     
     // Game entities
 //    glm::u32                m_numEntities;
-    SEntityComponents       m_entities[PE::MAX_ENTITIES];
+//    SEntityComponents       m_entities[PE::MAX_ENTITIES];
     
-    // Game systems
-    CGraphicsSystem         m_graphicsSystem;
-    CInputSystem            m_inputSystem;
+
     
     //
     static CPlayGameState   m_playGameState;

@@ -20,9 +20,9 @@
 
 CMenuGameState CMenuGameState::m_menuGameState;
 
-void CMenuGameState::init(CNeoAsteroids* neoAsteroids)
+void CMenuGameState::init()
 {
-    m_neoAsteroids = neoAsteroids;
+
 }
 
 void CMenuGameState::pause()
@@ -40,14 +40,8 @@ void CMenuGameState::shutdown()
     
 }
 
-void CMenuGameState::display()
-{
-    
-}
-
-
-void CMenuGameState::update(const glm::u32& delta)
+void CMenuGameState::update()
 {
     std::cout << "Menu" << std::endl;
-    m_neoAsteroids->pushState( &CPlayGameState::instance() );
+//    m_neoAsteroids->pushState( &CPlayGameState::instance() );
 }

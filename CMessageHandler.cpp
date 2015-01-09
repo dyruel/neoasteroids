@@ -16,40 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CNEOASTEROIDS_H
-#define CNEOASTEROIDS_H
-
 #include "CMessageHandler.h"
 
-#include "CLogicSystem.h"
-#include "CGraphicsSystem.h"
-#include "CInputSystem.h"
 
-class CNeoAsteroids : public IListener
+void CMessageHandler::attachListener(IListener* listener)
 {
-public:
-    
-    CNeoAsteroids()
-    : m_running(1) {}
-    virtual ~CNeoAsteroids(){}
-        
-    bool init(int& argc, char** argv);
-    
-    void shutdown();
+    assert(m_numSystems < PE::MAX_SYSTEMS);
+    m_systems[m_numSystems] = listener;
+    ++m_numSystems;
+}
 
-    void run();
-    
-    void receive(const CMessage& msg);
-    
-private:
-    
-    CMessageHandler     m_messageHandler;
-    
-    CLogicSystem        m_logicSystem;
-    CGraphicsSystem     m_graphicsSystem;
-    CInputSystem        m_inputSystem;
-    
-    glm::u8     m_running;
-};
-
-#endif
+void CMessageHandler::post(const CMessage& msg) const
+{
+    for (glm::u32 i = 0; i < m_numSystems; ++i)
+    {
+        m_systems[i]->receive(msg);
+    }
+}

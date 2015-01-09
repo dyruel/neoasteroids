@@ -20,18 +20,14 @@
 
 CPlayGameState CPlayGameState::m_playGameState;
 
-void CPlayGameState::init(CNeoAsteroids* neoAsteroids)
+void CPlayGameState::init()
 {
 //    glm::u32 i;
-    
-    m_neoAsteroids = neoAsteroids;
     
     m_level = 1;
     m_lives = 3;
     m_score = 0;
     
-    m_graphicsSystem.init(m_entities);
-    m_inputSystem.init(m_entities);
 /*
     m_world.init(20);
     
@@ -61,36 +57,20 @@ void CPlayGameState::resume()
 
 void CPlayGameState::shutdown()
 {
-    m_graphicsSystem.shutdown();
-    m_inputSystem.shutdown();
+
 }
 
-void CPlayGameState::update(const glm::u32& delta)
+void CPlayGameState::update()
 {
 
-    m_inputSystem.update(delta);
-    
-    m_neoAsteroids->quit();
+
 }
 
-void CPlayGameState::display()
-{
-    m_graphicsSystem.update(0);
-
-    
-//    SDL_Delay(2000);
-}
-
-
-void CPlayGameState::broadcast(const glm::i32& msg)
-{
-    m_graphicsSystem.receive(msg);
-    m_inputSystem.receive(msg);
-}
 
 
 glm::u32 CPlayGameState::addEntity()
 {
+    /*
     assert(m_entities != nullptr);
     
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
@@ -102,19 +82,21 @@ glm::u32 CPlayGameState::addEntity()
     }
     
     CFileLogger::log( "No more entities left.\n");
-    
+    */
     return PE::MAX_ENTITIES;
 }
 
 void CPlayGameState::removeEntity(const glm::u32& id)
 {
+    /*
     assert(id < PE::MAX_ENTITIES && m_entities != nullptr);
-    m_entities[id].mask = NULL_SYSTEM;
+    m_entities[id].mask = NULL_SYSTEM;*/
 }
 
 
 glm::u32 CPlayGameState::addAsteroid()
 {
+    /*
     glm::u32 id = addEntity();
     
     if (id == PE::MAX_ENTITIES) {
@@ -136,8 +118,8 @@ glm::u32 CPlayGameState::addAsteroid()
     m_entities[id].geometry.m_indices[1] = 1;
     m_entities[id].geometry.m_indices[2] = 2;
     m_entities[id].geometry.m_indices[3] = 3;
-    
-    return id;
+    */
+    return 0;
 }
 
 

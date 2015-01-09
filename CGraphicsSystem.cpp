@@ -19,10 +19,8 @@
 #include "CGraphicsSystem.h"
 
 
-bool CGraphicsSystem::init(SEntityComponents* entities)
+bool CGraphicsSystem::init()
 {
-    assert(entities);
-    m_entities = entities;
     
     if( SDL_Init(SDL_INIT_VIDEO) < 0 )
     {
@@ -90,6 +88,7 @@ bool CGraphicsSystem::shutdown()
     
     return true;
 }
+
 
 void CGraphicsSystem::beginFrame() const
 {
@@ -186,7 +185,7 @@ void CGraphicsSystem::useProgram(const glm::u32& programId) const
     }
 }
 
-void CGraphicsSystem::update(const glm::u32& delta)
+void CGraphicsSystem::run()
 {
 //    SComponentsContainer* entities = m_world->getComponentsContainers();
     
@@ -195,7 +194,7 @@ void CGraphicsSystem::update(const glm::u32& delta)
     
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
     {
-        if (m_entities[id].mask & GRAPHICS_SYSTEM)
+//        if (m_entities[id].mask & GRAPHICS_SYSTEM)
         {
                 
         }
@@ -204,7 +203,7 @@ void CGraphicsSystem::update(const glm::u32& delta)
     
 }
 
-void CGraphicsSystem::receive(const glm::i32& msg)
+void CGraphicsSystem::receive(const CMessage& msg)
 {
     
 }

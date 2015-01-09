@@ -16,41 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef SENTITYCOMPONENTS_H
-#define SENTITYCOMPONENTS_H
+#ifndef CMESSAGEHANDLER_H
+#define CMESSAGEHANDLER_H
+
+#include <vector>
 
 #include "Common.h"
+#include "IListener.h"
 
-struct SGeometryComponent
-{
-    glm::u32    m_numVertices;
-    glm::vec4   m_vertices[PE::MAX_VERTICES];
     
-    glm::u32    m_numIndices;
-    glm::u32    m_indices[PE::MAX_INDICES];
-
-};
-
-struct SPositionComponent
+class CMessageHandler
 {
-    glm::vec4 m_position;
-};
-
-struct SVelocityComponent
-{
-    glm::vec4 m_direction;
-    glm::f32  m_speed;
-};
-
-
-struct SEntityComponents
-{
-    glm::u32 mask;
+public:
+    CMessageHandler() : m_numSystems(0) {};
+    ~CMessageHandler() {};
     
-    SPositionComponent position;
-    SVelocityComponent velocity;
-    SGeometryComponent geometry;
+    void attachListener(IListener* listener);
+    
+    void post(const CMessage& msg) const;
+    
+private:
+    
+    glm::u32     m_numSystems;
+    IListener*   m_systems[PE::MAX_SYSTEMS];
 };
-
 
 #endif
