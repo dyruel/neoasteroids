@@ -42,6 +42,16 @@ public:
         m_messageHandler = messageHandler;
     }
     
+    CMessageHandler* getMessageHandler()
+    {
+        return m_messageHandler;
+    }
+    
+    SEntity* getEntities()
+    {
+        return m_entities;
+    }
+    
     virtual void attachEntities(SEntity* entities)
     {
         assert(entities != nullptr);

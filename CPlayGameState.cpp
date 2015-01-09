@@ -28,6 +28,13 @@ void CPlayGameState::init()
     m_lives = 3;
     m_score = 0;
     
+    CMessage msg;
+    
+    msg.setReceivers(PE::ALL_LISTENER);
+    msg.setSender(PE::LOGIC_LISTENER);
+    msg.setData(&m_entities);
+    
+    m_logicSystem->getMessageHandler()->post(msg);
 /*
     m_world.init(20);
     

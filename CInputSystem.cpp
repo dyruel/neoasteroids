@@ -40,7 +40,7 @@ void CInputSystem::run()
     SDL_Event event;
     bool is_pressed = false;
     
-    msg.setSender(PE::INPUT_SYSTEM);
+    msg.setSender(PE::INPUT_LISTENER);
     
     SDL_PollEvent( &event );
     
@@ -54,7 +54,7 @@ void CInputSystem::run()
             case SDLK_DOWN:     break;
             case SDLK_SPACE:    break;
             case SDLK_ESCAPE:
-                msg.setReceivers(PE::ALL_SYSTEM);
+                msg.setReceivers(PE::ALL_LISTENER);
                 msg.setMessageIds(PE::QUIT_MESSAGE);
                 m_messageHandler->post(msg);
             break;

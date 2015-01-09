@@ -40,16 +40,18 @@ namespace PE
     
     typedef enum
     {
-        NULL_SYSTEM         = 0,
-        GRAPHICS_SYSTEM     = 1 << 0,
-        INPUT_SYSTEM        = 1 << 1,
-        ALL_SYSTEM          = ~0
-    } SystemId;
+        NULL_LISTENER         = 0,
+        GRAPHICS_LISTENER     = 1 << 0,
+        INPUT_LISTENER        = 1 << 1,
+        LOGIC_LISTENER        = 1 << 2,
+        ALL_LISTENER          = ~0
+    } ListenerId;
     
     
     typedef enum
     {
         QUIT_MESSAGE         = 1,
+        ENTITIES_MESSAGE     = 2
     } MessageId;
 }
 

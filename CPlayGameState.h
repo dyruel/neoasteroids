@@ -21,11 +21,13 @@
 
 #include <iostream>
 
-#include "CNeoAsteroids.h"
+//#include "CNeoAsteroids.h"
 
 //#include "CGraphicsSystem.h"
 //#include "CInputSystem.h"
 
+#include "CLogicSystem.h"
+#include "SEntity.h"
 #include "CMessageHandler.h"
 
 
@@ -56,6 +58,7 @@ private:
     glm::u32    m_score;
     
     // Game entities
+    SEntity     m_entities;
 //    glm::u32                m_numEntities;
 //    SEntityComponents       m_entities[PE::MAX_ENTITIES];
     

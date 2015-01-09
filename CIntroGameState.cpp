@@ -43,5 +43,5 @@ void CIntroGameState::shutdown()
 void CIntroGameState::update()
 {
     std::cout << "Intro" << std::endl;
-//    m_neoAsteroids->changeState( &CMenuGameState::instance() );
+    m_logicSystem->changeState( &CMenuGameState::instance() );
 }

@@ -190,11 +190,15 @@ void CGraphicsSystem::run()
 //    SComponentsContainer* entities = m_world->getComponentsContainers();
     
 //    glEnableClientState(GL_VERTEX_ARRAY);
+    if(m_entities == nullptr)
+    {
+        return;
+    }
 
     
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
     {
-//        if (m_entities[id].mask & GRAPHICS_SYSTEM)
+        if (m_entities[id].mask & PE::GRAPHICS_LISTENER)
         {
                 
         }
@@ -205,7 +209,12 @@ void CGraphicsSystem::run()
 
 void CGraphicsSystem::receive(const CMessage& msg)
 {
-    
+    if (msg.getReceivers() & PE::GRAPHICS_LISTENER)
+    {
+        if (msg.getMessageIds() & PE::ENTITIES_MESSAGE) {
+            m_entities = (SEntity*) msg.getData();
+        }
+    }
 }
 
 

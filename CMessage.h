@@ -24,22 +24,42 @@ class CMessage
 {
 public:
     
-    CMessage(){};
+    CMessage() : m_data(nullptr) {};
     virtual ~CMessage(){};
     
-    void setSender(const PE::SystemId& systemId)
+    void setSender(const PE::ListenerId& systemId)
     {
         m_senderId = systemId;
     }
     
-    void setReceivers(const PE::SystemId& receiverIds)
+    const PE::ListenerId& getSender() const
+    {
+        return m_senderId;
+    }
+    
+    void setReceivers(const PE::ListenerId& receiverIds)
     {
         m_receiverIds = receiverIds;
+    }
+    
+    const PE::ListenerId& getReceivers() const
+    {
+        return m_receiverIds;
     }
     
     void  setMessageIds(const PE::MessageId& messageIds)
     {
         m_messageIds = messageIds;
+    }
+    
+    void  setData(void* data)
+    {
+        m_data = data;
+    }
+    
+    const void* getData() const
+    {
+        return m_data;
     }
     
     const PE::MessageId&  getMessageIds() const
@@ -49,11 +69,13 @@ public:
     
 protected:
     
-    PE::SystemId    m_senderId;
+    PE::ListenerId    m_senderId;
     
-    PE::SystemId    m_receiverIds;
+    PE::ListenerId    m_receiverIds;
     
     PE::MessageId   m_messageIds;
+    
+    void*           m_data;
     
 };
 
