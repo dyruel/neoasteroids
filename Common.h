@@ -53,6 +53,15 @@ namespace PE
         QUIT_MESSAGE         = 1,
         ENTITIES_MESSAGE     = 2
     } MessageId;
+    
+    typedef enum
+    {
+        NULL_SYSTEM           = 0,
+        GRAPHICS_SYSTEM     = 1 << 0,
+        INPUT_SYSTEM        = 1 << 1,
+        LOGIC_SYSTEM        = 1 << 2,
+        ALL_SYSTEM          = ~0
+    } SystemId;
 }
 
 

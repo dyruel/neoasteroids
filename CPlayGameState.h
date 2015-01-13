@@ -21,14 +21,10 @@
 
 #include <iostream>
 
-//#include "CNeoAsteroids.h"
-
-//#include "CGraphicsSystem.h"
-//#include "CInputSystem.h"
-
 #include "CLogicSystem.h"
 #include "SEntity.h"
 #include "CMessageHandler.h"
+#include "CFileLogger.h"
 
 
 class CPlayGameState : public IGameState
@@ -58,23 +54,23 @@ private:
     glm::u32    m_score;
     
     // Game entities
-    SEntity     m_entities;
-//    glm::u32                m_numEntities;
-//    SEntityComponents       m_entities[PE::MAX_ENTITIES];
+    glm::u32    m_spaceshipId;
     
-
+    SEntity     m_entities[PE::MAX_ENTITIES];
     
     //
     static CPlayGameState   m_playGameState;
     
     // Private methods
-    void        nextLevel();
-    
-    void        broadcast(const glm::i32& msg);
+    void        prepareLevel(const glm::u32& level);
     
     glm::u32    addEntity       ();
     
     void        removeEntity    (const glm::u32& id);
+    
+    void        removeAllEntities();
+    
+    void        resetSpaceship  ();
     
     glm::u32    addAsteroid     ();
     
