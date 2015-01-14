@@ -57,18 +57,14 @@ private:
     // OpenGL variables
     GLuint  m_basicProgram;
     GLuint  m_vbos[PE::NUM_MESH];
+    GLuint  m_ibos[PE::NUM_MESH];
     GLint   m_modelMatrix;
     
     // SDL variables
     SDL_Window*  m_window;
     SDL_GLContext m_glcontext;
     
-    
-    // Rendering methods
-    
-    //    void        beginFrame  () const;
-    //    void        endFrame    () const;
-    
+        
     // Shaders methods
     
     glm::u32    createProgram   (const char *vertexShader, const char *fragmentShader);

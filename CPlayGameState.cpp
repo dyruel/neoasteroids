@@ -129,7 +129,8 @@ void CPlayGameState::addAsteroid()
     
     m_entities[id].systemIds = PE::GRAPHICS_SYSTEM;
     
-    m_entities[id].type = PE::ASTEROID;
+    m_entities[id].type = PE::ASTEROID_ENTITY;
+    m_entities[id].mesh = PE::ASTEROID1_MESH;
     
     m_entities[id].m_speed = .5f;
     
@@ -166,7 +167,8 @@ void CPlayGameState::addSpaceship()
     
     m_entities[id].systemIds = PE::GRAPHICS_SYSTEM;
     
-    m_entities[id].type = PE::STACESHIP;
+    m_entities[id].type = PE::SPACESHIP_ENTITY;
+    m_entities[id].mesh = PE::SPACESHIP_MESH;
     
     resetSpaceship();
     

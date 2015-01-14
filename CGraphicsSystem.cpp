@@ -88,15 +88,67 @@ bool CGraphicsSystem::init()
     m_modelMatrix = glGetUniformLocation(m_basicProgram, "Model" );
     
     
-    //
+    // Initialize VBOs
+    
+    glGenBuffers( PE::NUM_MESH, m_vbos );
+    glGenBuffers( PE::NUM_MESH, m_ibos );
+    
+
+    // Asteroids VBO/IBO
+    GLfloat asteroid1Vertices[] =
+    {
+        -0.5f, -0.5f,
+        0.5f, -0.5f,
+        0.5f,  0.5f,
+        -0.5f,  0.5f
+    };
+    GLuint asteroid1Indices[] = { 0, 1, 2, 3 };
+    
+    glBindBuffer( GL_ARRAY_BUFFER, m_vbos[PE::ASTEROID1_MESH]);
+    glBufferData( GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), asteroid1Vertices, GL_STATIC_DRAW );
+    
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_ibos[PE::ASTEROID1_MESH] );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), asteroid1Indices, GL_STATIC_DRAW );
     
     
+    // Spaceship VBO/IBO
+    GLfloat spaceshipVertices[] =
+    {
+        -0.5f, -0.5f,
+        0.5f, -0.5f,
+        0.0f,  0.5f,
+    };
+    GLuint spaceshipIndices[] = { 0, 1, 2 };
+    
+    glBindBuffer( GL_ARRAY_BUFFER, m_vbos[PE::SPACESHIP_MESH]);
+    glBufferData( GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), spaceshipVertices, GL_STATIC_DRAW );
+    
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_ibos[PE::SPACESHIP_MESH] );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), spaceshipIndices, GL_STATIC_DRAW );
+    
+    // UFO VBO/IBO
+    GLfloat ufoVertices[] =
+    {
+        -0.5f, -0.5f,
+        0.5f, -0.5f,
+        0.0f,  0.5f,
+    };
+    GLuint ufoIndices[] = { 0, 1, 2 };
+    
+    glBindBuffer( GL_ARRAY_BUFFER, m_vbos[PE::UFO_MESH]);
+    glBufferData( GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), ufoVertices, GL_STATIC_DRAW );
+    
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_ibos[PE::UFO_MESH] );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), ufoIndices, GL_STATIC_DRAW );
     
     return true;
 }
 
 bool CGraphicsSystem::shutdown()
 {
+    glDeleteBuffers(PE::NUM_MESH, m_vbos);
+    glDeleteBuffers(PE::NUM_MESH, m_vbos);
+    
     SDL_GL_DeleteContext( m_glcontext );
     SDL_DestroyWindow( m_window ); // m_screen is freed by SDL_DestroyWindow
     m_window = nullptr;
@@ -107,18 +159,6 @@ bool CGraphicsSystem::shutdown()
     return true;
 }
 
-/*
-void CGraphicsSystem::beginFrame() const
-{
-    glClear( GL_COLOR_BUFFER_BIT );
-}
-
-void CGraphicsSystem::endFrame() const
-{
-    glFlush();
-    SDL_GL_SwapWindow( m_window );
-}
-*/
 
 glm::u32 CGraphicsSystem::createProgram(const char *vertexShaderSource, const char *fragmentShaderSource)
 {
@@ -240,37 +280,3 @@ void CGraphicsSystem::receive(const CMessage& msg)
     }
 }
 
-/*
- gVertexPos2DLocation = glGetAttribLocation( gProgramID, "LVertexPos2D" );
- if( gVertexPos2DLocation == -1 )
- {
- printf( "LVertexPos2D is not a valid glsl program variable!\n" );
- success = false;
- }
- else
- {
- 
- glClearColor( 0.f, 0.f, 0.f, 1.f );
- 
- GLfloat vertexData[] =
- {
- -0.5f, -0.5f,
- 0.5f, -0.5f,
- 0.5f,  0.5f,
- -0.5f,  0.5f
- };
- 
- 
- GLuint indexData[] = { 0, 1, 2, 3 };
- 
- 
- glGenBuffers( 1, &gVBO );
- glBindBuffer( GL_ARRAY_BUFFER, gVBO );
- glBufferData( GL_ARRAY_BUFFER, 2 * 4 * sizeof(GLfloat), vertexData, GL_STATIC_DRAW );
- 
- 
- glGenBuffers( 1, &gIBO );
- glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, gIBO );
- glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), indexData, GL_STATIC_DRAW );
- }
- */

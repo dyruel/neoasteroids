@@ -49,7 +49,7 @@ namespace PE
     
     typedef enum
     {
-        NULL_SYSTEM           = 0,
+        NULL_SYSTEM         = 0,
         GRAPHICS_SYSTEM     = 1 << 0,
         INPUT_SYSTEM        = 1 << 1,
         LOGIC_SYSTEM        = 1 << 2,
@@ -58,29 +58,29 @@ namespace PE
     
     typedef enum
     {
-        QUIT_MESSAGE         = 1,
-        ENTITIES_MESSAGE     = 2
+        NULL_MESSAGE         = 0,
+        QUIT_MESSAGE         = 1 << 0,
+        ENTITIES_MESSAGE     = 1 << 1,
+        ALL_MESSAGE          = ~0
     } MessageId;
     
     
     typedef enum
     {
-        ASTEROID            = 0,
-        STACESHIP,
-        DOT,
-        UFO,
+        ASTEROID_ENTITY            = 0,
+        SPACESHIP_ENTITY,
+        DOT_ENTITY,
+        UFO_ENTITY,
         NUM_ENTITYTYPE
     } EntityType;
     
     typedef enum
     {
-        NULL_MESH            = 0,
-        STACESHIP_MESH,
-        DOT_MESH,
+        ASTEROID1_MESH      = 0,
+        SPACESHIP_MESH,
         UFO_MESH,
         NUM_MESH
-    } MeshId;
-    
+    } Mesh;
 }
 
 

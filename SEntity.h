@@ -28,6 +28,8 @@ struct SEntity
     
     PE::EntityType type;
     
+    PE::Mesh       mesh;
+    
     glm::vec4 position;
     glm::vec4 velocity;
     glm::f32  m_speed;
