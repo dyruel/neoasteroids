@@ -30,6 +30,9 @@ class CInputSystem : public ISystem
     
 public:
     
+    CInputSystem() : m_commandsStatus(0) {};
+    virtual ~CInputSystem() {};
+    
     // ISystem specific methods
     bool    init();
     
@@ -38,6 +41,9 @@ public:
     void    run();
     
     void    receive(const CMessage& msg);
-        
+    
+private:
+    
+    glm::u32   m_commandsStatus;
 };
 #endif

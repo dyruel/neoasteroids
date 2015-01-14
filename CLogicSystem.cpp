@@ -33,36 +33,17 @@ bool CLogicSystem::shutdown()
 
 void CLogicSystem::run()
 {
- //   glm::u32 lastTime = CUtils::getTime();
- /*
-    while (m_running) {
-        
-        glm::u32 presentTime = CUtils::getTime();
-        
-        while (lastTime + PE::DELTA_TIME <= presentTime) {
-            
-            if(hasStates())
-            {
-                m_states[m_currentState]->update(PE::DELTA_TIME);
-            }
-            
-            lastTime += PE::DELTA_TIME;
-        }
-        
-        if(hasStates())
-        {
-            currentState()->display();
-        }
-        
-    }
-*/
+
     
     m_states[m_currentState]->update();
 }
 
 void CLogicSystem::receive(const CMessage& msg)
 {
-    
+    if (msg.getReceivers() & PE::LOGIC_LISTENER)
+    {
+        m_states[m_currentState]->receive(msg);
+    }
 }
 
 

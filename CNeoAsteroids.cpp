@@ -50,11 +50,20 @@ void CNeoAsteroids::shutdown()
 
 void CNeoAsteroids::run()
 {
-    
+    glm::u32 lastTime = CUtils::getTime();
+
     while (m_running)
     {
-        m_inputSystem.run();
-        m_logicSystem.run();
+        glm::u32 presentTime = CUtils::getTime();
+        
+        while (lastTime + PE::DELTA_TIME <= presentTime)
+        {
+            m_inputSystem.run();
+            m_logicSystem.run();
+            
+            lastTime += PE::DELTA_TIME;
+        }
+
         m_graphicsSystem.run();
     }
 

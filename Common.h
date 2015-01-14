@@ -61,6 +61,7 @@ namespace PE
         NULL_MESSAGE         = 0,
         QUIT_MESSAGE         = 1 << 0,
         ENTITIES_MESSAGE     = 1 << 1,
+        COMMAND_MESSAGE      = 1 << 2,
         ALL_MESSAGE          = ~0
     } MessageId;
     
@@ -76,11 +77,25 @@ namespace PE
     
     typedef enum
     {
-        ASTEROID1_MESH      = 0,
+        NO_MESH             = -1,
+        ASTEROID1_MESH,
         SPACESHIP_MESH,
         UFO_MESH,
         NUM_MESH
     } Mesh;
+    
+    typedef enum
+    {
+        NULL_COMMAND    = 0,
+        UP_COMMAND      = 1 << 0,
+        DOWN_COMMAND    = 1 << 1,
+        LEFT_COMMAND    = 1 << 2,
+        RIGHT_COMMAND   = 1 << 3,
+        X_COMMAND       = 1 << 4,
+        O_COMMAND       = 1 << 5,
+        T_COMMAND       = 1 << 6,
+        S_COMMAND       = 1 << 7
+    } CommandId;
 }
 
 

@@ -32,6 +32,8 @@
 #include <SDL2/SDL.h>
 #include <SDL2_ttf/SDL_ttf.h>
 #include <iostream>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "ISystem.h"
 #include "CFileLogger.h"
@@ -58,6 +60,8 @@ private:
     GLuint  m_basicProgram;
     GLuint  m_vbos[PE::NUM_MESH];
     GLuint  m_ibos[PE::NUM_MESH];
+    GLuint  m_vaos[PE::NUM_MESH];
+    GLsizei m_numIndices[PE::NUM_MESH];
     GLint   m_modelMatrix;
     
     // SDL variables

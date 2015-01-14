@@ -21,7 +21,7 @@
 
 class CLogicSystem;
 
-class IGameState
+class IGameState : public IListener
 {
     
 public:

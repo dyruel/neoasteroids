@@ -33,6 +33,7 @@ public:
     void resume();
     void shutdown();
     void update();
+    void receive(const CMessage& msg);
 
     static CMenuGameState& instance()
     {

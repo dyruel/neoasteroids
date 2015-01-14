@@ -66,7 +66,10 @@ bool CGraphicsSystem::init()
     //std::cout << maj << " " << min << std::endl;
     
     glViewport(0, 0, 800, 600);
-    glClearColor( 0.5f, 0.5f, 0.5f, 1.f );
+    
+    glClearColor( 0.0f, 0.0f, 0.0f, 1.f );
+    
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     
     m_basicProgram = createProgram(
                                    "#version 150\n\
@@ -86,60 +89,91 @@ bool CGraphicsSystem::init()
     
     
     m_modelMatrix = glGetUniformLocation(m_basicProgram, "Model" );
+    GLint vertexPositionAttrib = glGetAttribLocation ( m_basicProgram, "position") ;
     
+    // Initialize VAOs/VBOs/IBOs
     
-    // Initialize VBOs
-    
+    glGenVertexArrays ( PE::NUM_MESH, m_vaos);
     glGenBuffers( PE::NUM_MESH, m_vbos );
     glGenBuffers( PE::NUM_MESH, m_ibos );
     
 
-    // Asteroids VBO/IBO
+    // Asteroids VBOs/IBOs
+    
     GLfloat asteroid1Vertices[] =
     {
-        -0.5f, -0.5f,
-        0.5f, -0.5f,
-        0.5f,  0.5f,
-        -0.5f,  0.5f
+        -0.1f, -0.1f, 0.0f,
+        0.1f, -0.1f, 0.0f,
+        0.1f,  0.1f, 0.0f,
+        -0.1f,  0.1f, 0.0f,
     };
     GLuint asteroid1Indices[] = { 0, 1, 2, 3 };
     
+    m_numIndices[PE::ASTEROID1_MESH] = 4;
+    
     glBindBuffer( GL_ARRAY_BUFFER, m_vbos[PE::ASTEROID1_MESH]);
-    glBufferData( GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), asteroid1Vertices, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, 12 * sizeof(GLfloat), asteroid1Vertices, GL_STATIC_DRAW );
     
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_ibos[PE::ASTEROID1_MESH] );
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), asteroid1Indices, GL_STATIC_DRAW );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, m_numIndices[PE::ASTEROID1_MESH] * sizeof(GLuint), asteroid1Indices, GL_STATIC_DRAW );
     
+    // VAO
+    glBindVertexArray (m_vaos[PE::ASTEROID1_MESH]);
+        glEnableVertexAttribArray (vertexPositionAttrib);
+        glBindBuffer(GL_ARRAY_BUFFER, m_vbos[PE::ASTEROID1_MESH]);
+        glVertexAttribPointer (vertexPositionAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibos[PE::ASTEROID1_MESH]);
+    glBindVertexArray (0);
     
-    // Spaceship VBO/IBO
+    // Spaceship VBOs/IBOs
     GLfloat spaceshipVertices[] =
     {
-        -0.5f, -0.5f,
-        0.5f, -0.5f,
-        0.0f,  0.5f,
+        -0.05f, -0.1f, 0.0f,
+        0.05f, -0.1f, 0.0f,
+        0.0f,  0.1f, 0.0f,
     };
     GLuint spaceshipIndices[] = { 0, 1, 2 };
     
+    m_numIndices[PE::SPACESHIP_MESH] = 3;
+    
     glBindBuffer( GL_ARRAY_BUFFER, m_vbos[PE::SPACESHIP_MESH]);
-    glBufferData( GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), spaceshipVertices, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), spaceshipVertices, GL_STATIC_DRAW );
     
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_ibos[PE::SPACESHIP_MESH] );
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), spaceshipIndices, GL_STATIC_DRAW );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, m_numIndices[PE::SPACESHIP_MESH] * sizeof(GLuint), spaceshipIndices, GL_STATIC_DRAW );
     
-    // UFO VBO/IBO
+    // VAO
+    glBindVertexArray (m_vaos[PE::SPACESHIP_MESH]);
+        glEnableVertexAttribArray (vertexPositionAttrib);
+        glBindBuffer(GL_ARRAY_BUFFER, m_vbos[PE::SPACESHIP_MESH]);
+        glVertexAttribPointer (vertexPositionAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibos[PE::SPACESHIP_MESH]);
+    glBindVertexArray (0);
+    
+    // UFO VBOs/IBOs
     GLfloat ufoVertices[] =
     {
-        -0.5f, -0.5f,
-        0.5f, -0.5f,
-        0.0f,  0.5f,
+        -0.1f, -0.1f, 0.0f,
+        0.1f, -0.1f, 0.0f,
+        0.0f,  0.1f, 0.0f,
     };
     GLuint ufoIndices[] = { 0, 1, 2 };
     
+    m_numIndices[PE::UFO_MESH] = 3;
+    
     glBindBuffer( GL_ARRAY_BUFFER, m_vbos[PE::UFO_MESH]);
-    glBufferData( GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), ufoVertices, GL_STATIC_DRAW );
+    glBufferData( GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), ufoVertices, GL_STATIC_DRAW );
     
     glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, m_ibos[PE::UFO_MESH] );
-    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(GLuint), ufoIndices, GL_STATIC_DRAW );
+    glBufferData( GL_ELEMENT_ARRAY_BUFFER, 3 * sizeof(GLuint), ufoIndices, GL_STATIC_DRAW );
+
+    // VAO
+    glBindVertexArray (m_vaos[PE::UFO_MESH]);
+        glEnableVertexAttribArray (vertexPositionAttrib);
+        glBindBuffer(GL_ARRAY_BUFFER, m_vbos[PE::UFO_MESH]);
+        glVertexAttribPointer (vertexPositionAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibos[PE::UFO_MESH]);
+    glBindVertexArray (0);
     
     return true;
 }
@@ -253,13 +287,28 @@ void CGraphicsSystem::run()
     }
     
     glClear( GL_COLOR_BUFFER_BIT );
-
     
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
     {
         if (m_entities[id].systemIds & PE::GRAPHICS_SYSTEM)
         {
-            //SEntity e = m_entities[id];
+            glm::mat4 rotationMatrix;
+            rotationMatrix = glm::rotate(rotationMatrix, m_entities[id].angle, glm::vec3(0.0f, 0.0f, 1.0f));
+            
+            glm::mat4 translationMatrix;
+            translationMatrix = glm::translate(translationMatrix, m_entities[id].position);
+            
+            glm::mat4 modelMatrix = translationMatrix * rotationMatrix;
+            
+            glUniformMatrix4fv(m_modelMatrix, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+            
+            if(m_entities[id].mesh >= 0)
+            {
+                glBindVertexArray (m_vaos[m_entities[id].mesh]);
+                glDrawElements (GL_LINE_LOOP, m_numIndices[m_entities[id].mesh], GL_UNSIGNED_INT, 0);
+                glBindVertexArray (0);
+            }
+
         }
         
     }

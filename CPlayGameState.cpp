@@ -64,9 +64,24 @@ void CPlayGameState::update()
     
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
     {
-        if (m_entities[id].systemIds & PE::GRAPHICS_SYSTEM)
+        if (m_entities[id].systemIds & PE::LOGIC_SYSTEM)
         {
-            //SEntity e = m_entities[id];
+            switch (m_entities[id].type) {
+                    
+                case PE::SPACESHIP_ENTITY:
+                    if (m_commandStatus & PE::RIGHT_COMMAND)
+                    {
+                        m_entities[id].angle -= .005f * PE::DELTA_TIME;
+                    }
+                    else if (m_commandStatus & PE::LEFT_COMMAND)
+                    {
+                        m_entities[id].angle += .005f * PE::DELTA_TIME;
+                    }
+                    break;
+                    
+                default:
+                    break;
+            }
             
         }
         
@@ -74,6 +89,17 @@ void CPlayGameState::update()
 
 }
 
+void CPlayGameState::receive(const CMessage& msg)
+{
+
+    if (msg.getMessageIds() & PE::COMMAND_MESSAGE)
+    {
+        m_commandStatus = *((glm::u32*) msg.getData());
+        
+//        std::cout << m_commandStatus << std::endl;
+    }
+
+}
 
 
 glm::u32 CPlayGameState::addEntity()
@@ -114,7 +140,8 @@ void CPlayGameState::resetSpaceship()
     m_entities[m_spaceshipId].position.y = .0f;
     m_entities[m_spaceshipId].position.z = .0f;
     
-    m_entities[m_spaceshipId].m_speed = .0f;
+    m_entities[m_spaceshipId].speed = .0f;
+    m_entities[m_spaceshipId].angle = .0f;
 }
 
 
@@ -127,30 +154,18 @@ void CPlayGameState::addAsteroid()
         return;
     }
     
-    m_entities[id].systemIds = PE::GRAPHICS_SYSTEM;
+    m_entities[id].systemIds = PE::GRAPHICS_SYSTEM | PE::LOGIC_SYSTEM;
     
     m_entities[id].type = PE::ASTEROID_ENTITY;
     m_entities[id].mesh = PE::ASTEROID1_MESH;
     
-    m_entities[id].m_speed = .5f;
+    m_entities[id].speed = .5f;
+    m_entities[id].angle = .0f;
     
     m_entities[id].position.x = .0f;
     m_entities[id].position.y = .0f;
     m_entities[id].position.z = .0f;
-    
-    /*
-    m_entities[id].geometry.m_numVertices = 4;
-    m_entities[id].geometry.m_vertices[0].x = 0.f; m_entities[id].geometry.m_vertices[0].y = 0.f;
-    m_entities[id].geometry.m_vertices[1].x = 0.f; m_entities[id].geometry.m_vertices[1].y = 1.f;
-    m_entities[id].geometry.m_vertices[2].x = 1.f; m_entities[id].geometry.m_vertices[2].y = 1.f;
-    m_entities[id].geometry.m_vertices[3].x = 1.f; m_entities[id].geometry.m_vertices[3].y = 0.f;
-    
-    m_entities[id].geometry.m_numIndices = 4;
-    m_entities[id].geometry.m_indices[0] = 0;
-    m_entities[id].geometry.m_indices[1] = 1;
-    m_entities[id].geometry.m_indices[2] = 2;
-    m_entities[id].geometry.m_indices[3] = 3;
-    */
+
 }
 
 
@@ -165,24 +180,13 @@ void CPlayGameState::addSpaceship()
     
     m_spaceshipId = id;
     
-    m_entities[id].systemIds = PE::GRAPHICS_SYSTEM;
+    m_entities[id].systemIds = PE::GRAPHICS_SYSTEM | PE::LOGIC_SYSTEM;
     
     m_entities[id].type = PE::SPACESHIP_ENTITY;
     m_entities[id].mesh = PE::SPACESHIP_MESH;
     
     resetSpaceship();
-    
-    /*
-    m_entities[id].geometry.m_numVertices = 3;
-    m_entities[id].geometry.m_vertices[0].x = 0.f; m_entities[id].geometry.m_vertices[0].y = 0.f;
-    m_entities[id].geometry.m_vertices[1].x = 1.f; m_entities[id].geometry.m_vertices[1].y = 0.f;
-    m_entities[id].geometry.m_vertices[2].x = .5f; m_entities[id].geometry.m_vertices[2].y = 1.f;
-    
-    m_entities[id].geometry.m_numIndices = 3;
-    m_entities[id].geometry.m_indices[0] = 0;
-    m_entities[id].geometry.m_indices[1] = 1;
-    m_entities[id].geometry.m_indices[2] = 2;
-    */
+
 }
 
 void CPlayGameState::addUfo()
@@ -212,20 +216,5 @@ void CPlayGameState::prepareLevel(const glm::u32& level)
     for (glm::u32 i = 0; i < numAsteroids; ++i) {
         addAsteroid();
     }
-    
-    /*
-     m_world.init(20);
-     
-     
-     m_world.addSystem<CGraphicsSystem>();
-     m_world.addSystem<CInputSystem>();
-     */
-    /*
-     m_numAsteroids = 4;
-     for (i = 0; i < m_numAsteroids && i < MAX_ASTEROIDS; ++i) {
-     m_asteroids[i].init();
-     }
-     
-     m_numBullets = 0;
-     */
+
 }

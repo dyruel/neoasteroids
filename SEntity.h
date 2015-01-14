@@ -30,9 +30,10 @@ struct SEntity
     
     PE::Mesh       mesh;
     
-    glm::vec4 position;
-    glm::vec4 velocity;
-    glm::f32  m_speed;
+    glm::vec3 position;
+    glm::vec3 velocity;
+    glm::f32  speed;
+    glm::f32  angle;
 };
 
 

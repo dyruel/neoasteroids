@@ -38,42 +38,69 @@ void CInputSystem::run()
 {
     CMessage  msg;
     SDL_Event event;
-    bool is_pressed = false;
+    
     
     msg.setSender(PE::INPUT_LISTENER);
     
     SDL_PollEvent( &event );
     
-    if( event.type == SDL_KEYDOWN )
-    {
-        switch( event.key.keysym.sym )
-        {
-            case SDLK_LEFT:     break;
-            case SDLK_RIGHT:    break;
-            case SDLK_UP:       break;
-            case SDLK_DOWN:     break;
-            case SDLK_SPACE:    break;
-            case SDLK_ESCAPE:
-                msg.setReceivers(PE::ALL_LISTENER);
-                msg.setMessageIds(PE::QUIT_MESSAGE);
-                m_messageHandler->post(msg);
-            break;
-                
-            default:
-                break;
-        }
-    }
-    else if ( event.type == SDL_KEYUP )
-    {
-        is_pressed = false;
-    }
-    else
+    if( event.type != SDL_KEYDOWN  && event.type != SDL_KEYUP)
     {
         return;
     }
     
-
+    bool is_pressed = event.type == SDL_KEYDOWN ? true : false;
     
+    // BEGIN : TO BE REMOVED
+    if (is_pressed && event.key.keysym.sym == SDLK_q)
+    {
+        msg.setReceivers(PE::ALL_LISTENER);
+        msg.setMessageIds(PE::QUIT_MESSAGE);
+        m_messageHandler->post(msg);
+        return;
+    }
+    // END
     
+    msg.setReceivers(PE::LOGIC_LISTENER);
+    
+    PE::CommandId commandId = PE::NULL_COMMAND;
+            
+    switch( event.key.keysym.sym )
+    {
+        case SDLK_LEFT:  commandId = PE::LEFT_COMMAND;   break;
+        case SDLK_RIGHT: commandId = PE::RIGHT_COMMAND;  break;
+        case SDLK_UP:    commandId = PE::UP_COMMAND;     break;
+        case SDLK_DOWN:  commandId = PE::DOWN_COMMAND;   break;
+        case SDLK_SPACE: commandId = PE::X_COMMAND;      break;
+            
+        default:
+            return;
+            break;
+    }
+    
+    if (is_pressed)
+    {
+        if ((m_commandsStatus | commandId) == m_commandsStatus)
+        {
+            return;
+        }
+        
+        m_commandsStatus |= commandId;
+    }
+    else
+    {
+        if ((m_commandsStatus & (~commandId)) == m_commandsStatus)
+        {
+            return;
+        }
+        
+        m_commandsStatus &= (~commandId);
+    }
+    
+    msg.setMessageIds(PE::COMMAND_MESSAGE);
+    
+    msg.setData(&m_commandsStatus);
+    
+    m_messageHandler->post(msg);
 }
 

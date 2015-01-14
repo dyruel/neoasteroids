@@ -45,3 +45,8 @@ void CIntroGameState::update()
     std::cout << "Intro" << std::endl;
     m_logicSystem->changeState( &CMenuGameState::instance() );
 }
+
+void CIntroGameState::receive(const CMessage& msg)
+{
+    
+}

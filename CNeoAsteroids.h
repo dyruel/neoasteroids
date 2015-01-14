@@ -24,6 +24,7 @@
 #include "CLogicSystem.h"
 #include "CGraphicsSystem.h"
 #include "CInputSystem.h"
+#include "CUtils.h"
 
 class CNeoAsteroids : public IListener
 {

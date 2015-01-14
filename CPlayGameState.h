@@ -36,6 +36,7 @@ public:
     void resume();
     void shutdown();
     void update();
+    void receive(const CMessage& msg);
     
     static CPlayGameState& instance()
     {
@@ -48,6 +49,7 @@ private:
         
     glm::u32    m_level;
     glm::u32    m_lastTime;
+    glm::u32    m_commandStatus;
     
     // Player infos
     glm::u32    m_lives;
