@@ -72,13 +72,13 @@ private:
     
     void        resetSpaceship  ();
     
-    glm::u32    addAsteroid     ();
+    void        addAsteroid     ();
     
-    glm::u32    addSpaceship    ();
+    void        addSpaceship    ();
     
-    glm::u32    addUfo          ();
+    void        addUfo          ();
     
-    glm::u32    addBullet       ();
+    void        addBullet       ();
 };
 
 #endif

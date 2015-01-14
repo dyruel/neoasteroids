@@ -44,6 +44,7 @@ public:
     
     CMessageHandler* getMessageHandler()
     {
+        assert(m_messageHandler != nullptr);
         return m_messageHandler;
     }
     

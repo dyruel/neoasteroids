@@ -21,8 +21,10 @@
 
 #include <iostream>
 
-#include "CMenuGameState.h"
 #include "CLogicSystem.h"
+
+#include "CMenuGameState.h"
+
 
 class CIntroGameState : public IGameState
 {

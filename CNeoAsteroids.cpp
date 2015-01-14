@@ -22,20 +22,22 @@
 
 bool CNeoAsteroids::init(int& argc, char** argv)
 {
-    m_inputSystem.init();
     m_inputSystem.attachMessageHandler(&m_messageHandler);
-    
-    m_logicSystem.init();
-    m_logicSystem.attachMessageHandler(&m_messageHandler);
-    
-    m_graphicsSystem.init();
+    m_inputSystem.init();
+
     m_graphicsSystem.attachMessageHandler(&m_messageHandler);
+    m_graphicsSystem.init();
     
-    m_messageHandler.attachListener(&m_inputSystem);
-    m_messageHandler.attachListener(&m_logicSystem);
-    m_messageHandler.attachListener(&m_graphicsSystem);
+
     m_messageHandler.attachListener(this);
+    m_messageHandler.attachListener(&m_inputSystem);
+    m_messageHandler.attachListener(&m_graphicsSystem);
     
+    m_logicSystem.attachMessageHandler(&m_messageHandler);
+    m_messageHandler.attachListener(&m_logicSystem);
+    m_logicSystem.init();
+
+
     return true;
 }
 

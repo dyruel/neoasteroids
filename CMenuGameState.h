@@ -21,7 +21,9 @@
 
 #include <iostream>
 
-#include "IGameState.h"
+#include "CLogicSystem.h"
+
+#include "CPlayGameState.h"
 
 class CMenuGameState : public IGameState
 {

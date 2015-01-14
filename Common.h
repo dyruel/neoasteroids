@@ -47,13 +47,6 @@ namespace PE
         ALL_LISTENER          = ~0
     } ListenerId;
     
-    
-    typedef enum
-    {
-        QUIT_MESSAGE         = 1,
-        ENTITIES_MESSAGE     = 2
-    } MessageId;
-    
     typedef enum
     {
         NULL_SYSTEM           = 0,
@@ -62,6 +55,32 @@ namespace PE
         LOGIC_SYSTEM        = 1 << 2,
         ALL_SYSTEM          = ~0
     } SystemId;
+    
+    typedef enum
+    {
+        QUIT_MESSAGE         = 1,
+        ENTITIES_MESSAGE     = 2
+    } MessageId;
+    
+    
+    typedef enum
+    {
+        ASTEROID            = 0,
+        STACESHIP,
+        DOT,
+        UFO,
+        NUM_ENTITYTYPE
+    } EntityType;
+    
+    typedef enum
+    {
+        NULL_MESH            = 0,
+        STACESHIP_MESH,
+        DOT_MESH,
+        UFO_MESH,
+        NUM_MESH
+    } MeshId;
+    
 }
 
 

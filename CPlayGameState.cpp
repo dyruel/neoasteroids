@@ -37,7 +37,7 @@ void CPlayGameState::init()
     
     msg.setMessageIds(PE::ENTITIES_MESSAGE);
     
-    msg.setData(&m_entities);
+    msg.setData(m_entities);
     
     m_logicSystem->getMessageHandler()->post(msg);
     
@@ -61,7 +61,16 @@ void CPlayGameState::shutdown()
 
 void CPlayGameState::update()
 {
-
+    
+    for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
+    {
+        if (m_entities[id].systemIds & PE::GRAPHICS_SYSTEM)
+        {
+            //SEntity e = m_entities[id];
+            
+        }
+        
+    }
 
 }
 
@@ -73,7 +82,7 @@ glm::u32 CPlayGameState::addEntity()
     
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
     {
-        if(m_entities[id].mask == PE::NULL_SYSTEM)
+        if(m_entities[id].systemIds == PE::NULL_SYSTEM)
         {
             return id;
         }
@@ -95,37 +104,40 @@ void CPlayGameState::removeAllEntities()
 {
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
     {
-        m_entities[id].mask = PE::NULL_SYSTEM;
+        m_entities[id].systemIds = PE::NULL_SYSTEM;
     }
 }
 
 void CPlayGameState::resetSpaceship()
 {
-    m_entities[m_spaceshipId].position.m_position.x = .0f;
-    m_entities[m_spaceshipId].position.m_position.y = .0f;
-    m_entities[m_spaceshipId].position.m_position.z = .0f;
+    m_entities[m_spaceshipId].position.x = .0f;
+    m_entities[m_spaceshipId].position.y = .0f;
+    m_entities[m_spaceshipId].position.z = .0f;
     
-    m_entities[m_spaceshipId].velocity.m_speed = .0f;
+    m_entities[m_spaceshipId].m_speed = .0f;
 }
 
 
-glm::u32 CPlayGameState::addAsteroid()
+void CPlayGameState::addAsteroid()
 {
-    
     glm::u32 id = addEntity();
     
-    if (id == PE::MAX_ENTITIES) {
-        return PE::MAX_ENTITIES;
+    if (id == PE::MAX_ENTITIES)
+    {
+        return;
     }
     
-    m_entities[id].mask = PE::GRAPHICS_SYSTEM;
+    m_entities[id].systemIds = PE::GRAPHICS_SYSTEM;
     
-    m_entities[id].velocity.m_speed = .5f;
+    m_entities[id].type = PE::ASTEROID;
     
-    m_entities[id].position.m_position.x = .0f;
-    m_entities[id].position.m_position.y = .0f;
-    m_entities[id].position.m_position.z = .0f;
+    m_entities[id].m_speed = .5f;
     
+    m_entities[id].position.x = .0f;
+    m_entities[id].position.y = .0f;
+    m_entities[id].position.z = .0f;
+    
+    /*
     m_entities[id].geometry.m_numVertices = 4;
     m_entities[id].geometry.m_vertices[0].x = 0.f; m_entities[id].geometry.m_vertices[0].y = 0.f;
     m_entities[id].geometry.m_vertices[1].x = 0.f; m_entities[id].geometry.m_vertices[1].y = 1.f;
@@ -137,21 +149,28 @@ glm::u32 CPlayGameState::addAsteroid()
     m_entities[id].geometry.m_indices[1] = 1;
     m_entities[id].geometry.m_indices[2] = 2;
     m_entities[id].geometry.m_indices[3] = 3;
-    
-    return id;
+    */
 }
 
 
-glm::u32 CPlayGameState::addSpaceship()
+void CPlayGameState::addSpaceship()
 {
     glm::u32 id = addEntity();
     
-    if (id == PE::MAX_ENTITIES) {
-        return PE::MAX_ENTITIES;
+    if (id == PE::MAX_ENTITIES)
+    {
+        return;
     }
     
-    m_entities[id].mask = PE::GRAPHICS_SYSTEM;
+    m_spaceshipId = id;
     
+    m_entities[id].systemIds = PE::GRAPHICS_SYSTEM;
+    
+    m_entities[id].type = PE::STACESHIP;
+    
+    resetSpaceship();
+    
+    /*
     m_entities[id].geometry.m_numVertices = 3;
     m_entities[id].geometry.m_vertices[0].x = 0.f; m_entities[id].geometry.m_vertices[0].y = 0.f;
     m_entities[id].geometry.m_vertices[1].x = 1.f; m_entities[id].geometry.m_vertices[1].y = 0.f;
@@ -161,18 +180,17 @@ glm::u32 CPlayGameState::addSpaceship()
     m_entities[id].geometry.m_indices[0] = 0;
     m_entities[id].geometry.m_indices[1] = 1;
     m_entities[id].geometry.m_indices[2] = 2;
-    
-    return id;
+    */
 }
 
-glm::u32 CPlayGameState::addUfo()
+void CPlayGameState::addUfo()
 {
-     return 0;
+
 }
 
-glm::u32 CPlayGameState::addBullet()
+void CPlayGameState::addBullet()
 {
-     return 0;
+
 }
 
 void CPlayGameState::prepareLevel(const glm::u32& level)
@@ -181,9 +199,7 @@ void CPlayGameState::prepareLevel(const glm::u32& level)
     
     removeAllEntities();
     
-    m_spaceshipId = addSpaceship();
-    
-    resetSpaceship();
+    addSpaceship();
     
     glm::u32 numAsteroids = 4 + level;
     

@@ -56,6 +56,8 @@ void CLogicSystem::run()
         
     }
 */
+    
+    m_states[m_currentState]->update();
 }
 
 void CLogicSystem::receive(const CMessage& msg)
@@ -76,8 +78,8 @@ void CLogicSystem::changeState(IGameState* state)
     }
     
     m_states[m_currentState] = state;
-    state->init();
     state->attachLogicSystem(this);
+    state->init();
 }
 
 void CLogicSystem::pushState(IGameState* state)
@@ -91,8 +93,8 @@ void CLogicSystem::pushState(IGameState* state)
     
     ++m_currentState;
     m_states[m_currentState] = state;
-    state->init();
     state->attachLogicSystem(this);
+    state->init();
 }
 
 void CLogicSystem::popState()

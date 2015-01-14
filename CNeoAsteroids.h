@@ -49,7 +49,7 @@ private:
     CGraphicsSystem     m_graphicsSystem;
     CInputSystem        m_inputSystem;
     
-    glm::u8     m_running;
+    glm::u8             m_running;
 };
 
 #endif

@@ -69,10 +69,28 @@ bool CGraphicsSystem::init()
     glClearColor( 0.5f, 0.5f, 0.5f, 1.f );
     
     m_basicProgram = createProgram(
-                                   "#version 150\nin vec4 position; void main() { gl_Position = position; }",
+                                   "#version 150\n\
+\
+                                   in vec4 position;\
+\
+                                   uniform mat4 Model;\
+\
+                                   void main()\
+                                   {\
+                                    gl_Position = Model * position;\
+                                   }\
+                                   ",
                                    "#version 150\nout vec4 out_color; void main() { out_color = vec4( 1.0, 1.0, 1.0, 1.0 ); }"
                                    );
     glUseProgram(m_basicProgram);
+    
+    
+    m_modelMatrix = glGetUniformLocation(m_basicProgram, "Model" );
+    
+    
+    //
+    
+    
     
     return true;
 }
@@ -89,7 +107,7 @@ bool CGraphicsSystem::shutdown()
     return true;
 }
 
-
+/*
 void CGraphicsSystem::beginFrame() const
 {
     glClear( GL_COLOR_BUFFER_BIT );
@@ -100,7 +118,7 @@ void CGraphicsSystem::endFrame() const
     glFlush();
     SDL_GL_SwapWindow( m_window );
 }
-
+*/
 
 glm::u32 CGraphicsSystem::createProgram(const char *vertexShaderSource, const char *fragmentShaderSource)
 {
@@ -187,36 +205,40 @@ void CGraphicsSystem::useProgram(const glm::u32& programId) const
 
 void CGraphicsSystem::run()
 {
-//    SComponentsContainer* entities = m_world->getComponentsContainers();
     
 //    glEnableClientState(GL_VERTEX_ARRAY);
     if(m_entities == nullptr)
     {
         return;
     }
+    
+    glClear( GL_COLOR_BUFFER_BIT );
 
     
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
     {
-        if (m_entities[id].mask & PE::GRAPHICS_LISTENER)
+        if (m_entities[id].systemIds & PE::GRAPHICS_SYSTEM)
         {
-                
+            //SEntity e = m_entities[id];
         }
+        
     }
     
+    glFlush();
     
+    SDL_GL_SwapWindow( m_window );
 }
 
 void CGraphicsSystem::receive(const CMessage& msg)
 {
     if (msg.getReceivers() & PE::GRAPHICS_LISTENER)
     {
-        if (msg.getMessageIds() & PE::ENTITIES_MESSAGE) {
-            m_entities = (SEntity*) msg.getData();
+        if (msg.getMessageIds() & PE::ENTITIES_MESSAGE)
+        {
+            attachEntities((SEntity*) msg.getData());
         }
     }
 }
-
 
 /*
  gVertexPos2DLocation = glGetAttribLocation( gProgramID, "LVertexPos2D" );

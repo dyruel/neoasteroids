@@ -21,6 +21,8 @@
 
 #include "ISystem.h"
 
+#include "IGameState.h"
+
 #include "CIntroGameState.h"
 
 

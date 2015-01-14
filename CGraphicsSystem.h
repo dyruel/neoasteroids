@@ -40,6 +40,8 @@ class CGraphicsSystem : public ISystem
 {
 
 public:
+    CGraphicsSystem() : m_window(nullptr) {};
+    virtual ~CGraphicsSystem() {};
     
     // ISystem specific methods
     bool    init();
@@ -50,29 +52,27 @@ public:
     
     void    receive(const CMessage& msg);
     
-
+private:
+    
+    // OpenGL variables
+    GLuint  m_basicProgram;
+    GLuint  m_vbos[PE::NUM_MESH];
+    GLint   m_modelMatrix;
+    
+    // SDL variables
+    SDL_Window*  m_window;
+    SDL_GLContext m_glcontext;
+    
+    
     // Rendering methods
     
-    void        beginFrame  () const;
-    void        endFrame    () const;
+    //    void        beginFrame  () const;
+    //    void        endFrame    () const;
     
-    // Matrices : projection, view, model
-    
-    // Shaders management
+    // Shaders methods
     
     glm::u32    createProgram   (const char *vertexShader, const char *fragmentShader);
     void        useProgram      (const glm::u32& programId) const;
-    
-private:
-    SEntity* m_entities;
-    
-    // OpenGL
-    GLuint  m_basicProgram;
-    GLuint  m_vbos[2*PE::MAX_ENTITIES];
-    
-    // SDL
-    SDL_Window*  m_window;
-    SDL_GLContext m_glcontext;
 };
 
 #endif

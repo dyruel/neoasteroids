@@ -42,6 +42,6 @@ void CMenuGameState::shutdown()
 
 void CMenuGameState::update()
 {
-    std::cout << "Menu" << std::endl;
-//    m_neoAsteroids->pushState( &CPlayGameState::instance() );
+//    std::cout << "Menu" << std::endl;
+    m_logicSystem->pushState( &CPlayGameState::instance() );
 }
