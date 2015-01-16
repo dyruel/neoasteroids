@@ -16,46 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CNEOASTEROIDS_H
-#define CNEOASTEROIDS_H
+#ifndef CCOLLISIONSYSTEM_H
+#define CCOLLISIONSYSTEM_H
 
-#include "CMessageHandler.h"
+#include "ISystem.h"
 
-#include "CLogicSystem.h"
-#include "CGraphicsSystem.h"
-#include "CInputSystem.h"
-#include "CAudioSystem.h"
-#include "CCollisionSystem.h"
-
-#include "CUtils.h"
-
-class CNeoAsteroids : public IListener
+class CCollisionSystem : public ISystem
 {
+    
 public:
     
-    CNeoAsteroids()
-    : m_running(1) {}
-    virtual ~CNeoAsteroids(){}
-        
-    bool init(int& argc, char** argv);
+    CCollisionSystem() {};
+    virtual ~CCollisionSystem() {};
     
-    void shutdown();
-
-    void run();
+    // ISystem specific methods
+    bool    init();
     
-    void receive(const CMessage& msg);
+    bool    shutdown();
+    
+    void    run();
+    
+    void    receive(const CMessage& msg);
     
 private:
     
-    CMessageHandler     m_messageHandler;
-    
-    CLogicSystem        m_logicSystem;
-    CGraphicsSystem     m_graphicsSystem;
-    CInputSystem        m_inputSystem;
-    CAudioSystem        m_audioSystem;
-    CCollisionSystem    m_collisionSystem;
-    
-    glm::u8             m_running;
 };
-
 #endif

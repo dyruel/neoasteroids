@@ -28,7 +28,7 @@ namespace PE
     
     constexpr const glm::u32   MAX_SYSTEMS     = 3;
     
-    constexpr const glm::u32   MAX_LISTENERS   = 4;
+    constexpr const glm::u32   MAX_LISTENERS   = 6;
     
     constexpr const glm::f32   DELTA_TIME      = .01f; // in s
 

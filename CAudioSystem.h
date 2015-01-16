@@ -16,46 +16,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CNEOASTEROIDS_H
-#define CNEOASTEROIDS_H
+#ifndef CAUDIOSYSTEM_H
+#define CAUDIOSYSTEM_H
 
-#include "CMessageHandler.h"
+#include <SDL2/SDL.h>
+#include <SDL2_mixer/SDL_mixer.h>
 
-#include "CLogicSystem.h"
-#include "CGraphicsSystem.h"
-#include "CInputSystem.h"
-#include "CAudioSystem.h"
-#include "CCollisionSystem.h"
+#include "ISystem.h"
+#include "CFileLogger.h"
 
-#include "CUtils.h"
+#include <iostream>
 
-class CNeoAsteroids : public IListener
+class CAudioSystem : public ISystem
 {
+    
 public:
     
-    CNeoAsteroids()
-    : m_running(1) {}
-    virtual ~CNeoAsteroids(){}
-        
-    bool init(int& argc, char** argv);
+    CAudioSystem() : m_menuMusic(nullptr) {};
+    virtual ~CAudioSystem() {};
     
-    void shutdown();
-
-    void run();
+    // ISystem specific methods
+    bool    init();
     
-    void receive(const CMessage& msg);
+    bool    shutdown();
+    
+    void    run();
+    
+    void    receive(const CMessage& msg);
     
 private:
     
-    CMessageHandler     m_messageHandler;
+    // Musics
+    Mix_Music* m_menuMusic;
     
-    CLogicSystem        m_logicSystem;
-    CGraphicsSystem     m_graphicsSystem;
-    CInputSystem        m_inputSystem;
-    CAudioSystem        m_audioSystem;
-    CCollisionSystem    m_collisionSystem;
+    // Sounds
     
-    glm::u8             m_running;
 };
-
 #endif

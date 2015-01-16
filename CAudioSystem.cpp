@@ -16,46 +16,54 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CNEOASTEROIDS_H
-#define CNEOASTEROIDS_H
-
-#include "CMessageHandler.h"
-
-#include "CLogicSystem.h"
-#include "CGraphicsSystem.h"
-#include "CInputSystem.h"
 #include "CAudioSystem.h"
-#include "CCollisionSystem.h"
 
-#include "CUtils.h"
-
-class CNeoAsteroids : public IListener
+bool CAudioSystem::init()
 {
-public:
+    if( SDL_InitSubSystem(SDL_INIT_AUDIO) < 0 )
+    {
+        CFileLogger::logFormat( "SDL audio could not initialize! SDL_Error: %s\n", SDL_GetError() );
+        return false;
+    }
     
-    CNeoAsteroids()
-    : m_running(1) {}
-    virtual ~CNeoAsteroids(){}
-        
-    bool init(int& argc, char** argv);
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        CFileLogger::logFormat( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+        return false;
+    }
     
-    void shutdown();
+    
+    m_menuMusic = Mix_LoadMUS( "menu.ogg" );
+    if( m_menuMusic == nullptr )
+    {
+        CFileLogger::logFormat( "Failed to load menu music! SDL_mixer Error: %s\n", Mix_GetError() );
+        return false;
+    }
+/*
+    if( Mix_PlayingMusic() == 0 )
+    {
+        Mix_PlayMusic( m_menuMusic, -1 );
+    }
+*/    
+    
+    return true;
+}
 
-    void run();
-    
-    void receive(const CMessage& msg);
-    
-private:
-    
-    CMessageHandler     m_messageHandler;
-    
-    CLogicSystem        m_logicSystem;
-    CGraphicsSystem     m_graphicsSystem;
-    CInputSystem        m_inputSystem;
-    CAudioSystem        m_audioSystem;
-    CCollisionSystem    m_collisionSystem;
-    
-    glm::u8             m_running;
-};
+bool CAudioSystem::shutdown()
+{
+    Mix_FreeMusic( m_menuMusic );
+    Mix_Quit();
+    return true;
+}
 
-#endif
+
+void CAudioSystem::receive(const CMessage& msg)
+{
+    
+}
+
+void CAudioSystem::run()
+{
+
+}
+

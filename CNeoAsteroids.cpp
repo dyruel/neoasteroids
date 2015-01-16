@@ -22,19 +22,26 @@
 
 bool CNeoAsteroids::init(int& argc, char** argv)
 {
-    m_inputSystem.attachMessageHandler(&m_messageHandler);
-    m_inputSystem.init();
-
-    m_graphicsSystem.attachMessageHandler(&m_messageHandler);
-    m_graphicsSystem.init();
-    
-
     m_messageHandler.attachListener(this);
     m_messageHandler.attachListener(&m_inputSystem);
     m_messageHandler.attachListener(&m_graphicsSystem);
+    m_messageHandler.attachListener(&m_logicSystem);
+    m_messageHandler.attachListener(&m_audioSystem);
+    m_messageHandler.attachListener(&m_collisionSystem);
+    
+    m_graphicsSystem.attachMessageHandler(&m_messageHandler);
+    m_graphicsSystem.init();
+    
+    m_inputSystem.attachMessageHandler(&m_messageHandler);
+    m_inputSystem.init();
+    
+    m_audioSystem.attachMessageHandler(&m_messageHandler);
+    m_audioSystem.init();
+    
+    m_collisionSystem.attachMessageHandler(&m_messageHandler);
+    m_collisionSystem.init();
     
     m_logicSystem.attachMessageHandler(&m_messageHandler);
-    m_messageHandler.attachListener(&m_logicSystem);
     m_logicSystem.init();
 
     CUtils::initRandom();
@@ -44,8 +51,10 @@ bool CNeoAsteroids::init(int& argc, char** argv)
 
 void CNeoAsteroids::shutdown()
 {
-    m_inputSystem.shutdown();
     m_logicSystem.shutdown();
+    m_collisionSystem.shutdown();
+    m_audioSystem.shutdown();
+    m_inputSystem.shutdown();
     m_graphicsSystem.shutdown();
 }
 
@@ -63,6 +72,8 @@ void CNeoAsteroids::run()
         while (lastTime + deltaTimeMs <= presentTime)
         {
             m_inputSystem.run();
+            m_collisionSystem.run();
+            m_audioSystem.run();
             m_logicSystem.run();
             
             lastTime += deltaTimeMs;
