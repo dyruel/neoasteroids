@@ -25,6 +25,7 @@
 #include "SEntity.h"
 #include "CMessageHandler.h"
 #include "CFileLogger.h"
+#include "CUtils.h"
 
 
 class CPlayGameState : public IGameState
@@ -49,7 +50,7 @@ private:
         
     glm::u32    m_level;
     glm::u32    m_lastTime;
-    glm::u32    m_commandStatus;
+    glm::u32    m_commandsStatus;
     
     // Player infos
     glm::u32    m_lives;

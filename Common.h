@@ -30,13 +30,17 @@ namespace PE
     
     constexpr const glm::u32   MAX_LISTENERS   = 4;
     
-    constexpr const glm::u32   DELTA_TIME      = 10; // in ms
+    constexpr const glm::f32   DELTA_TIME      = .01f; // in s
 
     constexpr const glm::u32   MAX_ENTITIES    = 20;
 
     constexpr const glm::u32   MAX_VERTICES    = 10;
     
     constexpr const glm::u32   MAX_INDICES     = 10;
+    
+    constexpr const glm::f64   PI = 3.1415926535897932384626433832795f;
+    
+    constexpr const glm::f64   TO_RADS = PI / 180.0;
     
     typedef enum
     {

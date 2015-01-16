@@ -23,3 +23,13 @@ glm::u32 CUtils::getTime()
 {
     return SDL_GetTicks();
 }
+
+void CUtils::initRandom()
+{
+    std::srand(std::time(0));
+}
+
+glm::f32 CUtils::getRandomNumber()
+{
+    return (std::rand() / (glm::f32) RAND_MAX);
+}

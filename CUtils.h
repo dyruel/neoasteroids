@@ -21,6 +21,8 @@
 
 #include <SDL2/SDL.h>
 #include <glm/common.hpp>
+#include <cstdlib>
+#include <ctime>
 
 
 class CUtils 
@@ -28,7 +30,9 @@ class CUtils
 public:
     static glm::u32 getTime();
     
-private:
+    static void initRandom();
+    
+    static glm::f32 getRandomNumber();
     
 };
 

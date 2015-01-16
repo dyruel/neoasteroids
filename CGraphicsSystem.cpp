@@ -129,8 +129,8 @@ bool CGraphicsSystem::init()
     GLfloat spaceshipVertices[] =
     {
         -0.05f, -0.1f, 0.0f,
-        0.05f, -0.1f, 0.0f,
-        0.0f,  0.1f, 0.0f,
+        -0.05f, 0.1f, 0.0f,
+        0.1f,  0.0f, 0.0f,
     };
     GLuint spaceshipIndices[] = { 0, 1, 2 };
     

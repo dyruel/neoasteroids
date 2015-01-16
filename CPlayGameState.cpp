@@ -69,13 +69,74 @@ void CPlayGameState::update()
             switch (m_entities[id].type) {
                     
                 case PE::SPACESHIP_ENTITY:
-                    if (m_commandStatus & PE::RIGHT_COMMAND)
+                    if (m_commandsStatus & PE::RIGHT_COMMAND)
                     {
-                        m_entities[id].angle -= .005f * PE::DELTA_TIME;
+                        m_entities[id].angle -= 5.f * PE::DELTA_TIME;
                     }
-                    else if (m_commandStatus & PE::LEFT_COMMAND)
+                    else if (m_commandsStatus & PE::LEFT_COMMAND)
                     {
-                        m_entities[id].angle += .005f * PE::DELTA_TIME;
+                        m_entities[id].angle += 5.f * PE::DELTA_TIME;
+                    }
+                    
+                    if (m_commandsStatus & PE::UP_COMMAND)
+                    {
+                        m_entities[id].accel.x = cosf( m_entities[id].angle );
+                        m_entities[id].accel.y = sinf( m_entities[id].angle );
+                    }
+                    else
+                    {
+                        m_entities[id].accel.x = 0;
+                        m_entities[id].accel.y = 0;
+                    }
+                    
+                    m_entities[id].velocity += ( m_entities[id].accel * PE::DELTA_TIME );
+                    m_entities[id].position += ( m_entities[id].velocity * PE::DELTA_TIME );
+                    
+                    if ( m_entities[id].position.x > 1.0f )
+                    {
+                        m_entities[id].position.x = - 1.0f;
+                    }
+                    
+                    if ( m_entities[id].position.y > 1.0f )
+                    {
+                        m_entities[id].position.y = - 1.0f;
+                    }
+
+                    if ( m_entities[id].position.x < - 1.0f )
+                    {
+                        m_entities[id].position.x =  1.0f;
+                    }
+                    
+                    if ( m_entities[id].position.y < - 1.0f )
+                    {
+                        m_entities[id].position.y = 1.0f;
+                    }
+                    break;
+                    
+                    
+                case PE::ASTEROID_ENTITY:
+
+                    m_entities[id].velocity += ( m_entities[id].accel * PE::DELTA_TIME );
+                    m_entities[id].position += ( m_entities[id].velocity * PE::DELTA_TIME );
+                    
+                    if ( m_entities[id].position.x > 1.0f )
+                    {
+                        m_entities[id].position.x = - 1.0f;
+                    }
+                    
+                    if ( m_entities[id].position.y > 1.0f )
+                    {
+                        m_entities[id].position.y = - 1.0f;
+                    }
+                    
+                    if ( m_entities[id].position.x < - 1.0f )
+                    {
+                        m_entities[id].position.x =  1.0f;
+                    }
+                    
+                    if ( m_entities[id].position.y < - 1.0f )
+                    {
+                        m_entities[id].position.y = 1.0f;
                     }
                     break;
                     
@@ -83,6 +144,8 @@ void CPlayGameState::update()
                     break;
             }
             
+            
+
         }
         
     }
@@ -94,9 +157,7 @@ void CPlayGameState::receive(const CMessage& msg)
 
     if (msg.getMessageIds() & PE::COMMAND_MESSAGE)
     {
-        m_commandStatus = *((glm::u32*) msg.getData());
-        
-//        std::cout << m_commandStatus << std::endl;
+        m_commandsStatus = *((glm::u32*) msg.getData());
     }
 
 }
@@ -140,8 +201,16 @@ void CPlayGameState::resetSpaceship()
     m_entities[m_spaceshipId].position.y = .0f;
     m_entities[m_spaceshipId].position.z = .0f;
     
-    m_entities[m_spaceshipId].speed = .0f;
-    m_entities[m_spaceshipId].angle = .0f;
+    m_entities[m_spaceshipId].velocity.x = .0f;
+    m_entities[m_spaceshipId].velocity.y = .0f;
+    m_entities[m_spaceshipId].velocity.z = .0f;
+    
+    m_entities[m_spaceshipId].accel.x = .0f;
+    m_entities[m_spaceshipId].accel.y = .0f;
+    m_entities[m_spaceshipId].accel.z = .0f;
+    
+//    m_entities[m_spaceshipId].speed = .0f;
+    m_entities[m_spaceshipId].angle = 0.0f;
 }
 
 
@@ -159,12 +228,14 @@ void CPlayGameState::addAsteroid()
     m_entities[id].type = PE::ASTEROID_ENTITY;
     m_entities[id].mesh = PE::ASTEROID1_MESH;
     
-    m_entities[id].speed = .5f;
-    m_entities[id].angle = .0f;
-    
-    m_entities[id].position.x = .0f;
-    m_entities[id].position.y = .0f;
+    m_entities[id].position.x = 2 * CUtils::getRandomNumber() - 1;
+    m_entities[id].position.y = 2 * CUtils::getRandomNumber() - 1;
     m_entities[id].position.z = .0f;
+    
+    m_entities[id].angle = 2 * PE::PI * CUtils::getRandomNumber();
+    
+    m_entities[id].velocity.x = cosf( m_entities[id].angle );
+    m_entities[id].velocity.y = sinf( m_entities[id].angle );
 
 }
 

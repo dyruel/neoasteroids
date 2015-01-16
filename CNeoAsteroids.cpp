@@ -37,6 +37,7 @@ bool CNeoAsteroids::init(int& argc, char** argv)
     m_messageHandler.attachListener(&m_logicSystem);
     m_logicSystem.init();
 
+    CUtils::initRandom();
 
     return true;
 }
@@ -50,18 +51,21 @@ void CNeoAsteroids::shutdown()
 
 void CNeoAsteroids::run()
 {
-    glm::u32 lastTime = CUtils::getTime();
+    glm::f32 lastTime = CUtils::getTime();
+    const glm::f32 deltaTimeMs = PE::DELTA_TIME * 1000.f;
 
     while (m_running)
     {
-        glm::u32 presentTime = CUtils::getTime();
+        glm::f32 presentTime = CUtils::getTime();
         
-        while (lastTime + PE::DELTA_TIME <= presentTime)
+//        std::cout << presentTime - lastTime << std::endl;
+        
+        while (lastTime + deltaTimeMs <= presentTime)
         {
             m_inputSystem.run();
             m_logicSystem.run();
             
-            lastTime += PE::DELTA_TIME;
+            lastTime += deltaTimeMs;
         }
 
         m_graphicsSystem.run();

@@ -32,7 +32,7 @@ struct SEntity
     
     glm::vec3 position;
     glm::vec3 velocity;
-    glm::f32  speed;
+    glm::vec3 accel;
     glm::f32  angle;
 };
 
