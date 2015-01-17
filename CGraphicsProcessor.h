@@ -16,53 +16,66 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef ISYSTEMS_H
-#define ISYSTEMS_H
+#ifndef CGRAPHICSPROCESSOR_H
+#define CGRAPHICSPROCESSOR_H
 
-#include "SEntity.h"
-#include "CMessageHandler.h"
+#ifdef WIN32
+#include <GL/glew.h>
+#elif __APPLE__
+#define GL3_PROTOTYPES 1
+#include <OpenGL/gl3.h>
+#else
+#define GL3_PROTOTYPES 1
+#include <GL3/gl3.h>
+#endif
 
-class ISystem : public IListener
+#include <SDL2/SDL.h>
+#include <SDL2_ttf/SDL_ttf.h>
+#include <iostream>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+#include "IProcessor.h"
+#include "CFileLogger.h"
+
+class CGraphicsProcessor : public IProcessor
 {
-    
+
 public:
-    ISystem() : m_messageHandler(nullptr), m_entities(nullptr) {};
-    virtual ~ISystem() {};
+    CGraphicsProcessor() : m_window(nullptr) {};
+    virtual ~CGraphicsProcessor() {};
     
-    virtual bool init()     = 0;
+    // IProcessor specific methods
+    bool    init();
     
-    virtual bool shutdown() = 0;
+    bool    shutdown();
     
-    virtual void run()      = 0;
+    void    run();
     
-    virtual void attachMessageHandler(CMessageHandler* messageHandler)
-    {
-        assert(messageHandler != nullptr);
+    void    receive(const CMessage& msg);
+    
+private:
+    
+    glm::u32    m_winWidth;
+    glm::u32    m_winHeight;
+    
+    // OpenGL variables
+    GLuint  m_basicProgram;
+    GLuint  m_vbos[PE::NUM_MESH];
+    GLuint  m_ibos[PE::NUM_MESH];
+    GLuint  m_vaos[PE::NUM_MESH];
+    GLsizei m_numIndices[PE::NUM_MESH];
+    GLint   m_modelMatrix;
+    
+    // SDL variables
+    SDL_Window*  m_window;
+    SDL_GLContext m_glcontext;
+    
         
-        m_messageHandler = messageHandler;
-    }
+    // Shaders methods
     
-    CMessageHandler* getMessageHandler()
-    {
-        assert(m_messageHandler != nullptr);
-        return m_messageHandler;
-    }
-    
-    SEntity* getEntities()
-    {
-        return m_entities;
-    }
-    
-    virtual void attachEntities(SEntity* entities)
-    {
-        assert(entities != nullptr);
-        
-        m_entities = entities;
-    }
-    
-protected:
-    CMessageHandler*    m_messageHandler;
-    SEntity*            m_entities;
+    glm::u32    createProgram   (const char *vertexShader, const char *fragmentShader);
+    void        useProgram      (const glm::u32& programId) const;
 };
 
 #endif

@@ -16,26 +16,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CAUDIOSYSTEM_H
-#define CAUDIOSYSTEM_H
+#ifndef CLOGICSYSTEM_H
+#define CLOGICSYSTEM_H
 
-#include <SDL2/SDL.h>
-#include <SDL2_mixer/SDL_mixer.h>
+#include "IProcessor.h"
 
-#include "ISystem.h"
-#include "CFileLogger.h"
+#include "IGameState.h"
 
-#include <iostream>
+#include "CIntroGameState.h"
 
-class CAudioSystem : public ISystem
+
+class CLogicProcessor : public IProcessor
 {
     
 public:
+    CLogicProcessor() : m_currentState(-1) {};
+    ~CLogicProcessor() {};
     
-    CAudioSystem() : m_menuMusic(nullptr) {};
-    virtual ~CAudioSystem() {};
-    
-    // ISystem specific methods
+    // IProcessor specific methods
     bool    init();
     
     bool    shutdown();
@@ -44,12 +42,24 @@ public:
     
     void    receive(const CMessage& msg);
     
+    
+    // Game states management
+    
+    void changeState(IGameState* state);
+    
+    void pushState(IGameState* state);
+    
+    void popState();
+    
+    IGameState* currentState();
+    
+    bool hasStates();
+    
+    void removeAllStates();
+    
 private:
     
-    // Musics
-    Mix_Music* m_menuMusic;
-    
-    // Sounds
-    
+    glm::i32    m_currentState;
+    IGameState* m_states[PE::MAX_GAME_STATES];
 };
 #endif

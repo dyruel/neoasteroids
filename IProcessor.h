@@ -16,34 +16,53 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CMENUSTATE_H
-#define CMENUSTATE_H
+#ifndef IPROCESSOR_H
+#define IPROCESSOR_H
 
-#include <iostream>
+#include "SEntity.h"
+#include "CMessageHandler.h"
 
-#include "CLogicProcessor.h"
-
-#include "CPlayGameState.h"
-
-class CMenuGameState : public IGameState
+class IProcessor : public IListener
 {
+    
 public:
-    void init();
-    void pause();
-    void resume();
-    void shutdown();
-    void update();
-    void receive(const CMessage& msg);
-
-    static CMenuGameState& instance()
+    IProcessor() : m_messageHandler(nullptr), m_entities(nullptr) {};
+    virtual ~IProcessor() {};
+    
+    virtual bool init()     = 0;
+    
+    virtual bool shutdown() = 0;
+    
+    virtual void run()      = 0;
+    
+    virtual void attachMessageHandler(CMessageHandler* messageHandler)
     {
-        return m_menuGameState;
+        assert(messageHandler != nullptr);
+        
+        m_messageHandler = messageHandler;
     }
-
-private:
-    CMenuGameState() {}
-
-    static CMenuGameState m_menuGameState;
+    
+    CMessageHandler* getMessageHandler()
+    {
+        assert(m_messageHandler != nullptr);
+        return m_messageHandler;
+    }
+    
+    SEntity* getEntities()
+    {
+        return m_entities;
+    }
+    
+    virtual void attachEntities(SEntity* entities)
+    {
+        assert(entities != nullptr);
+        
+        m_entities = entities;
+    }
+    
+protected:
+    CMessageHandler*    m_messageHandler;
+    SEntity*            m_entities;
 };
 
 #endif

@@ -16,50 +16,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CLOGICSYSTEM_H
-#define CLOGICSYSTEM_H
+#ifndef CAUDIOSYSTEM_H
+#define CAUDIOSYSTEM_H
 
-#include "ISystem.h"
+#include <SDL2/SDL.h>
+#include <SDL2_mixer/SDL_mixer.h>
 
-#include "IGameState.h"
+#include "IListener.h"
+#include "CFileLogger.h"
 
-#include "CIntroGameState.h"
+#include <iostream>
 
-
-class CLogicSystem : public ISystem
+class CAudioHelper : public IListener
 {
     
 public:
-    CLogicSystem() : m_currentState(-1) {};
-    ~CLogicSystem() {};
+    
+    CAudioHelper() : m_menuMusic(nullptr) {};
+    virtual ~CAudioHelper() {};
     
     // ISystem specific methods
     bool    init();
     
     bool    shutdown();
     
-    void    run();
-    
     void    receive(const CMessage& msg);
-    
-    
-    // Game states management
-    
-    void changeState(IGameState* state);
-    
-    void pushState(IGameState* state);
-    
-    void popState();
-    
-    IGameState* currentState();
-    
-    bool hasStates();
-    
-    void removeAllStates();
     
 private:
     
-    glm::i32    m_currentState;
-    IGameState* m_states[PE::MAX_GAME_STATES];
+    // Musics
+    Mix_Music* m_menuMusic;
+    
+    // Sounds
+    
 };
 #endif

@@ -19,7 +19,7 @@
 #ifndef IGAMESTATE_H
 #define IGAMESTATE_H
 
-class CLogicSystem;
+class CLogicProcessor;
 
 class IGameState : public IListener
 {
@@ -34,16 +34,13 @@ public:
     virtual void shutdown() = 0;
     virtual void update()   = 0;
     
-    void attachLogicSystem(CLogicSystem* logicSystem)
+    void attachLogicSystem(CLogicProcessor* logicProcessor)
     {
-        m_logicSystem = logicSystem;
+        m_logicProcessor = logicProcessor;
     }
     
 protected:
-    CLogicSystem*  m_logicSystem;
-    
-//    virtual void display() = 0;
-//    virtual void update(const glm::u32& delta) = 0;
+    CLogicProcessor*  m_logicProcessor;
 
 };
 

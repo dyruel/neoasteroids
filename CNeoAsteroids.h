@@ -19,13 +19,17 @@
 #ifndef CNEOASTEROIDS_H
 #define CNEOASTEROIDS_H
 
-#include "CMessageHandler.h"
+//#include "CMessageHandler.h"
 
-#include "CLogicSystem.h"
-#include "CGraphicsSystem.h"
-#include "CInputSystem.h"
-#include "CAudioSystem.h"
-#include "CCollisionSystem.h"
+#include "SEntity.h"
+
+#include "CLogicProcessor.h"
+#include "CGraphicsProcessor.h"
+#include "CCollisionProcessor.h"
+#include "CPhysicsProcessor.h"
+
+#include "CInputHandler.h"
+#include "CAudioHelper.h"
 
 #include "CUtils.h"
 
@@ -47,15 +51,21 @@ public:
     
 private:
     
-    CMessageHandler     m_messageHandler;
+    // Entities
+    SEntity                m_entities[PE::MAX_ENTITIES];
     
-    CLogicSystem        m_logicSystem;
-    CGraphicsSystem     m_graphicsSystem;
-    CInputSystem        m_inputSystem;
-    CAudioSystem        m_audioSystem;
-    CCollisionSystem    m_collisionSystem;
+    // Processors
+    CLogicProcessor        m_logicProcessor;
+    CGraphicsProcessor     m_graphicsProcessor;
+    CCollisionProcessor    m_collisionProcessor;
+    CPhysicsProcessor      m_physicsProcessor;
     
-    glm::u8             m_running;
+    // 
+    CInputHandler          m_inputHandler;
+    
+    CAudioHelper           m_audioHelper;
+    
+    glm::u8                m_running;
 };
 
 #endif

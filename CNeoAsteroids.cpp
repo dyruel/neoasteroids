@@ -22,27 +22,36 @@
 
 bool CNeoAsteroids::init(int& argc, char** argv)
 {
+    /*
     m_messageHandler.attachListener(this);
     m_messageHandler.attachListener(&m_inputSystem);
     m_messageHandler.attachListener(&m_graphicsSystem);
     m_messageHandler.attachListener(&m_logicSystem);
     m_messageHandler.attachListener(&m_audioSystem);
     m_messageHandler.attachListener(&m_collisionSystem);
+    m_messageHandler.attachListener(&m_physicsSystem);
+    */
+
+    m_graphicsProcessor.attachEntities(m_entities);
+    m_graphicsProcessor.init();
     
-    m_graphicsSystem.attachMessageHandler(&m_messageHandler);
-    m_graphicsSystem.init();
+//    m_inputSystem.attachMessageHandler(&m_messageHandler);
+//    m_inputSystem.init();
     
-    m_inputSystem.attachMessageHandler(&m_messageHandler);
-    m_inputSystem.init();
+//    m_audioSystem.attachMessageHandler(&m_messageHandler);
+//    m_audioSystem.init();
     
-    m_audioSystem.attachMessageHandler(&m_messageHandler);
-    m_audioSystem.init();
+    m_collisionProcessor.attachEntities(m_entities);
+    m_collisionProcessor.init();
     
-    m_collisionSystem.attachMessageHandler(&m_messageHandler);
-    m_collisionSystem.init();
+    m_physicsProcessor.attachEntities(m_entities);
+    m_physicsProcessor.init();
     
-    m_logicSystem.attachMessageHandler(&m_messageHandler);
-    m_logicSystem.init();
+    m_inputHandler.attachListener(&m_logicProcessor);
+    
+    m_logicProcessor.attachEntities(m_entities);
+    m_logicProcessor.init();
+    
 
     CUtils::initRandom();
 
@@ -52,6 +61,7 @@ bool CNeoAsteroids::init(int& argc, char** argv)
 void CNeoAsteroids::shutdown()
 {
     m_logicSystem.shutdown();
+    m_physicsSystem.shutdown();
     m_collisionSystem.shutdown();
     m_audioSystem.shutdown();
     m_inputSystem.shutdown();

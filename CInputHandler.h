@@ -16,34 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CINPUTSYSTEM_H
-#define CINPUTSYSTEM_H
+#ifndef CINPUTHANDLER_H
+#define CINPUTHANDLER_H
 
 #include <SDL2/SDL.h>
 
-#include "ISystem.h"
+#include "CSubject.h"
 
 #include <iostream>
 
-class CInputSystem : public ISystem
+class CInputHandler : public CSubject
 {
     
 public:
     
-    CInputSystem() : m_commandsStatus(0) {};
-    virtual ~CInputSystem() {};
+    CInputHandler() : m_commandsStatus(0) {};
+    virtual ~CInputHandler() {};
     
-    // ISystem specific methods
     bool    init();
     
     bool    shutdown();
     
     void    run();
     
-    void    receive(const CMessage& msg);
-    
 private:
-    
+
     glm::u32   m_commandsStatus;
 };
 #endif

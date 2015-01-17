@@ -16,29 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CCOLLISIONSYSTEM_H
-#define CCOLLISIONSYSTEM_H
+#ifndef CMESSAGEHANDLER_H
+#define CMESSAGEHANDLER_H
 
-#include "ISystem.h"
+#include "Common.h"
+#include "IListener.h"
 
-class CCollisionSystem : public ISystem
+    
+class CSubject
 {
-    
 public:
+    CSubject() : m_numListeners(0) {};
+    ~CSubject() {};
     
-    CCollisionSystem() {};
-    virtual ~CCollisionSystem() {};
+    void attachListener(IListener* listener);
     
-    // ISystem specific methods
-    bool    init();
-    
-    bool    shutdown();
-    
-    void    run();
-    
-    void    receive(const CMessage& msg);
+    void post(const CMessage& msg) const;
     
 private:
     
+    glm::u32     m_numListeners;
+    IListener*   m_listeners[PE::MAX_LISTENERS];
 };
+
 #endif

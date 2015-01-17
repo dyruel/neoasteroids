@@ -62,6 +62,11 @@ void CPlayGameState::shutdown()
 void CPlayGameState::update()
 {
     
+    if (m_commandsStatus & PE::A_COMMAND)
+    {
+        addBullet();
+    }
+    
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
     {
         if (m_entities[id].systemIds & PE::LOGIC_SYSTEM)
@@ -89,67 +94,11 @@ void CPlayGameState::update()
                         m_entities[id].accel.y = 0;
                     }
                     
-                    m_entities[id].velocity += ( m_entities[id].accel * PE::DELTA_TIME );
-                    m_entities[id].position += ( m_entities[id].velocity * PE::DELTA_TIME );
-                    
-                    if ( m_entities[id].position.x > 1.0f )
-                    {
-                        m_entities[id].position.x = - 1.0f;
-                    }
-                    
-                    if ( m_entities[id].position.y > 1.0f )
-                    {
-                        m_entities[id].position.y = - 1.0f;
-                    }
-
-                    if ( m_entities[id].position.x < - 1.0f )
-                    {
-                        m_entities[id].position.x =  1.0f;
-                    }
-                    
-                    if ( m_entities[id].position.y < - 1.0f )
-                    {
-                        m_entities[id].position.y = 1.0f;
-                    }
-                    break;
-                    
-                    
-                case PE::ASTEROID_ENTITY:
-
-                    m_entities[id].velocity += ( m_entities[id].accel * PE::DELTA_TIME );
-                    m_entities[id].position += ( m_entities[id].velocity * PE::DELTA_TIME );
-                    
-                    if ( m_entities[id].position.x > 1.0f )
-                    {
-                        m_entities[id].position.x = - 1.0f;
-                    }
-                    
-                    if ( m_entities[id].position.y > 1.0f )
-                    {
-                        m_entities[id].position.y = - 1.0f;
-                    }
-                    
-                    if ( m_entities[id].position.x < - 1.0f )
-                    {
-                        m_entities[id].position.x =  1.0f;
-                    }
-                    
-                    if ( m_entities[id].position.y < - 1.0f )
-                    {
-                        m_entities[id].position.y = 1.0f;
-                    }
-                    break;
-                    
                 default:
                     break;
             }
-            
-            
-
         }
-        
     }
-
 }
 
 void CPlayGameState::receive(const CMessage& msg)
@@ -210,7 +159,7 @@ void CPlayGameState::resetSpaceship()
     m_entities[m_spaceshipId].accel.z = .0f;
     
 //    m_entities[m_spaceshipId].speed = .0f;
-    m_entities[m_spaceshipId].angle = 0.0f;
+    m_entities[m_spaceshipId].angle = PE::PI / 2;
 }
 
 
@@ -226,16 +175,32 @@ void CPlayGameState::addAsteroid()
     m_entities[id].systemIds = PE::GRAPHICS_SYSTEM | PE::LOGIC_SYSTEM;
     
     m_entities[id].type = PE::ASTEROID_ENTITY;
+    
     m_entities[id].mesh = PE::ASTEROID1_MESH;
     
-    m_entities[id].position.x = 2 * CUtils::getRandomNumber() - 1;
-    m_entities[id].position.y = 2 * CUtils::getRandomNumber() - 1;
+    m_entities[id].position.x = (CUtils::getRandomNumber() / 2) + 0.5f;
+    
+    if (CUtils::getRandomNumber() < 0.5f)
+    {
+        m_entities[id].position.x *= -1.f;
+    }
+    
+    m_entities[id].position.y = (CUtils::getRandomNumber() / 2) + 0.5f;
+    
+    if (CUtils::getRandomNumber() < 0.5f)
+    {
+        m_entities[id].position.y *= -1.f;
+    }
+    
     m_entities[id].position.z = .0f;
+    
     
     m_entities[id].angle = 2 * PE::PI * CUtils::getRandomNumber();
     
     m_entities[id].velocity.x = cosf( m_entities[id].angle );
     m_entities[id].velocity.y = sinf( m_entities[id].angle );
+    
+    m_entities[id].velocity *= 0.5f;
 
 }
 

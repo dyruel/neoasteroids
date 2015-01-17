@@ -16,20 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CMessageHandler.h"
+#ifndef CPHYSICSPROCESSOR_H
+#define CPHYSICSPROCESSOR_H
 
+#include "IProcessor.h"
 
-void CMessageHandler::attachListener(IListener* listener)
+class CPhysicsProcessor : public IProcessor
 {
-    assert(m_numListeners < PE::MAX_LISTENERS);
-    m_listeners[m_numListeners] = listener;
-    ++m_numListeners;
-}
-
-void CMessageHandler::post(const CMessage& msg) const
-{
-    for (glm::u32 i = 0; i < m_numListeners; ++i)
-    {
-        m_listeners[i]->receive(msg);
-    }
-}
+    
+public:
+    
+    CPhysicsProcessor() {};
+    virtual ~CPhysicsProcessor() {};
+    
+    // ISystem specific methods
+    bool    init();
+    
+    bool    shutdown();
+    
+    void    run();
+    
+    void    receive(const CMessage& msg);
+    
+private:
+    
+};
+#endif

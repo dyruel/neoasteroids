@@ -16,10 +16,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CGraphicsSystem.h"
+#include "CGraphicsProcessor.h"
 
 
-bool CGraphicsSystem::init()
+bool CGraphicsProcessor::init()
 {
     
     if( SDL_Init(SDL_INIT_VIDEO) < 0 )
@@ -65,7 +65,6 @@ bool CGraphicsSystem::init()
     //glGetIntegerv(GL_MINOR_VERSION, &min);
     //std::cout << maj << " " << min << std::endl;
     
-    glViewport(0, 0, 800, 600);
     
     glClearColor( 0.0f, 0.0f, 0.0f, 1.f );
     
@@ -76,19 +75,45 @@ bool CGraphicsSystem::init()
 \
                                    in vec4 position;\
 \
+                                   uniform mat4 Projection;\
+\
                                    uniform mat4 Model;\
 \
                                    void main()\
                                    {\
-                                    gl_Position = Model * position;\
+                                    gl_Position = Projection * Model * position;\
                                    }\
                                    ",
                                    "#version 150\nout vec4 out_color; void main() { out_color = vec4( 1.0, 1.0, 1.0, 1.0 ); }"
                                    );
     glUseProgram(m_basicProgram);
     
+    m_winWidth = 800;
+    m_winHeight = 600;
     
+    //
+    glViewport(0, 0, m_winWidth, m_winHeight);
+    
+    GLfloat aspect = (GLfloat)m_winWidth / (GLfloat)m_winHeight;
+    
+    glm::mat4 projection;
+    
+    if ( m_winWidth >= m_winHeight )
+    {
+        projection = glm::ortho(-1.0 * aspect, 1.0 * aspect, -1.0, 1.0);
+    }
+    else
+    {
+        projection = glm::ortho(-1.0, 1.0, -1.0 / aspect, 1.0 / aspect);
+    }
+
+    
+    glUniformMatrix4fv( glGetUniformLocation(m_basicProgram, "Projection" ), 1, GL_FALSE, glm::value_ptr(projection) );
+    
+    //
     m_modelMatrix = glGetUniformLocation(m_basicProgram, "Model" );
+    
+    
     GLint vertexPositionAttrib = glGetAttribLocation ( m_basicProgram, "position") ;
     
     // Initialize VAOs/VBOs/IBOs
@@ -178,7 +203,7 @@ bool CGraphicsSystem::init()
     return true;
 }
 
-bool CGraphicsSystem::shutdown()
+bool CGraphicsProcessor::shutdown()
 {
     glDeleteBuffers(PE::NUM_MESH, m_vbos);
     glDeleteBuffers(PE::NUM_MESH, m_vbos);
@@ -194,7 +219,7 @@ bool CGraphicsSystem::shutdown()
 }
 
 
-glm::u32 CGraphicsSystem::createProgram(const char *vertexShaderSource, const char *fragmentShaderSource)
+glm::u32 CGraphicsProcessor::createProgram(const char *vertexShaderSource, const char *fragmentShaderSource)
 {
     GLuint shaderProgram = 0;
     
@@ -265,7 +290,7 @@ glm::u32 CGraphicsSystem::createProgram(const char *vertexShaderSource, const ch
     return shaderProgram;
 }
 
-void CGraphicsSystem::useProgram(const glm::u32& programId) const
+void CGraphicsProcessor::useProgram(const glm::u32& programId) const
 {
     if(programId > 0)
     {
@@ -277,10 +302,9 @@ void CGraphicsSystem::useProgram(const glm::u32& programId) const
     }
 }
 
-void CGraphicsSystem::run()
+void CGraphicsProcessor::run()
 {
-    
-//    glEnableClientState(GL_VERTEX_ARRAY);
+
     if(m_entities == nullptr)
     {
         return;
@@ -318,7 +342,7 @@ void CGraphicsSystem::run()
     SDL_GL_SwapWindow( m_window );
 }
 
-void CGraphicsSystem::receive(const CMessage& msg)
+void CGraphicsProcessor::receive(const CMessage& msg)
 {
     if (msg.getReceivers() & PE::GRAPHICS_LISTENER)
     {

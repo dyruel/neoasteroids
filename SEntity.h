@@ -21,19 +21,40 @@
 
 #include "Common.h"
 
+typedef enum
+{
+    NULL_COMPONENT          = 0,
+    RENDER_COMPONENT        = 1 << 0,
+    POSITION_COMPONENT      = 1 << 1,
+    MOVE_COMPONENT          = 1 << 2,
+    COLLIDABLE_COMPONENT    = 1 << 3,
+    PLAYER_COMPONENT        = 1 << 4,
+    ALL_COMPONENT           = ~0
+} ComponentId;
 
 struct SEntity
 {
-    glm::u32 systemIds;
+    glm::u32       mask;
     
-    PE::EntityType type;
+    // Render Component
+    glm::u8        texName[64];
+    glm::u32       texId;
     
-    PE::Mesh       mesh;
+    // Position component
+    glm::vec3      position;
     
-    glm::vec3 position;
-    glm::vec3 velocity;
-    glm::vec3 accel;
-    glm::f32  angle;
+    // Move component
+    glm::vec3      velocity;
+    glm::vec3      accel;
+    glm::f32       angle;
+    
+    // Collidable component
+    glm::u8        group;       // Only entities of different groups can collide
+    glm::vec2      rect[4];
+    
+    // Player Component
+    glm::u32       lives;
+    glm::u32       score;
 };
 
 

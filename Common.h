@@ -28,7 +28,7 @@ namespace PE
     
     constexpr const glm::u32   MAX_SYSTEMS     = 3;
     
-    constexpr const glm::u32   MAX_LISTENERS   = 6;
+    constexpr const glm::u32   MAX_LISTENERS   = 7;
     
     constexpr const glm::f32   DELTA_TIME      = .01f; // in s
 
@@ -48,6 +48,9 @@ namespace PE
         GRAPHICS_LISTENER     = 1 << 0,
         INPUT_LISTENER        = 1 << 1,
         LOGIC_LISTENER        = 1 << 2,
+        COLLISION_LISTENER    = 1 << 3,
+        AUDIO_LISTENER        = 1 << 4,
+        PHYSICS_LISTENER      = 1 << 5,
         ALL_LISTENER          = ~0
     } ListenerId;
     
@@ -57,6 +60,9 @@ namespace PE
         GRAPHICS_SYSTEM     = 1 << 0,
         INPUT_SYSTEM        = 1 << 1,
         LOGIC_SYSTEM        = 1 << 2,
+        COLLISION_SYSTEM    = 1 << 3,
+        AUDIO_SYSTEM        = 1 << 4,
+        PHYSICS_SYSTEM      = 1 << 5,
         ALL_SYSTEM          = ~0
     } SystemId;
     
@@ -74,7 +80,7 @@ namespace PE
     {
         ASTEROID_ENTITY            = 0,
         SPACESHIP_ENTITY,
-        DOT_ENTITY,
+        BULLET_ENTITY,
         UFO_ENTITY,
         NUM_ENTITYTYPE
     } EntityType;
@@ -85,6 +91,7 @@ namespace PE
         ASTEROID1_MESH,
         SPACESHIP_MESH,
         UFO_MESH,
+        BULLET_MESH,
         NUM_MESH
     } Mesh;
     
@@ -95,10 +102,10 @@ namespace PE
         DOWN_COMMAND    = 1 << 1,
         LEFT_COMMAND    = 1 << 2,
         RIGHT_COMMAND   = 1 << 3,
-        X_COMMAND       = 1 << 4,
-        O_COMMAND       = 1 << 5,
-        T_COMMAND       = 1 << 6,
-        S_COMMAND       = 1 << 7
+        A_COMMAND       = 1 << 4,
+        B_COMMAND       = 1 << 5,
+        C_COMMAND       = 1 << 6,
+        D_COMMAND       = 1 << 7
     } CommandId;
 }
 

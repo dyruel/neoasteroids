@@ -16,54 +16,46 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CAudioSystem.h"
+#include "CCollisionProcessor.h"
 
-bool CAudioSystem::init()
+bool CCollisionProcessor::init()
 {
-    if( SDL_InitSubSystem(SDL_INIT_AUDIO) < 0 )
-    {
-        CFileLogger::logFormat( "SDL audio could not initialize! SDL_Error: %s\n", SDL_GetError() );
-        return false;
-    }
-    
-    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
-    {
-        CFileLogger::logFormat( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
-        return false;
-    }
-    
-    
-    m_menuMusic = Mix_LoadMUS( "menu.ogg" );
-    if( m_menuMusic == nullptr )
-    {
-        CFileLogger::logFormat( "Failed to load menu music! SDL_mixer Error: %s\n", Mix_GetError() );
-        return false;
-    }
-/*
-    if( Mix_PlayingMusic() == 0 )
-    {
-        Mix_PlayMusic( m_menuMusic, -1 );
-    }
-*/    
-    
     return true;
 }
 
-bool CAudioSystem::shutdown()
+bool CCollisionProcessor::shutdown()
 {
-    Mix_FreeMusic( m_menuMusic );
-    Mix_Quit();
     return true;
 }
 
 
-void CAudioSystem::receive(const CMessage& msg)
+void CCollisionProcessor::receive(const CMessage& msg)
 {
-    
+    if (msg.getReceivers() & PE::COLLISION_LISTENER)
+    {
+        if (msg.getMessageIds() & PE::ENTITIES_MESSAGE)
+        {
+            attachEntities((SEntity*) msg.getData());
+        }
+    }
 }
 
-void CAudioSystem::run()
+void CCollisionProcessor::run()
 {
+    if(m_entities == nullptr)
+    {
+        return;
+    }
+    
+    for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
+    {
+        if (m_entities[id].systemIds & PE::COLLISION_SYSTEM)
+        {
 
+            
+        }
+        
+    }
+    
 }
 

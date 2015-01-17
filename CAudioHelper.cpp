@@ -16,29 +16,50 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CMESSAGEHANDLER_H
-#define CMESSAGEHANDLER_H
+#include "CAudioHelper.h"
 
-#include <vector>
-
-#include "Common.h"
-#include "IListener.h"
-
-    
-class CMessageHandler
+bool CAudioHelper::init()
 {
-public:
-    CMessageHandler() : m_numListeners(0) {};
-    ~CMessageHandler() {};
+    if( SDL_InitSubSystem(SDL_INIT_AUDIO) < 0 )
+    {
+        CFileLogger::logFormat( "SDL audio could not initialize! SDL_Error: %s\n", SDL_GetError() );
+        return false;
+    }
     
-    void attachListener(IListener* listener);
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        CFileLogger::logFormat( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+        return false;
+    }
     
-    void post(const CMessage& msg) const;
     
-private:
+    m_menuMusic = Mix_LoadMUS( "menu.ogg" );
+    if( m_menuMusic == nullptr )
+    {
+        CFileLogger::logFormat( "Failed to load menu music! SDL_mixer Error: %s\n", Mix_GetError() );
+        return false;
+    }
+/*
+    if( Mix_PlayingMusic() == 0 )
+    {
+        Mix_PlayMusic( m_menuMusic, -1 );
+    }
+*/    
     
-    glm::u32     m_numListeners;
-    IListener*   m_listeners[PE::MAX_LISTENERS];
-};
+    return true;
+}
 
-#endif
+bool CAudioHelper::shutdown()
+{
+    Mix_FreeMusic( m_menuMusic );
+    Mix_Quit();
+    return true;
+}
+
+
+void CAudioHelper::receive(const CMessage& msg)
+{
+    
+}
+
+

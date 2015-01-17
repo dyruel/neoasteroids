@@ -16,29 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CLogicSystem.h"
+#include "CLogicProcessor.h"
 
 
-bool CLogicSystem::init()
+bool CLogicProcessor::init()
 {
     changeState( &CIntroGameState::instance() );
     
     return true;
 }
 
-bool CLogicSystem::shutdown()
+bool CLogicProcessor::shutdown()
 {
     return true;
 }
 
-void CLogicSystem::run()
+void CLogicProcessor::run()
 {
 
     
     m_states[m_currentState]->update();
 }
 
-void CLogicSystem::receive(const CMessage& msg)
+void CLogicProcessor::receive(const CMessage& msg)
 {
     if (msg.getReceivers() & PE::LOGIC_LISTENER)
     {
@@ -47,7 +47,7 @@ void CLogicSystem::receive(const CMessage& msg)
 }
 
 
-void CLogicSystem::changeState(IGameState* state)
+void CLogicProcessor::changeState(IGameState* state)
 {
     if ( hasStates() )
     {
@@ -63,7 +63,7 @@ void CLogicSystem::changeState(IGameState* state)
     state->init();
 }
 
-void CLogicSystem::pushState(IGameState* state)
+void CLogicProcessor::pushState(IGameState* state)
 {
     assert( (m_currentState + 1 < PE::MAX_GAME_STATES) && (state != nullptr) );
     
@@ -78,7 +78,7 @@ void CLogicSystem::pushState(IGameState* state)
     state->init();
 }
 
-void CLogicSystem::popState()
+void CLogicProcessor::popState()
 {
     if ( hasStates() )
     {

@@ -16,63 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CGRAPHICSSYSTEM_H
-#define CGRAPHICSSYSTEM_H
+#include "CSubject.h"
 
-#ifdef WIN32
-#include <GL/glew.h>
-#elif __APPLE__
-#define GL3_PROTOTYPES 1
-#include <OpenGL/gl3.h>
-#else
-#define GL3_PROTOTYPES 1
-#include <GL3/gl3.h>
-#endif
 
-#include <SDL2/SDL.h>
-#include <SDL2_ttf/SDL_ttf.h>
-#include <iostream>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
-#include "ISystem.h"
-#include "CFileLogger.h"
-
-class CGraphicsSystem : public ISystem
+void CSubject::attachListener(IListener* listener)
 {
+    assert(m_numListeners < PE::MAX_LISTENERS);
+    m_listeners[m_numListeners] = listener;
+    ++m_numListeners;
+}
 
-public:
-    CGraphicsSystem() : m_window(nullptr) {};
-    virtual ~CGraphicsSystem() {};
-    
-    // ISystem specific methods
-    bool    init();
-    
-    bool    shutdown();
-    
-    void    run();
-    
-    void    receive(const CMessage& msg);
-    
-private:
-    
-    // OpenGL variables
-    GLuint  m_basicProgram;
-    GLuint  m_vbos[PE::NUM_MESH];
-    GLuint  m_ibos[PE::NUM_MESH];
-    GLuint  m_vaos[PE::NUM_MESH];
-    GLsizei m_numIndices[PE::NUM_MESH];
-    GLint   m_modelMatrix;
-    
-    // SDL variables
-    SDL_Window*  m_window;
-    SDL_GLContext m_glcontext;
-    
-        
-    // Shaders methods
-    
-    glm::u32    createProgram   (const char *vertexShader, const char *fragmentShader);
-    void        useProgram      (const glm::u32& programId) const;
-};
-
-#endif
+void CSubject::post(const CMessage& msg) const
+{
+    for (glm::u32 i = 0; i < m_numListeners; ++i)
+    {
+        m_listeners[i]->receive(msg);
+    }
+}

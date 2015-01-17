@@ -16,26 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CCollisionSystem.h"
+#ifndef CCOLLISIONSYSTEM_H
+#define CCOLLISIONSYSTEM_H
 
-bool CCollisionSystem::init()
-{
-    return true;
-}
+#include "IProcessor.h"
 
-bool CCollisionSystem::shutdown()
-{
-    return true;
-}
-
-
-void CCollisionSystem::receive(const CMessage& msg)
+class CCollisionProcessor : public IProcessor
 {
     
-}
-
-void CCollisionSystem::run()
-{
+public:
     
-}
-
+    CCollisionProcessor() {};
+    virtual ~CCollisionProcessor() {};
+    
+    // IProcessor specific methods
+    bool    init();
+    
+    bool    shutdown();
+    
+    void    run();
+    
+    void    receive(const CMessage& msg);
+    
+private:
+    
+};
+#endif
