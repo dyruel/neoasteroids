@@ -31,9 +31,22 @@ bool CGameStateManager::shutdown()
 
 void CGameStateManager::receive(const CMessage& msg)
 {
-    if ( hasStates() )
+    switch (msg.getMessageId())
     {
-        m_states[m_currentState]->receive(msg);
+        case CHANGE_STATE_MSG:
+            changeState( (IGameState*) msg.getData() );
+            break;
+            
+        case PUSH_STATE_MSG:
+            pushState( (IGameState*) msg.getData() );
+            break;
+            
+        default:
+            if ( hasStates() )
+            {
+                m_states[m_currentState]->receive(msg);
+            }
+            break;
     }
 }
 

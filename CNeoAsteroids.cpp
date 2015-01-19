@@ -37,9 +37,6 @@ bool CNeoAsteroids::init(int& argc, char** argv)
     // Init game
     m_gameStateManager.init();
     
-//    m_collisionProcessor.registerReceiver( &m_gameStateManager );
-//    m_inputProcessor.registerReceiver( &m_gameStateManager );
-    
     m_transitionProcessor.registerReceiver( &m_gameStateManager );
     
     m_gameStateManager.changeState( &CIntroGameState::instance() );

@@ -36,11 +36,12 @@ void CTransitionProcessor::process(CSpace* space)
     {
         if (entities[id].components & TRANSITION_COMPONENT)
         {
-            void* ptr = entities[id].targetGameState;
+            MessageId op = (MessageId) entities[id].op;
+            void* ptr = entities[id].gameState;
             
             space->removeEntity(id);
             
-            post( CMessage( CHANGE_STATE_MSG, ptr ) );
+            post( CMessage( op, ptr ) );
         }
         
     }

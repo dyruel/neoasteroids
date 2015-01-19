@@ -22,7 +22,13 @@ CMenuGameState CMenuGameState::m_menuGameState;
 
 void CMenuGameState::init()
 {
-std::cout << "Menu init" << std::endl;
+    std::cout << "Menu init" << std::endl;
+    
+    glm::u32 id = m_space.addEntity();
+    
+    m_space[id].components = TRANSITION_COMPONENT;
+    m_space[id].gameState = &CPlayGameState::instance();
+    m_space[id].op = PUSH_STATE_MSG;
 }
 
 void CMenuGameState::pause()
@@ -43,5 +49,5 @@ std::cout << "Menu shutdown" << std::endl;
 
 void CMenuGameState::receive(const CMessage& msg)
 {
-    
+
 }

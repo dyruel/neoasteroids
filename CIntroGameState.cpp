@@ -26,7 +26,8 @@ void CIntroGameState::init()
     glm::u32 id = m_space.addEntity();
     
     m_space[id].components = TRANSITION_COMPONENT;
-    m_space[id].targetGameState = &CMenuGameState::instance();
+    m_space[id].gameState = &CMenuGameState::instance();
+    m_space[id].op = CHANGE_STATE_MSG;
 }
 
 void CIntroGameState::pause()
@@ -46,12 +47,5 @@ void CIntroGameState::shutdown()
 
 void CIntroGameState::receive(const CMessage& msg)
 {
-    switch (msg.getMessageId()) {
-        case CHANGE_STATE_MSG:
-            m_gameStateManager->changeState( (IGameState*) msg.getData() );
-            break;
-            
-        default:
-            break;
-    }
+
 }

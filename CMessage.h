@@ -26,6 +26,7 @@ typedef enum
     ENTITIES_MESSAGE,
     COMMAND_MESSAGE,
     CHANGE_STATE_MSG,
+    PUSH_STATE_MSG,
 } MessageId;
 
 class CMessage

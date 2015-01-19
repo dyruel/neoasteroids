@@ -22,6 +22,7 @@ CPlayGameState CPlayGameState::m_playGameState;
 
 void CPlayGameState::init()
 {
+    std::cout << "Play init" << std::endl;
     m_level = 1;
     m_lives = 3;
     m_score = 0;
@@ -43,7 +44,7 @@ void CPlayGameState::resume()
 
 void CPlayGameState::shutdown()
 {
-
+ std::cout << "Play shutdown" << std::endl;
 }
 
 void CPlayGameState::update()

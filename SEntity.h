@@ -64,7 +64,8 @@ struct SEntity
     glm::u32       ActionId[CST::MAX_INPUT_MAP];
     
     // Transition component
-    void*          targetGameState;
+    glm::u32       op;
+    void*          gameState;
 };
 
 
