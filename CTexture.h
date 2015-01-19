@@ -16,39 +16,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CAUDIODEVICE_H
-#define CAUDIODEVICE_H
+#ifndef CTEXTURE_H
+#define CTEXTURE_H
 
-#include <SDL2/SDL.h>
 
-#include "CSound.h"
-#include "CMusic.h"
-#include "CFileLogger.h"
-
-#include <iostream>
-
-class CAudioDevice
+class CTexture
 {
+    friend class CVideoDevice;
     
 public:
     
-    CAudioDevice() {};
-    virtual ~CAudioDevice() {};
+    CTexture() : m_textureId(0) {};
+    virtual ~CTexture() {};
     
-    bool    init();
     
-    bool    shutdown();
-    
-    CSound  loadSound     (const char * file) const;
-    
-    void    freeSound(CSound* sound) const;
-    
-    CMusic  loadMusic     (const char * file) const;
-    
-    void    freeMusic(CMusic* music) const;
-        
 private:
 
-    
+    GLuint  m_textureId;
 };
+
 #endif

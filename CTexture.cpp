@@ -16,39 +16,5 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CAUDIODEVICE_H
-#define CAUDIODEVICE_H
+//#include "CTexture.h"
 
-#include <SDL2/SDL.h>
-
-#include "CSound.h"
-#include "CMusic.h"
-#include "CFileLogger.h"
-
-#include <iostream>
-
-class CAudioDevice
-{
-    
-public:
-    
-    CAudioDevice() {};
-    virtual ~CAudioDevice() {};
-    
-    bool    init();
-    
-    bool    shutdown();
-    
-    CSound  loadSound     (const char * file) const;
-    
-    void    freeSound(CSound* sound) const;
-    
-    CMusic  loadMusic     (const char * file) const;
-    
-    void    freeMusic(CMusic* music) const;
-        
-private:
-
-    
-};
-#endif

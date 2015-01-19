@@ -16,39 +16,56 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CAUDIODEVICE_H
-#define CAUDIODEVICE_H
+#ifndef CASSETS_H
+#define CASSETS_H
 
-#include <SDL2/SDL.h>
+#include "CEngine.h"
 
+#include "CTexture.h"
 #include "CSound.h"
 #include "CMusic.h"
-#include "CFileLogger.h"
 
-#include <iostream>
-
-class CAudioDevice
+class CAssets
 {
     
 public:
     
-    CAudioDevice() {};
-    virtual ~CAudioDevice() {};
+    CAssets(CEngine* engine)
+    : m_engine(engine) {};
+    virtual ~CAssets() {};
     
-    bool    init();
+    bool    loadAssets();
     
-    bool    shutdown();
+    void    freeAssets();
     
-    CSound  loadSound     (const char * file) const;
+    CTexture* getSpaceShip();
     
-    void    freeSound(CSound* sound) const;
+    CTexture* getBullet();
     
-    CMusic  loadMusic     (const char * file) const;
+    CTexture* getAsteroid();
     
-    void    freeMusic(CMusic* music) const;
-        
+    CTexture* getUfo();
+    
+    CSound*   getExplosion();
+    
+    CSound*   getShot();
+    
+    CMusic*   getMusic();
+    
 private:
-
     
+    CEngine*    m_engine;
+    
+    CTexture    m_spaceShip;
+    CTexture    m_bullet;
+    CTexture    m_asteroid;
+    CTexture    m_ufo;
+    
+    CSound      m_explosion;
+    CSound      m_shot;
+    
+    CMusic      m_music;
+
 };
+
 #endif

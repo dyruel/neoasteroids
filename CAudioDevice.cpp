@@ -32,14 +32,14 @@ bool CAudioDevice::init()
         return false;
     }
     
-    
+/*    
     m_menuMusic = Mix_LoadMUS( "menu.ogg" );
     if( m_menuMusic == nullptr )
     {
         CFileLogger::logFormat( "Failed to load menu music! SDL_mixer Error: %s\n", Mix_GetError() );
         return false;
     }
-/*
+
     if( Mix_PlayingMusic() == 0 )
     {
         Mix_PlayMusic( m_menuMusic, -1 );
@@ -51,10 +51,55 @@ bool CAudioDevice::init()
 
 bool CAudioDevice::shutdown()
 {
-    Mix_FreeMusic( m_menuMusic );
+//    Mix_FreeMusic( m_menuMusic );
     Mix_Quit();
     return true;
 }
 
 
+CSound CAudioDevice::loadSound(const char *file) const
+{
+    CSound sound;
+    
+    sound.m_sound = Mix_LoadWAV( file );
+    
+    if( sound.m_sound == nullptr )
+    {
+        CFileLogger::logFormat( "Failed to load sound file %s! SDL_mixer Error: %s\n", file , Mix_GetError() );
+    }
+    
+    return sound;
+}
 
+
+void CAudioDevice::freeSound(CSound* sound) const
+{
+    if ( sound )
+    {
+        Mix_FreeChunk( sound->m_sound );
+    }
+}
+
+
+CMusic CAudioDevice::loadMusic(const char *file) const
+{
+    CMusic music;
+    
+    music.m_music = Mix_LoadMUS( file );
+    
+    if( music.m_music == nullptr )
+    {
+        CFileLogger::logFormat( "Failed to load music file %s! SDL_mixer Error: %s\n", file , Mix_GetError() );
+    }
+    
+    return music;
+}
+
+
+void CAudioDevice::freeMusic(CMusic* music) const
+{
+    if ( music )
+    {
+        Mix_FreeMusic( music->m_music );
+    }
+}

@@ -16,39 +16,68 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CAUDIODEVICE_H
-#define CAUDIODEVICE_H
+#ifndef CVIDEODEVICE_H
+#define CVIDEODEVICE_H
+
+#ifdef WIN32
+    #include <GL/glew.h>
+#elif __APPLE__
+    #define GL3_PROTOTYPES 1
+    #include <OpenGL/gl3.h>
+#else
+    #define GL3_PROTOTYPES 1
+    #include <GL3/gl3.h>
+#endif
 
 #include <SDL2/SDL.h>
+#include <SDL2_ttf/SDL_ttf.h>
+#include <SDL2_image/SDL_image.h>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
-#include "CSound.h"
-#include "CMusic.h"
+#include "Common.h"
 #include "CFileLogger.h"
+#include "CTexture.h"
 
-#include <iostream>
-
-class CAudioDevice
+class CVideoDevice
 {
     
 public:
     
-    CAudioDevice() {};
-    virtual ~CAudioDevice() {};
+    CVideoDevice()
+     : m_window(nullptr), m_winWidth(800), m_winHeight(600) {};
+    virtual ~CVideoDevice() {};
     
     bool    init();
     
     bool    shutdown();
     
-    CSound  loadSound     (const char * file) const;
+    void    beginRender() const;
     
-    void    freeSound(CSound* sound) const;
+    void    endRender() const;
     
-    CMusic  loadMusic     (const char * file) const;
+    // Shaders methods
     
-    void    freeMusic(CMusic* music) const;
-        
+    glm::u32    createProgram   (const char *vertexShader, const char *fragmentShader);
+    void        useProgram      (const glm::u32& programId) const;
+    
+    CTexture    loadTexture     (const char * file) const;
+    void        freeTexture     (CTexture* texture) const;
+    
 private:
-
+    glm::u32    m_winWidth;
+    glm::u32    m_winHeight;
     
+    // OpenGL variables
+    GLuint  m_basicProgram;
+    //    GLuint  m_vbos[PE::NUM_MESH];
+    //    GLuint  m_ibos[PE::NUM_MESH];
+    //    GLuint  m_vaos[PE::NUM_MESH];
+    //    GLsizei m_numIndices[PE::NUM_MESH];
+    GLint   m_modelMatrix;
+    
+    // SDL variables
+    SDL_Window*     m_window;
+    SDL_GLContext   m_glcontext;
 };
 #endif

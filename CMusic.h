@@ -16,39 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CAUDIODEVICE_H
-#define CAUDIODEVICE_H
+#ifndef CMUSIC_H
+#define CMUSIC_H
 
-#include <SDL2/SDL.h>
+#include <SDL2_mixer/SDL_mixer.h>
 
-#include "CSound.h"
-#include "CMusic.h"
 #include "CFileLogger.h"
 
-#include <iostream>
-
-class CAudioDevice
+class CMusic
 {
+    friend class CAudioDevice;
     
 public:
     
-    CAudioDevice() {};
-    virtual ~CAudioDevice() {};
+    CMusic()
+    : m_music(nullptr) {};
+    virtual ~CMusic() {};
     
-    bool    init();
-    
-    bool    shutdown();
-    
-    CSound  loadSound     (const char * file) const;
-    
-    void    freeSound(CSound* sound) const;
-    
-    CMusic  loadMusic     (const char * file) const;
-    
-    void    freeMusic(CMusic* music) const;
-        
 private:
-
     
+    Mix_Music*  m_music;
 };
+
 #endif

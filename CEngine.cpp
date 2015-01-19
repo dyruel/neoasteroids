@@ -16,39 +16,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CAUDIODEVICE_H
-#define CAUDIODEVICE_H
+#include "CEngine.h"
 
-#include <SDL2/SDL.h>
-
-#include "CSound.h"
-#include "CMusic.h"
-#include "CFileLogger.h"
-
-#include <iostream>
-
-class CAudioDevice
+bool CEngine::init()
 {
+    SDL_Init(0);
     
-public:
+    m_videoDevice.init();
     
-    CAudioDevice() {};
-    virtual ~CAudioDevice() {};
+    m_audioDevice.init();
     
-    bool    init();
-    
-    bool    shutdown();
-    
-    CSound  loadSound     (const char * file) const;
-    
-    void    freeSound(CSound* sound) const;
-    
-    CMusic  loadMusic     (const char * file) const;
-    
-    void    freeMusic(CMusic* music) const;
-        
-private:
+    return true;
+}
 
+bool CEngine::shutdown()
+{
+    m_audioDevice.shutdown();
     
-};
-#endif
+    m_videoDevice.shutdown();
+    
+    SDL_Quit();
+    
+    return true;
+}
+
+
+
