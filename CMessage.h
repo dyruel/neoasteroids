@@ -21,43 +21,32 @@
 
 typedef enum
 {
-    NULL_MESSAGE         = 0,
-    QUIT_MESSAGE         = 1 << 0,
-    ENTITIES_MESSAGE     = 1 << 1,
-    COMMAND_MESSAGE      = 1 << 2,
-    ALL_MESSAGE          = ~0
+    EMPTY_MSG            = 0,
+    QUIT_MESSAGE,
+    ENTITIES_MESSAGE,
+    COMMAND_MESSAGE,
+    CHANGE_STATE_MSG,
 } MessageId;
 
 class CMessage
 {
 public:
     
-    CMessage() : m_data(nullptr) {};
+    CMessage() : m_data(nullptr), m_messageId(EMPTY_MSG) {};
+    CMessage(const MessageId& messageId, void* data)
+    : m_data(data), m_messageId(messageId) {};
+    CMessage(const MessageId& messageId)
+    : m_data(nullptr), m_messageId(messageId) {};
     virtual ~CMessage(){};
-/*
-    void setSender(const PE::ListenerId& systemId)
+
+    const MessageId&  getMessageId() const
     {
-        m_senderId = systemId;
+        return m_messageId;
     }
     
-    const PE::ListenerId& getSender() const
+    void  setMessageIds(const MessageId& messageId)
     {
-        return m_senderId;
-    }
-    
-    void setReceivers(const PE::ListenerId& receiverIds)
-    {
-        m_receiverIds = receiverIds;
-    }
-    
-    const PE::ListenerId& getReceivers() const
-    {
-        return m_receiverIds;
-    }
-    
-    void  setMessageIds(const PE::MessageId& messageIds)
-    {
-        m_messageIds = messageIds;
+        m_messageId = messageId;
     }
     
     void  setData(void* data)
@@ -70,20 +59,11 @@ public:
         return m_data;
     }
     
-    const PE::MessageId&  getMessageIds() const
-    {
-        return m_messageIds;
-    }
-*/
 protected:
     
-//    PE::ListenerId    m_senderId;
+    MessageId   m_messageId;
     
-//    PE::ListenerId    m_receiverIds;
-    
-    MessageId   m_messageIds;
-    
-    void*           m_data;
+    void*       m_data;
     
 };
 

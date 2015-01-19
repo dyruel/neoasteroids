@@ -25,6 +25,7 @@
 #include "CCollisionProcessor.h"
 #include "CPhysicsProcessor.h"
 #include "CInputProcessor.h"
+#include "CTransitionProcessor.h"
 
 #include "CUtils.h"
 
@@ -48,6 +49,7 @@ private:
     CCollisionProcessor    m_collisionProcessor;
     CPhysicsProcessor      m_physicsProcessor;
     CInputProcessor        m_inputProcessor;
+    CTransitionProcessor   m_transitionProcessor;
     
     // Game state manager
     CGameStateManager      m_gameStateManager;

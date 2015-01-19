@@ -22,7 +22,7 @@ CMenuGameState CMenuGameState::m_menuGameState;
 
 void CMenuGameState::init()
 {
-
+std::cout << "Menu init" << std::endl;
 }
 
 void CMenuGameState::pause()
@@ -37,14 +37,9 @@ void CMenuGameState::resume()
 
 void CMenuGameState::shutdown()
 {
-    
+std::cout << "Menu shutdown" << std::endl;
 }
 
-void CMenuGameState::update()
-{
-//    std::cout << "Menu" << std::endl;
-    m_gameStateManager->pushState( &CPlayGameState::instance() );
-}
 
 void CMenuGameState::receive(const CMessage& msg)
 {

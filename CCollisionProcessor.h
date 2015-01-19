@@ -34,7 +34,7 @@ public:
     
     bool    shutdown();
     
-    void    process(const CSpace* space);
+    void    process(CSpace* space);
     
 //    void    receive(const CMessage& msg);
     

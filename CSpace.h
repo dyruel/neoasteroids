@@ -27,6 +27,13 @@ public:
     CSpace() {};
     virtual ~CSpace() {};
     
+    SEntity& operator [] (const glm::u64& i)
+    {
+        assert(i >= 0 && i < CST::MAX_ENTITIES);
+        
+        return m_entities[i];
+    }
+    
     SEntity* getEntities();
     
     glm::u32 addEntity();
@@ -36,8 +43,8 @@ public:
     void removeAllEntities();
     
 protected:
-    
-    SEntity m_entities[CST::MAX_ENTITIES];
+
+    SEntity  m_entities[CST::MAX_ENTITIES];
 };
 
 #endif

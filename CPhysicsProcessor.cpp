@@ -41,7 +41,7 @@ void CPhysicsProcessor::receive(const CMessage& msg)
 }
 */
 
-void CPhysicsProcessor::process(const CSpace* space)
+void CPhysicsProcessor::process(CSpace* space)
 {
     /*
     if(m_entities == nullptr)

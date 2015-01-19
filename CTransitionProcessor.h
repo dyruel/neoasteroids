@@ -16,51 +16,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef IGAMESTATE_H
-#define IGAMESTATE_H
+#ifndef CTRANSITIONPROCESSOR_H
+#define CTRANSITIONPROCESSOR_H
 
-#include "IReceiver.h"
+#include "IProcessor.h"
 
-#include "CSpace.h"
-
-class CGameStateManager;
-
-/*
-typedef enum
-{
-    NULL_STATE          = 0,
-    MENU_GAMESTATE      = 1 << 0,
-    PLAY_GAMESTATE      = 1 << 1,
-    INTRO_GAMESTATE     = 1 << 2,
-    ALL_STATE           = ~0
-} GameStateId;
-*/
-
-class IGameState : public IReceiver
+class CTransitionProcessor : public IProcessor
 {
     
 public:
-    IGameState() {};
-    virtual ~IGameState() {};
     
-    virtual void init()     = 0;
-    virtual void pause()    = 0;
-    virtual void resume()   = 0;
-    virtual void shutdown() = 0;
+    CTransitionProcessor() {};
+    virtual ~CTransitionProcessor() {};
     
-    void attachGameStateManager(CGameStateManager* gameStateManager)
-    {
-        m_gameStateManager = gameStateManager;
-    }
+    // IProcessor specific methods
+    bool    init();
     
-    CSpace* getSpace()
-    {
-        return &m_space;
-    }
+    bool    shutdown();
     
-protected:
-    CGameStateManager*  m_gameStateManager;
-    CSpace              m_space;
+    void    process(CSpace* space);
+    
 };
-
 #endif

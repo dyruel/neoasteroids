@@ -20,6 +20,7 @@
 #define COMMON_H
 
 #include <glm/common.hpp>
+#include <iostream>
 
 // Constants list
 namespace CST

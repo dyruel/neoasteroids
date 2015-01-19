@@ -30,6 +30,7 @@ typedef enum
     COLLIDABLE_COMPONENT    = 1 << 3,
     PLAYER_COMPONENT        = 1 << 4,
     INPUT_COMPONENT         = 1 << 5,
+    TRANSITION_COMPONENT    = 1 << 6,
     ALL_COMPONENT           = ~0
 } ComponentId;
 
@@ -61,6 +62,9 @@ struct SEntity
     glm::u32       mapSize;
     glm::u32       ButtonId[CST::MAX_INPUT_MAP];
     glm::u32       ActionId[CST::MAX_INPUT_MAP];
+    
+    // Transition component
+    void*          targetGameState;
 };
 
 

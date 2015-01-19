@@ -303,7 +303,7 @@ void CGraphicsProcessor::useProgram(const glm::u32& programId) const
     }
 }
 
-void CGraphicsProcessor::process(const CSpace* space)
+void CGraphicsProcessor::process(CSpace* space)
 {
 /*
     if(m_entities == nullptr)

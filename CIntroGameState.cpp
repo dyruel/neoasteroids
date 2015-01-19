@@ -22,7 +22,11 @@ CIntroGameState CIntroGameState::m_introGameState;
 
 void CIntroGameState::init()
 {
-
+    std::cout << "Intro init" << std::endl;
+    glm::u32 id = m_space.addEntity();
+    
+    m_space[id].components = TRANSITION_COMPONENT;
+    m_space[id].targetGameState = &CMenuGameState::instance();
 }
 
 void CIntroGameState::pause()
@@ -37,16 +41,17 @@ void CIntroGameState::resume()
 
 void CIntroGameState::shutdown()
 {
-    
-}
-
-void CIntroGameState::update()
-{
-    std::cout << "Intro" << std::endl;
-    m_gameStateManager->changeState( &CMenuGameState::instance() );
+    std::cout << "Intro shutdown" << std::endl;
 }
 
 void CIntroGameState::receive(const CMessage& msg)
 {
-    
+    switch (msg.getMessageId()) {
+        case CHANGE_STATE_MSG:
+            m_gameStateManager->changeState( (IGameState*) msg.getData() );
+            break;
+            
+        default:
+            break;
+    }
 }

@@ -28,7 +28,7 @@ bool CInputProcessor::shutdown()
     return true;
 }
 
-void CInputProcessor::process(const CSpace* space)
+void CInputProcessor::process(CSpace* space)
 {
 /*
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)

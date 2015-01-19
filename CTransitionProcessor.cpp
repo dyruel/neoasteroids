@@ -16,51 +16,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef IGAMESTATE_H
-#define IGAMESTATE_H
+#include "CTransitionProcessor.h"
 
-#include "IReceiver.h"
-
-#include "CSpace.h"
-
-class CGameStateManager;
-
-/*
-typedef enum
+bool CTransitionProcessor::init()
 {
-    NULL_STATE          = 0,
-    MENU_GAMESTATE      = 1 << 0,
-    PLAY_GAMESTATE      = 1 << 1,
-    INTRO_GAMESTATE     = 1 << 2,
-    ALL_STATE           = ~0
-} GameStateId;
-*/
+    return true;
+}
 
-class IGameState : public IReceiver
+bool CTransitionProcessor::shutdown()
 {
-    
-public:
-    IGameState() {};
-    virtual ~IGameState() {};
-    
-    virtual void init()     = 0;
-    virtual void pause()    = 0;
-    virtual void resume()   = 0;
-    virtual void shutdown() = 0;
-    
-    void attachGameStateManager(CGameStateManager* gameStateManager)
-    {
-        m_gameStateManager = gameStateManager;
-    }
-    
-    CSpace* getSpace()
-    {
-        return &m_space;
-    }
-    
-protected:
-    CGameStateManager*  m_gameStateManager;
-    CSpace              m_space;
-};
+    return true;
+}
 
-#endif
+void CTransitionProcessor::process(CSpace* space)
+{
+    SEntity* entities = space->getEntities();
+    
+    for (glm::u32 id = 0; id < CST::MAX_ENTITIES; ++id)
+    {
+        if (entities[id].components & TRANSITION_COMPONENT)
+        {
+            void* ptr = entities[id].targetGameState;
+            
+            space->removeEntity(id);
+            
+            post( CMessage( CHANGE_STATE_MSG, ptr ) );
+        }
+        
+    }
+}
