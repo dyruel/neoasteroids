@@ -127,7 +127,7 @@ bool CGraphicsProcessor::shutdown()
 
 
 
-void CGraphicsProcessor::process(CSpace* space)
+void CGraphicsProcessor::process(CSpace* space, CAssets* assets, CEngine* engine)
 {
 /*
     if(m_entities == nullptr)

@@ -21,7 +21,10 @@
 bool CNeoAsteroids::init(int& argc, char** argv)
 {
 
-    CUtils::initRandom();
+    // Init game engine and load assets
+    m_engine.init();
+    
+    m_assets.loadAssets();
     
     // Init processors
     m_graphicsProcessor.init();
@@ -41,6 +44,8 @@ bool CNeoAsteroids::init(int& argc, char** argv)
     
     m_gameStateManager.changeState( &CIntroGameState::instance() );
     
+    CUtils::initRandom();
+    
     return true;
 }
 
@@ -53,6 +58,11 @@ void CNeoAsteroids::shutdown()
     m_graphicsProcessor.shutdown();
     m_inputProcessor.shutdown();
     m_transitionProcessor.shutdown();
+    
+    m_assets.freeAssets();
+    
+    m_engine.shutdown();
+    
 }
 
 void CNeoAsteroids::run()
@@ -69,18 +79,18 @@ void CNeoAsteroids::run()
         
         while (lastTime + deltaTimeMs <= presentTime)
         {
-            m_physicsProcessor.process( currentSpace );
+            m_physicsProcessor.process( currentSpace, &m_assets, &m_engine );
             
-            m_collisionProcessor.process( currentSpace );
+            m_collisionProcessor.process( currentSpace, &m_assets, &m_engine );
             
-            m_inputProcessor.process( currentSpace );
+            m_inputProcessor.process( currentSpace, &m_assets, &m_engine );
             
-            m_transitionProcessor.process( currentSpace );
+            m_transitionProcessor.process( currentSpace, &m_assets, &m_engine );
             
             lastTime += deltaTimeMs;
         }
 
-        m_graphicsProcessor.process( currentSpace );
+        m_graphicsProcessor.process( currentSpace, &m_assets, &m_engine );
     }
 
 }

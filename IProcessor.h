@@ -19,6 +19,9 @@
 #ifndef IPROCESSOR_H
 #define IPROCESSOR_H
 
+#include "CAssets.h"
+#include "CEngine.h"
+
 #include "CGameStateManager.h"
 
 #include "CMessenger.h"
@@ -35,7 +38,7 @@ public:
     
     virtual bool shutdown() = 0;
     
-    virtual void process(CSpace* space)  = 0;
+    virtual void process(CSpace* space, CAssets* assets, CEngine* engine)  = 0;
 };
 
 #endif

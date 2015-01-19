@@ -28,7 +28,7 @@ bool CTransitionProcessor::shutdown()
     return true;
 }
 
-void CTransitionProcessor::process(CSpace* space)
+void CTransitionProcessor::process(CSpace* space, CAssets* assets, CEngine* engine)
 {
     SEntity* entities = space->getEntities();
     

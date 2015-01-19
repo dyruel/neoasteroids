@@ -40,7 +40,7 @@ void CCollisionProcessor::receive(const CMessage& msg)
     }
 }
 */
-void CCollisionProcessor::process(CSpace* space)
+void CCollisionProcessor::process(CSpace* space, CAssets* assets, CEngine* engine)
 {
     /*
     if(m_entities == nullptr)

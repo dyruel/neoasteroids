@@ -29,11 +29,15 @@
 
 #include "CUtils.h"
 
+#include "CAssets.h"
+#include "CEngine.h"
+
 class CNeoAsteroids
 {
 public:
     
-    CNeoAsteroids() {}
+    CNeoAsteroids()
+    : m_assets(&m_engine) {}
     virtual ~CNeoAsteroids() {}
         
     bool init(int& argc, char** argv);
@@ -53,7 +57,12 @@ private:
     
     // Game state manager
     CGameStateManager      m_gameStateManager;
-
+    
+    // Game assets
+    CAssets                m_assets;
+    
+    // Game engine
+    CEngine                m_engine;
 };
 
 #endif

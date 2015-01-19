@@ -34,7 +34,7 @@ public:
     
     bool    shutdown();
     
-    void    process(CSpace* space);
+    void    process(CSpace* space, CAssets* assets, CEngine* engine);
     
 };
 #endif

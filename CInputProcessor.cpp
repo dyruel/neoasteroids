@@ -28,7 +28,7 @@ bool CInputProcessor::shutdown()
     return true;
 }
 
-void CInputProcessor::process(CSpace* space)
+void CInputProcessor::process(CSpace* space, CAssets* assets, CEngine* engine)
 {
 /*
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
