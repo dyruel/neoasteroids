@@ -34,7 +34,7 @@ glm::u32 CSpace::addEntity()
         }
     }
     
-    //        CFileLogger::log( "No more entities left.\n");
+    CFileLogger::log( "No more entities left.\n");
     
     return CST::MAX_ENTITIES;
 }

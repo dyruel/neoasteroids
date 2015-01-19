@@ -21,6 +21,8 @@
 
 #include "SEntity.h"
 
+#include "CFileLogger.h"
+
 class CSpace
 {
 public:
