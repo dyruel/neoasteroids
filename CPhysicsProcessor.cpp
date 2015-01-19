@@ -28,7 +28,7 @@ bool CPhysicsProcessor::shutdown()
     return true;
 }
 
-
+/*
 void CPhysicsProcessor::receive(const CMessage& msg)
 {
     if (msg.getReceivers() & PE::PHYSICS_LISTENER)
@@ -39,9 +39,11 @@ void CPhysicsProcessor::receive(const CMessage& msg)
         }
     }
 }
+*/
 
-void CPhysicsProcessor::run()
+void CPhysicsProcessor::process(const IProcessible* processible)
 {
+    /*
     if(m_entities == nullptr)
     {
         return;
@@ -120,5 +122,5 @@ void CPhysicsProcessor::run()
         }
         
     }
-    
+    */
 }

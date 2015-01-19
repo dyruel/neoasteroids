@@ -16,38 +16,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CAUDIOSYSTEM_H
-#define CAUDIOSYSTEM_H
+#ifndef CINPUTPROCESSOR_H
+#define CINPUTPROCESSOR_H
 
 #include <SDL2/SDL.h>
-#include <SDL2_mixer/SDL_mixer.h>
 
-#include "IListener.h"
-#include "CFileLogger.h"
+#include "IProcessor.h"
 
-#include <iostream>
-
-class CAudioHelper : public IListener
+class CInputProcessor : public IProcessor
 {
     
 public:
     
-    CAudioHelper() : m_menuMusic(nullptr) {};
-    virtual ~CAudioHelper() {};
+    CInputProcessor() {};
+    virtual ~CInputProcessor() {};
     
-    // ISystem specific methods
+    // IProcessor specific methods
     bool    init();
     
     bool    shutdown();
     
-    void    receive(const CMessage& msg);
+    void    process(const IProcessible* processible);
+    
+    //    void    receive(const CMessage& msg);
     
 private:
+    glm::u32   m_buttonsStatus;
     
-    // Musics
-    Mix_Music* m_menuMusic;
-    
-    // Sounds
+    void       updateButtonStatus();
     
 };
 #endif

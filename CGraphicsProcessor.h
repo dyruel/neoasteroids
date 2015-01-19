@@ -35,6 +35,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Common.h"
 #include "IProcessor.h"
 #include "CFileLogger.h"
 
@@ -50,9 +51,9 @@ public:
     
     bool    shutdown();
     
-    void    run();
+    void    process(const IProcessible* processible);
     
-    void    receive(const CMessage& msg);
+//    void    receive(const CMessage& msg);
     
 private:
     
@@ -61,10 +62,10 @@ private:
     
     // OpenGL variables
     GLuint  m_basicProgram;
-    GLuint  m_vbos[PE::NUM_MESH];
-    GLuint  m_ibos[PE::NUM_MESH];
-    GLuint  m_vaos[PE::NUM_MESH];
-    GLsizei m_numIndices[PE::NUM_MESH];
+//    GLuint  m_vbos[PE::NUM_MESH];
+//    GLuint  m_ibos[PE::NUM_MESH];
+//    GLuint  m_vaos[PE::NUM_MESH];
+//    GLsizei m_numIndices[PE::NUM_MESH];
     GLint   m_modelMatrix;
     
     // SDL variables

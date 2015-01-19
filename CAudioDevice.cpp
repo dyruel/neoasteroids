@@ -16,40 +16,45 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CNEOASTEROIDS_H
-#define CNEOASTEROIDS_H
+#include "CAudioDevice.h"
 
-#include "CGameStateManager.h"
-
-#include "CGraphicsProcessor.h"
-#include "CCollisionProcessor.h"
-#include "CPhysicsProcessor.h"
-
-#include "CUtils.h"
-
-class CNeoAsteroids
+bool CAudioDevice::init()
 {
-public:
+    if( SDL_InitSubSystem(SDL_INIT_AUDIO) < 0 )
+    {
+        CFileLogger::logFormat( "SDL audio could not initialize! SDL_Error: %s\n", SDL_GetError() );
+        return false;
+    }
     
-    CNeoAsteroids() {}
-    virtual ~CNeoAsteroids() {}
-        
-    bool init(int& argc, char** argv);
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
+    {
+        CFileLogger::logFormat( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+        return false;
+    }
     
-    void shutdown();
+    
+    m_menuMusic = Mix_LoadMUS( "menu.ogg" );
+    if( m_menuMusic == nullptr )
+    {
+        CFileLogger::logFormat( "Failed to load menu music! SDL_mixer Error: %s\n", Mix_GetError() );
+        return false;
+    }
+/*
+    if( Mix_PlayingMusic() == 0 )
+    {
+        Mix_PlayMusic( m_menuMusic, -1 );
+    }
+*/    
+    
+    return true;
+}
 
-    void run();
-    
-private:
-    
-    // Processors
-    CGraphicsProcessor     m_graphicsProcessor;
-    CCollisionProcessor    m_collisionProcessor;
-    CPhysicsProcessor      m_physicsProcessor;
-    
-    // Game state manager
-    CGameStateManager      m_gameStateManager;
+bool CAudioDevice::shutdown()
+{
+    Mix_FreeMusic( m_menuMusic );
+    Mix_Quit();
+    return true;
+}
 
-};
 
-#endif
+

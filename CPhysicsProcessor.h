@@ -29,14 +29,14 @@ public:
     CPhysicsProcessor() {};
     virtual ~CPhysicsProcessor() {};
     
-    // ISystem specific methods
+    // IProcessor specific methods
     bool    init();
     
     bool    shutdown();
     
-    void    run();
+    void    process(const IProcessible* processible);
     
-    void    receive(const CMessage& msg);
+//    void    receive(const CMessage& msg);
     
 private:
     

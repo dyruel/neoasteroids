@@ -19,50 +19,23 @@
 #ifndef IPROCESSOR_H
 #define IPROCESSOR_H
 
-#include "SEntity.h"
-#include "CMessageHandler.h"
+#include "CGameStateManager.h"
 
-class IProcessor : public IListener
+#include "CMessenger.h"
+
+class IProcessor : public CMessenger
 {
     
 public:
-    IProcessor() : m_messageHandler(nullptr), m_entities(nullptr) {};
+    
+    IProcessor() {};
     virtual ~IProcessor() {};
     
     virtual bool init()     = 0;
     
     virtual bool shutdown() = 0;
     
-    virtual void run()      = 0;
-    
-    virtual void attachMessageHandler(CMessageHandler* messageHandler)
-    {
-        assert(messageHandler != nullptr);
-        
-        m_messageHandler = messageHandler;
-    }
-    
-    CMessageHandler* getMessageHandler()
-    {
-        assert(m_messageHandler != nullptr);
-        return m_messageHandler;
-    }
-    
-    SEntity* getEntities()
-    {
-        return m_entities;
-    }
-    
-    virtual void attachEntities(SEntity* entities)
-    {
-        assert(entities != nullptr);
-        
-        m_entities = entities;
-    }
-    
-protected:
-    CMessageHandler*    m_messageHandler;
-    SEntity*            m_entities;
+    virtual void process(const IProcessible* processible)  = 0;
 };
 
 #endif

@@ -19,9 +19,13 @@
 #ifndef IGAMESTATE_H
 #define IGAMESTATE_H
 
-class CLogicProcessor;
+#include "IReceiver.h"
 
-class IGameState : public IListener
+#include "IProcessible.h"
+
+class CGameStateManager;
+
+class IGameState : public IReceiver, public IProcessible
 {
     
 public:
@@ -32,15 +36,14 @@ public:
     virtual void pause()    = 0;
     virtual void resume()   = 0;
     virtual void shutdown() = 0;
-    virtual void update()   = 0;
     
-    void attachLogicSystem(CLogicProcessor* logicProcessor)
+    void attachGameStateManager(CGameStateManager* gameStateManager)
     {
-        m_logicProcessor = logicProcessor;
+        m_gameStateManager = gameStateManager;
     }
     
 protected:
-    CLogicProcessor*  m_logicProcessor;
+    CGameStateManager*  m_gameStateManager;
 
 };
 

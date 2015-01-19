@@ -43,7 +43,7 @@ void CMenuGameState::shutdown()
 void CMenuGameState::update()
 {
 //    std::cout << "Menu" << std::endl;
-    m_logicSystem->pushState( &CPlayGameState::instance() );
+    m_gameStateManager->pushState( &CPlayGameState::instance() );
 }
 
 void CMenuGameState::receive(const CMessage& msg)

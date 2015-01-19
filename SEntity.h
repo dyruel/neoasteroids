@@ -29,12 +29,13 @@ typedef enum
     MOVE_COMPONENT          = 1 << 2,
     COLLIDABLE_COMPONENT    = 1 << 3,
     PLAYER_COMPONENT        = 1 << 4,
+    INPUT_COMPONENT         = 1 << 5,
     ALL_COMPONENT           = ~0
 } ComponentId;
 
 struct SEntity
 {
-    glm::u32       mask;
+    glm::u32       components;
     
     // Render Component
     glm::u8        texName[64];
@@ -55,7 +56,13 @@ struct SEntity
     // Player Component
     glm::u32       lives;
     glm::u32       score;
+    
+    // Input Component
+    glm::u32       mapSize;
+    glm::u32       ButtonId[PE::MAX_INPUT_MAP];
+    glm::u32       ActionId[PE::MAX_INPUT_MAP];
 };
+
 
 
 #endif

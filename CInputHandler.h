@@ -21,11 +21,11 @@
 
 #include <SDL2/SDL.h>
 
-#include "CSubject.h"
+#include "CMessenger.h"
 
 #include <iostream>
 
-class CInputHandler : public CSubject
+class CInputHandler : public CMessenger
 {
     
 public:

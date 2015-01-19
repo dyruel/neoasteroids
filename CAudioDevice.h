@@ -16,18 +16,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef ILISTENER_H
-#define ILISTENER_H
+#ifndef CAUDIODEVICE_H
+#define CAUDIODEVICE_H
 
-#include "CMessage.h"
+#include <SDL2/SDL.h>
+#include <SDL2_mixer/SDL_mixer.h>
 
-class IListener
+#include "CFileLogger.h"
+
+#include <iostream>
+
+class CAudioDevice
 {
     
 public:
-    IListener(){};
-    virtual ~IListener(){};
     
-    virtual void receive(const CMessage& msg) = 0;
+    CAudioDevice() : m_menuMusic(nullptr) {};
+    virtual ~CAudioDevice() {};
+    
+    bool    init();
+    
+    bool    shutdown();
+        
+private:
+    
+    // Musics
+    Mix_Music* m_menuMusic;
+    
+    // Sounds
+    
 };
 #endif

@@ -18,85 +18,56 @@
 
 #include "CNeoAsteroids.h"
 
-
-
 bool CNeoAsteroids::init(int& argc, char** argv)
 {
-    /*
-    m_messageHandler.attachListener(this);
-    m_messageHandler.attachListener(&m_inputSystem);
-    m_messageHandler.attachListener(&m_graphicsSystem);
-    m_messageHandler.attachListener(&m_logicSystem);
-    m_messageHandler.attachListener(&m_audioSystem);
-    m_messageHandler.attachListener(&m_collisionSystem);
-    m_messageHandler.attachListener(&m_physicsSystem);
-    */
-
-    m_graphicsProcessor.attachEntities(m_entities);
-    m_graphicsProcessor.init();
-    
-//    m_inputSystem.attachMessageHandler(&m_messageHandler);
-//    m_inputSystem.init();
-    
-//    m_audioSystem.attachMessageHandler(&m_messageHandler);
-//    m_audioSystem.init();
-    
-    m_collisionProcessor.attachEntities(m_entities);
-    m_collisionProcessor.init();
-    
-    m_physicsProcessor.attachEntities(m_entities);
-    m_physicsProcessor.init();
-    
-    m_inputHandler.attachListener(&m_logicProcessor);
-    
-    m_logicProcessor.attachEntities(m_entities);
-    m_logicProcessor.init();
-    
 
     CUtils::initRandom();
-
+    
+    // Init processors
+    m_graphicsProcessor.init();
+    
+    m_collisionProcessor.init();
+    
+    m_physicsProcessor.init();
+    
+    
+    // Init game
+    m_gameStateManager.init();
+    
+    m_gameStateManager.changeState( &CIntroGameState::instance() );
+    
     return true;
 }
 
 void CNeoAsteroids::shutdown()
 {
-    m_logicSystem.shutdown();
-    m_physicsSystem.shutdown();
-    m_collisionSystem.shutdown();
-    m_audioSystem.shutdown();
-    m_inputSystem.shutdown();
-    m_graphicsSystem.shutdown();
+    m_gameStateManager.shutdown();
+    m_physicsProcessor.shutdown();
+    m_collisionProcessor.shutdown();
+    m_graphicsProcessor.shutdown();
 }
 
 void CNeoAsteroids::run()
 {
     glm::f32 lastTime = CUtils::getTime();
     const glm::f32 deltaTimeMs = PE::DELTA_TIME * 1000.f;
+    IGameState* gameState = m_gameStateManager.currentState();
 
-    while (m_running)
+    while (m_gameStateManager.hasStates())
     {
         glm::f32 presentTime = CUtils::getTime();
         
-//        std::cout << presentTime - lastTime << std::endl;
-        
         while (lastTime + deltaTimeMs <= presentTime)
         {
-            m_inputSystem.run();
-            m_collisionSystem.run();
-            m_audioSystem.run();
-            m_logicSystem.run();
+            m_physicsProcessor.process( gameState );
+            
+            m_collisionProcessor.process( gameState );
             
             lastTime += deltaTimeMs;
         }
 
-        m_graphicsSystem.run();
+        m_graphicsProcessor.process( gameState );
     }
 
 }
 
-void CNeoAsteroids::receive(const CMessage& msg)
-{
-    if (msg.getMessageIds() & PE::QUIT_MESSAGE) {
-        m_running = 0;
-    }
-}

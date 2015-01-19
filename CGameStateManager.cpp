@@ -16,38 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CLogicProcessor.h"
+#include "CGameStateManager.h"
 
 
-bool CLogicProcessor::init()
-{
-    changeState( &CIntroGameState::instance() );
-    
-    return true;
-}
-
-bool CLogicProcessor::shutdown()
+bool CGameStateManager::init()
 {
     return true;
 }
 
-void CLogicProcessor::run()
+bool CGameStateManager::shutdown()
 {
-
-    
-    m_states[m_currentState]->update();
+    return true;
 }
 
-void CLogicProcessor::receive(const CMessage& msg)
+void CGameStateManager::receive(const CMessage& msg)
 {
-    if (msg.getReceivers() & PE::LOGIC_LISTENER)
+    if ( hasStates() )
     {
         m_states[m_currentState]->receive(msg);
     }
 }
 
-
-void CLogicProcessor::changeState(IGameState* state)
+void CGameStateManager::changeState(IGameState* state)
 {
     if ( hasStates() )
     {
@@ -59,11 +49,11 @@ void CLogicProcessor::changeState(IGameState* state)
     }
     
     m_states[m_currentState] = state;
-    state->attachLogicSystem(this);
+    state->attachGameStateManager(this);
     state->init();
 }
 
-void CLogicProcessor::pushState(IGameState* state)
+void CGameStateManager::pushState(IGameState* state)
 {
     assert( (m_currentState + 1 < PE::MAX_GAME_STATES) && (state != nullptr) );
     
@@ -74,11 +64,11 @@ void CLogicProcessor::pushState(IGameState* state)
     
     ++m_currentState;
     m_states[m_currentState] = state;
-    state->attachLogicSystem(this);
+    state->attachGameStateManager(this);
     state->init();
 }
 
-void CLogicProcessor::popState()
+void CGameStateManager::popState()
 {
     if ( hasStates() )
     {
@@ -92,20 +82,22 @@ void CLogicProcessor::popState()
     }
 }
 
-IGameState* CLogicSystem::currentState()
+IGameState* CGameStateManager::currentState()
 {
     return m_states[m_currentState];
 }
 
-bool CLogicSystem::hasStates()
+bool CGameStateManager::hasStates()
 {
     return m_currentState >= 0;
 }
 
-void CLogicSystem::removeAllStates()
+void CGameStateManager::removeAllStates()
 {
     while ( m_currentState >= 0 ) {
         m_states[m_currentState]->shutdown();
         --m_currentState;
     }
 }
+
+

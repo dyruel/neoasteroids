@@ -16,50 +16,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CAudioHelper.h"
+#ifndef IPROCESSIBLE_H
+#define IPROCESSIBLE_H
 
-bool CAudioHelper::init()
+#include "SEntity.h"
+
+class IProcessible
 {
-    if( SDL_InitSubSystem(SDL_INIT_AUDIO) < 0 )
+public:
+    IProcessible() {};
+    virtual ~IProcessible() {};
+    
+    // To be virtual
+    SEntity* getEntities()
     {
-        CFileLogger::logFormat( "SDL audio could not initialize! SDL_Error: %s\n", SDL_GetError() );
-        return false;
+        return m_entities;
     }
     
-    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 )
-    {
-        CFileLogger::logFormat( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
-        return false;
-    }
+protected:
     
-    
-    m_menuMusic = Mix_LoadMUS( "menu.ogg" );
-    if( m_menuMusic == nullptr )
-    {
-        CFileLogger::logFormat( "Failed to load menu music! SDL_mixer Error: %s\n", Mix_GetError() );
-        return false;
-    }
-/*
-    if( Mix_PlayingMusic() == 0 )
-    {
-        Mix_PlayMusic( m_menuMusic, -1 );
-    }
-*/    
-    
-    return true;
-}
+    SEntity m_entities[PE::MAX_ENTITIES];
+};
 
-bool CAudioHelper::shutdown()
-{
-    Mix_FreeMusic( m_menuMusic );
-    Mix_Quit();
-    return true;
-}
-
-
-void CAudioHelper::receive(const CMessage& msg)
-{
-    
-}
-
-
+#endif

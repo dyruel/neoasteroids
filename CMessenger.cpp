@@ -16,20 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CSubject.h"
+#include "CMessenger.h"
 
 
-void CSubject::attachListener(IListener* listener)
+void CMessenger::registerReceiver(IReceiver* receiver)
 {
-    assert(m_numListeners < PE::MAX_LISTENERS);
-    m_listeners[m_numListeners] = listener;
-    ++m_numListeners;
+    assert(m_numReceivers < PE::MAX_RECEIVERS);
+    m_receivers[m_numReceivers] = receiver;
+    ++m_numReceivers;
 }
 
-void CSubject::post(const CMessage& msg) const
+void CMessenger::post(const CMessage& msg) const
 {
-    for (glm::u32 i = 0; i < m_numListeners; ++i)
+    for (glm::u32 i = 0; i < m_numReceivers; ++i)
     {
-        m_listeners[i]->receive(msg);
+        m_receivers[i]->receive(msg);
     }
 }

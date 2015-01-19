@@ -28,7 +28,7 @@ namespace PE
     
     constexpr const glm::u32   MAX_SYSTEMS     = 3;
     
-    constexpr const glm::u32   MAX_LISTENERS   = 7;
+    constexpr const glm::u32   MAX_RECEIVERS   = 7;
     
     constexpr const glm::f32   DELTA_TIME      = .01f; // in s
 
@@ -38,10 +38,12 @@ namespace PE
     
     constexpr const glm::u32   MAX_INDICES     = 10;
     
+    constexpr const glm::u32   MAX_INPUT_MAP   = 10;
+    
     constexpr const glm::f64   PI = 3.1415926535897932384626433832795f;
     
     constexpr const glm::f64   TO_RADS = PI / 180.0;
-    
+/*
     typedef enum
     {
         NULL_LISTENER         = 0,
@@ -65,17 +67,10 @@ namespace PE
         PHYSICS_SYSTEM      = 1 << 5,
         ALL_SYSTEM          = ~0
     } SystemId;
+*/    
+
     
-    typedef enum
-    {
-        NULL_MESSAGE         = 0,
-        QUIT_MESSAGE         = 1 << 0,
-        ENTITIES_MESSAGE     = 1 << 1,
-        COMMAND_MESSAGE      = 1 << 2,
-        ALL_MESSAGE          = ~0
-    } MessageId;
-    
-    
+/*
     typedef enum
     {
         ASTEROID_ENTITY            = 0,
@@ -94,19 +89,31 @@ namespace PE
         BULLET_MESH,
         NUM_MESH
     } Mesh;
+*/
+    typedef enum
+    {
+        NULL_BUTTON    = 0,
+        UP_BUTTON      = 1 << 0,
+        DOWN_BUTTON    = 1 << 1,
+        LEFT_BUTTON    = 1 << 2,
+        RIGHT_BUTTON   = 1 << 3,
+        A_BUTTON       = 1 << 4,
+        B_BUTTON       = 1 << 5,
+        C_BUTTON       = 1 << 6,
+        D_BUTTON       = 1 << 7,
+        START_BUTTON   = 1 << 8,
+        SELECT_BUTTON  = 1 << 9,
+    } ButtonId;
     
     typedef enum
     {
-        NULL_COMMAND    = 0,
-        UP_COMMAND      = 1 << 0,
-        DOWN_COMMAND    = 1 << 1,
-        LEFT_COMMAND    = 1 << 2,
-        RIGHT_COMMAND   = 1 << 3,
-        A_COMMAND       = 1 << 4,
-        B_COMMAND       = 1 << 5,
-        C_COMMAND       = 1 << 6,
-        D_COMMAND       = 1 << 7
-    } CommandId;
+        NULL_ACTION         = 0,
+        TURN_LEFT_ACTION    = 1 << 0,
+        TURN_RIGHT_ACTION   = 1 << 1,
+        MOVE_ACTION         = 1 << 2,
+        FIRE_ACTION         = 1 << 3,
+        PAUSE_ACTION        = 1 << 4
+    } ActionId;
 }
 
 

@@ -21,7 +21,9 @@
 
 #include <iostream>
 
-#include "CLogicProcessor.h"
+#include "CGameStateManager.h"
+
+#include "IGameState.h"
 
 #include "CMenuGameState.h"
 

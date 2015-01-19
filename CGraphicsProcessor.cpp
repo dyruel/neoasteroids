@@ -117,7 +117,7 @@ bool CGraphicsProcessor::init()
     GLint vertexPositionAttrib = glGetAttribLocation ( m_basicProgram, "position") ;
     
     // Initialize VAOs/VBOs/IBOs
-    
+#if 0
     glGenVertexArrays ( PE::NUM_MESH, m_vaos);
     glGenBuffers( PE::NUM_MESH, m_vbos );
     glGenBuffers( PE::NUM_MESH, m_ibos );
@@ -199,15 +199,16 @@ bool CGraphicsProcessor::init()
         glVertexAttribPointer (vertexPositionAttrib, 3, GL_FLOAT, GL_FALSE, 0, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibos[PE::UFO_MESH]);
     glBindVertexArray (0);
-    
+#endif
     return true;
 }
 
 bool CGraphicsProcessor::shutdown()
 {
+#if 0
     glDeleteBuffers(PE::NUM_MESH, m_vbos);
-    glDeleteBuffers(PE::NUM_MESH, m_vbos);
-    
+//    glDeleteBuffers(PE::NUM_MESH, m_vbos);
+#endif
     SDL_GL_DeleteContext( m_glcontext );
     SDL_DestroyWindow( m_window ); // m_screen is freed by SDL_DestroyWindow
     m_window = nullptr;
@@ -302,18 +303,19 @@ void CGraphicsProcessor::useProgram(const glm::u32& programId) const
     }
 }
 
-void CGraphicsProcessor::run()
+void CGraphicsProcessor::process(const IProcessible* processible)
 {
-
+/*
     if(m_entities == nullptr)
     {
         return;
     }
-    
+*/
     glClear( GL_COLOR_BUFFER_BIT );
     
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
     {
+/*
         if (m_entities[id].systemIds & PE::GRAPHICS_SYSTEM)
         {
             glm::mat4 rotationMatrix;
@@ -334,7 +336,7 @@ void CGraphicsProcessor::run()
             }
 
         }
-        
+*/
     }
     
     glFlush();
@@ -342,6 +344,7 @@ void CGraphicsProcessor::run()
     SDL_GL_SwapWindow( m_window );
 }
 
+/*
 void CGraphicsProcessor::receive(const CMessage& msg)
 {
     if (msg.getReceivers() & PE::GRAPHICS_LISTENER)
@@ -352,4 +355,5 @@ void CGraphicsProcessor::receive(const CMessage& msg)
         }
     }
 }
+*/
 

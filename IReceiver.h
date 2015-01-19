@@ -16,40 +16,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CNEOASTEROIDS_H
-#define CNEOASTEROIDS_H
+#ifndef IRECEIVER_H
+#define IRECEIVER_H
 
-#include "CGameStateManager.h"
+#include "CMessage.h"
 
-#include "CGraphicsProcessor.h"
-#include "CCollisionProcessor.h"
-#include "CPhysicsProcessor.h"
-
-#include "CUtils.h"
-
-class CNeoAsteroids
+class IReceiver
 {
+    
 public:
+    IReceiver(){};
+    virtual ~IReceiver(){};
     
-    CNeoAsteroids() {}
-    virtual ~CNeoAsteroids() {}
-        
-    bool init(int& argc, char** argv);
-    
-    void shutdown();
-
-    void run();
-    
-private:
-    
-    // Processors
-    CGraphicsProcessor     m_graphicsProcessor;
-    CCollisionProcessor    m_collisionProcessor;
-    CPhysicsProcessor      m_physicsProcessor;
-    
-    // Game state manager
-    CGameStateManager      m_gameStateManager;
-
+    virtual void receive(const CMessage& msg) = 0;
 };
-
 #endif

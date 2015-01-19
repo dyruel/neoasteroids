@@ -19,6 +19,14 @@
 #ifndef CMESSAGE_H
 #define CMESSAGE_H
 
+typedef enum
+{
+    NULL_MESSAGE         = 0,
+    QUIT_MESSAGE         = 1 << 0,
+    ENTITIES_MESSAGE     = 1 << 1,
+    COMMAND_MESSAGE      = 1 << 2,
+    ALL_MESSAGE          = ~0
+} MessageId;
 
 class CMessage
 {
@@ -26,7 +34,7 @@ public:
     
     CMessage() : m_data(nullptr) {};
     virtual ~CMessage(){};
-    
+/*
     void setSender(const PE::ListenerId& systemId)
     {
         m_senderId = systemId;
@@ -66,14 +74,14 @@ public:
     {
         return m_messageIds;
     }
-    
+*/
 protected:
     
-    PE::ListenerId    m_senderId;
+//    PE::ListenerId    m_senderId;
     
-    PE::ListenerId    m_receiverIds;
+//    PE::ListenerId    m_receiverIds;
     
-    PE::MessageId   m_messageIds;
+    MessageId   m_messageIds;
     
     void*           m_data;
     

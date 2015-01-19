@@ -28,7 +28,7 @@ bool CCollisionProcessor::shutdown()
     return true;
 }
 
-
+/*
 void CCollisionProcessor::receive(const CMessage& msg)
 {
     if (msg.getReceivers() & PE::COLLISION_LISTENER)
@@ -39,9 +39,10 @@ void CCollisionProcessor::receive(const CMessage& msg)
         }
     }
 }
-
-void CCollisionProcessor::run()
+*/
+void CCollisionProcessor::process(const IProcessible* processible)
 {
+    /*
     if(m_entities == nullptr)
     {
         return;
@@ -56,6 +57,6 @@ void CCollisionProcessor::run()
         }
         
     }
-    
+    */
 }
 

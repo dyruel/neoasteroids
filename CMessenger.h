@@ -16,27 +16,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CMESSAGEHANDLER_H
-#define CMESSAGEHANDLER_H
+#ifndef CMESSENGER_H
+#define CMESSENGER_H
 
 #include "Common.h"
-#include "IListener.h"
+#include "IReceiver.h"
 
     
-class CSubject
+class CMessenger
 {
 public:
-    CSubject() : m_numListeners(0) {};
-    ~CSubject() {};
+    CMessenger() : m_numReceivers(0) {};
+    ~CMessenger() {};
     
-    void attachListener(IListener* listener);
+    void registerReceiver(IReceiver* receiver);
     
     void post(const CMessage& msg) const;
     
 private:
     
-    glm::u32     m_numListeners;
-    IListener*   m_listeners[PE::MAX_LISTENERS];
+    glm::u32     m_numReceivers;
+    IReceiver*   m_receivers[PE::MAX_RECEIVERS];
 };
 
 #endif

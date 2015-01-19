@@ -21,9 +21,12 @@
 
 #include <iostream>
 
-#include "CLogicProcessor.h"
-#include "SEntity.h"
-#include "CMessageHandler.h"
+//#include "CGameStateManager.h"
+//#include "SEntity.h"
+//#include "CMessageHandler.h"
+
+#include "IGameState.h"
+
 #include "CFileLogger.h"
 #include "CUtils.h"
 
@@ -59,7 +62,7 @@ private:
     // Game entities
     glm::u32    m_spaceshipId;
     
-    
+
     
     //
     static CPlayGameState   m_playGameState;

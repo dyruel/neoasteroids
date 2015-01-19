@@ -16,32 +16,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CLOGICSYSTEM_H
-#define CLOGICSYSTEM_H
+#ifndef CGAMESTATEMANAGER_H
+#define CGAMESTATEMANAGER_H
 
-#include "IProcessor.h"
+#include "IReceiver.h"
 
 #include "IGameState.h"
 
 #include "CIntroGameState.h"
 
 
-class CLogicProcessor : public IProcessor
+class CGameStateManager : public IReceiver
 {
     
 public:
-    CLogicProcessor() : m_currentState(-1) {};
-    ~CLogicProcessor() {};
+    CGameStateManager() : m_currentState(-1) {};
+    ~CGameStateManager() {};
     
-    // IProcessor specific methods
+
     bool    init();
     
     bool    shutdown();
     
-    void    run();
+//    void    run();
     
-    void    receive(const CMessage& msg);
+    // IReceiver
     
+    void receive(const CMessage& msg);
     
     // Game states management
     
