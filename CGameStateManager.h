@@ -61,6 +61,6 @@ public:
 private:
     
     glm::i32    m_currentState;
-    IGameState* m_states[PE::MAX_GAME_STATES];
+    IGameState* m_states[CST::MAX_GAME_STATES];
 };
 #endif

@@ -21,7 +21,7 @@
 
 void CMessenger::registerReceiver(IReceiver* receiver)
 {
-    assert(m_numReceivers < PE::MAX_RECEIVERS);
+    assert(m_numReceivers < CST::MAX_RECEIVERS);
     m_receivers[m_numReceivers] = receiver;
     ++m_numReceivers;
 }

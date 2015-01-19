@@ -55,7 +55,7 @@ void CGameStateManager::changeState(IGameState* state)
 
 void CGameStateManager::pushState(IGameState* state)
 {
-    assert( (m_currentState + 1 < PE::MAX_GAME_STATES) && (state != nullptr) );
+    assert( (m_currentState + 1 < CST::MAX_GAME_STATES) && (state != nullptr) );
     
     if ( hasStates() )
     {

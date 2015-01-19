@@ -28,7 +28,7 @@ bool CInputProcessor::shutdown()
     return true;
 }
 
-void CInputProcessor::process(const IProcessible* processible)
+void CInputProcessor::process(const CSpace* space)
 {
 /*
     for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
@@ -80,15 +80,15 @@ void CInputProcessor::updateButtonStatus()
     
     bool is_pressed = event.type == SDL_KEYDOWN ? true : false;
     
-    PE::ButtonId buttonId = PE::NULL_BUTTON;
+    ButtonId buttonId = NULL_BUTTON;
     
     switch( event.key.keysym.sym )
     {
-        case SDLK_LEFT:  buttonId = PE::LEFT_BUTTON;   break;
-        case SDLK_RIGHT: buttonId = PE::RIGHT_BUTTON;  break;
-        case SDLK_UP:    buttonId = PE::UP_BUTTON;     break;
-        case SDLK_DOWN:  buttonId = PE::DOWN_BUTTON;   break;
-        case SDLK_SPACE: buttonId = PE::A_BUTTON;      break;
+        case SDLK_LEFT:  buttonId = LEFT_BUTTON;   break;
+        case SDLK_RIGHT: buttonId = RIGHT_BUTTON;  break;
+        case SDLK_UP:    buttonId = UP_BUTTON;     break;
+        case SDLK_DOWN:  buttonId = DOWN_BUTTON;   break;
+        case SDLK_SPACE: buttonId = A_BUTTON;      break;
         
             
         default:

@@ -303,7 +303,7 @@ void CGraphicsProcessor::useProgram(const glm::u32& programId) const
     }
 }
 
-void CGraphicsProcessor::process(const IProcessible* processible)
+void CGraphicsProcessor::process(const CSpace* space)
 {
 /*
     if(m_entities == nullptr)
@@ -313,7 +313,7 @@ void CGraphicsProcessor::process(const IProcessible* processible)
 */
     glClear( GL_COLOR_BUFFER_BIT );
     
-    for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
+    for (glm::u32 id = 0; id < CST::MAX_ENTITIES; ++id)
     {
 /*
         if (m_entities[id].systemIds & PE::GRAPHICS_SYSTEM)

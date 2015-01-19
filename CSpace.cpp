@@ -16,26 +16,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef IPROCESSIBLE_H
-#define IPROCESSIBLE_H
+#include "CSpace.h"
 
-#include "SEntity.h"
 
-class IProcessible
+SEntity* CSpace::getEntities()
 {
-public:
-    IProcessible() {};
-    virtual ~IProcessible() {};
-    
-    // To be virtual
-    SEntity* getEntities()
+    return m_entities;
+}
+
+glm::u32 CSpace::addEntity()
+{
+    for (glm::u32 id = 0; id < CST::MAX_ENTITIES; ++id)
     {
-        return m_entities;
+        if(m_entities[id].components == NULL_COMPONENT)
+        {
+            return id;
+        }
     }
     
-protected:
+    //        CFileLogger::log( "No more entities left.\n");
     
-    SEntity m_entities[PE::MAX_ENTITIES];
-};
+    return CST::MAX_ENTITIES;
+}
 
-#endif
+void CSpace::removeEntity(const glm::u32& id)
+{
+    assert(id < CST::MAX_ENTITIES && m_entities != nullptr);
+    
+    m_entities[id].components = NULL_COMPONENT;
+}
+
+void CSpace::removeAllEntities()
+{
+    for (glm::u32 id = 0; id < CST::MAX_ENTITIES; ++id)
+    {
+        m_entities[id].components = NULL_COMPONENT;
+    }
+}

@@ -35,7 +35,7 @@ public:
     
     virtual bool shutdown() = 0;
     
-    virtual void process(const IProcessible* processible)  = 0;
+    virtual void process(const CSpace* space)  = 0;
 };
 
 #endif

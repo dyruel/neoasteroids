@@ -36,7 +36,7 @@ public:
 private:
     
     glm::u32     m_numReceivers;
-    IReceiver*   m_receivers[PE::MAX_RECEIVERS];
+    IReceiver*   m_receivers[CST::MAX_RECEIVERS];
 };
 
 #endif

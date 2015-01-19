@@ -16,53 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef SENTITY_H
-#define SENTITY_H
+#ifndef CSPACE_H
+#define CSPACE_H
 
-#include "Common.h"
+#include "SEntity.h"
 
-typedef enum
+class CSpace
 {
-    NULL_COMPONENT          = 0,
-    RENDER_COMPONENT        = 1 << 0,
-    POSITION_COMPONENT      = 1 << 1,
-    MOVE_COMPONENT          = 1 << 2,
-    COLLIDABLE_COMPONENT    = 1 << 3,
-    PLAYER_COMPONENT        = 1 << 4,
-    INPUT_COMPONENT         = 1 << 5,
-    ALL_COMPONENT           = ~0
-} ComponentId;
-
-struct SEntity
-{
-    glm::u32       components;
+public:
+    CSpace() {};
+    virtual ~CSpace() {};
     
-    // Render Component
-    glm::u8        texName[64];
-    glm::u32       texId;
+    SEntity* getEntities();
     
-    // Position component
-    glm::vec3      position;
+    glm::u32 addEntity();
     
-    // Move component
-    glm::vec3      velocity;
-    glm::vec3      accel;
-    glm::f32       angle;
+    void removeEntity(const glm::u32& id);
     
-    // Collidable component
-    glm::u8        group;       // Only entities of different groups can collide
-    glm::vec2      rect[4];
+    void removeAllEntities();
     
-    // Player Component
-    glm::u32       lives;
-    glm::u32       score;
+protected:
     
-    // Input Component
-    glm::u32       mapSize;
-    glm::u32       ButtonId[CST::MAX_INPUT_MAP];
-    glm::u32       ActionId[CST::MAX_INPUT_MAP];
+    SEntity m_entities[CST::MAX_ENTITIES];
 };
-
-
 
 #endif

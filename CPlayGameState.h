@@ -70,12 +70,6 @@ private:
     // Private methods
     void        prepareLevel(const glm::u32& level);
     
-    glm::u32    addEntity       ();
-    
-    void        removeEntity    (const glm::u32& id);
-    
-    void        removeAllEntities();
-    
     void        resetSpaceship  ();
     
     void        addAsteroid     ();

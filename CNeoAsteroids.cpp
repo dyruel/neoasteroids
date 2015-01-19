@@ -30,9 +30,14 @@ bool CNeoAsteroids::init(int& argc, char** argv)
     
     m_physicsProcessor.init();
     
+    m_inputProcessor.init();
+    
     
     // Init game
     m_gameStateManager.init();
+    
+    m_collisionProcessor.registerReceiver( &m_gameStateManager );
+    m_inputProcessor.registerReceiver( &m_gameStateManager );
     
     m_gameStateManager.changeState( &CIntroGameState::instance() );
     
@@ -42,6 +47,7 @@ bool CNeoAsteroids::init(int& argc, char** argv)
 void CNeoAsteroids::shutdown()
 {
     m_gameStateManager.shutdown();
+    
     m_physicsProcessor.shutdown();
     m_collisionProcessor.shutdown();
     m_graphicsProcessor.shutdown();
@@ -50,8 +56,8 @@ void CNeoAsteroids::shutdown()
 void CNeoAsteroids::run()
 {
     glm::f32 lastTime = CUtils::getTime();
-    const glm::f32 deltaTimeMs = PE::DELTA_TIME * 1000.f;
-    IGameState* gameState = m_gameStateManager.currentState();
+    const glm::f32 deltaTimeMs = CST::DELTA_TIME * 1000.f;
+    CSpace* currentSpace = m_gameStateManager.currentState()->getSpace();
 
     while (m_gameStateManager.hasStates())
     {
@@ -59,14 +65,16 @@ void CNeoAsteroids::run()
         
         while (lastTime + deltaTimeMs <= presentTime)
         {
-            m_physicsProcessor.process( gameState );
+            m_physicsProcessor.process( currentSpace );
             
-            m_collisionProcessor.process( gameState );
+            m_collisionProcessor.process( currentSpace );
+            
+            m_inputProcessor.process( currentSpace );
             
             lastTime += deltaTimeMs;
         }
 
-        m_graphicsProcessor.process( gameState );
+        m_graphicsProcessor.process( currentSpace );
     }
 
 }

@@ -59,40 +59,12 @@ void CPlayGameState::receive(const CMessage& msg)
 }
 
 
-glm::u32 CPlayGameState::addEntity()
-{
-    assert(m_entities != nullptr);
-    
-    for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
-    {
-        if(m_entities[id].components == NULL_COMPONENT)
-        {
-            return id;
-        }
-    }
-    
-    CFileLogger::log( "No more entities left.\n");
 
-    return PE::MAX_ENTITIES;
-}
-
-void CPlayGameState::removeEntity(const glm::u32& id)
-{
-    /*
-    assert(id < PE::MAX_ENTITIES && m_entities != nullptr);
-    m_entities[id].mask = NULL_SYSTEM;*/
-}
-
-void CPlayGameState::removeAllEntities()
-{
-    for (glm::u32 id = 0; id < PE::MAX_ENTITIES; ++id)
-    {
-        m_entities[id].components = NULL_COMPONENT;
-    }
-}
 
 void CPlayGameState::resetSpaceship()
 {
+    SEntity* m_entities = m_space.getEntities();
+    
     m_entities[m_spaceshipId].position.x = .0f;
     m_entities[m_spaceshipId].position.y = .0f;
     m_entities[m_spaceshipId].position.z = .0f;
@@ -106,15 +78,16 @@ void CPlayGameState::resetSpaceship()
     m_entities[m_spaceshipId].accel.z = .0f;
     
 //    m_entities[m_spaceshipId].speed = .0f;
-    m_entities[m_spaceshipId].angle = PE::PI / 2;
+    m_entities[m_spaceshipId].angle = CST::PI / 2;
 }
 
 
 void CPlayGameState::addAsteroid()
 {
-    glm::u32 id = addEntity();
+    glm::u32 id = m_space.addEntity();
+    SEntity* m_entities = m_space.getEntities();
     
-    if (id == PE::MAX_ENTITIES)
+    if (id == CST::MAX_ENTITIES)
     {
         return;
     }
@@ -138,7 +111,7 @@ void CPlayGameState::addAsteroid()
     m_entities[id].position.z = .0f;
     
     
-    m_entities[id].angle = 2 * PE::PI * CUtils::getRandomNumber();
+    m_entities[id].angle = 2 * CST::PI * CUtils::getRandomNumber();
     
     m_entities[id].velocity.x = cosf( m_entities[id].angle );
     m_entities[id].velocity.y = sinf( m_entities[id].angle );
@@ -150,9 +123,10 @@ void CPlayGameState::addAsteroid()
 
 void CPlayGameState::addSpaceship()
 {
-    glm::u32 id = addEntity();
+    glm::u32 id = m_space.addEntity();
+    SEntity* m_entities = m_space.getEntities();
     
-    if (id == PE::MAX_ENTITIES)
+    if (id == CST::MAX_ENTITIES)
     {
         return;
     }
@@ -179,7 +153,7 @@ void CPlayGameState::prepareLevel(const glm::u32& level)
 {
     assert(level <= 200);
     
-    removeAllEntities();
+    m_space.removeAllEntities();
     
     addSpaceship();
     

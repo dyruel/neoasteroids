@@ -21,11 +21,11 @@
 
 #include "IReceiver.h"
 
-#include "IProcessible.h"
+#include "CSpace.h"
 
 class CGameStateManager;
 
-class IGameState : public IReceiver, public IProcessible
+class IGameState : public IReceiver
 {
     
 public:
@@ -42,9 +42,14 @@ public:
         m_gameStateManager = gameStateManager;
     }
     
+    CSpace* getSpace()
+    {
+        return &m_space;
+    }
+    
 protected:
     CGameStateManager*  m_gameStateManager;
-
+    CSpace              m_space;
 };
 
 #endif
