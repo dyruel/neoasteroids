@@ -26,7 +26,7 @@ glm::u32 CUtils::getTime()
 
 void CUtils::initRandom()
 {
-    std::srand(std::time(0));
+    std::srand((uint32_t)time(NULL));
 }
 
 glm::f32 CUtils::getRandomNumber()
