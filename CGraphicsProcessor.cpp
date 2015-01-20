@@ -136,7 +136,8 @@ void CGraphicsProcessor::process(CSpace* space, CAssets* assets, CEngine* engine
     }
 */
     
-    
+	engine->getVideoDevice()->beginRender();
+
     for (glm::u32 id = 0; id < CST::MAX_ENTITIES; ++id)
     {
 /*
@@ -162,7 +163,7 @@ void CGraphicsProcessor::process(CSpace* space, CAssets* assets, CEngine* engine
         }
 */
     }
-    
+	engine->getVideoDevice()->endRender();
 
 }
 

@@ -57,6 +57,18 @@ bool CVideoDevice::init()
         CFileLogger::logFormat( "Could not create an OpenGL context! SDL_Error: %s\n", SDL_GetError() );
         return false;
     }
+
+#ifdef WIN32
+	GLenum glewInitStatus = glewInit();
+	if ( glewInitStatus != GLEW_OK )
+	{
+		CFileLogger::logFormat("Could not initialize GLEW! GLEW Error: %s\n", glewGetErrorString(glewInitStatus));
+		SDL_GL_DeleteContext(m_glcontext);
+		SDL_DestroyWindow(m_window);
+		SDL_Quit();
+		return false;
+	}
+#endif
     //m_screen = SDL_GetWindowSurface( m_window );
     
     //int maj = 0, min = 0;
