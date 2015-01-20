@@ -25,25 +25,25 @@
 // Constants list
 namespace CST
 {
-    constexpr const glm::u32   MAX_GAME_STATES = 3;
+     const glm::u32   MAX_GAME_STATES = 3;
     
-    constexpr const glm::u32   MAX_SYSTEMS     = 3;
+     const glm::u32   MAX_SYSTEMS     = 3;
     
-    constexpr const glm::u32   MAX_RECEIVERS   = 7;
+     const glm::u32   MAX_RECEIVERS   = 7;
     
-    constexpr const glm::f32   DELTA_TIME      = .01f; // in s
+     const glm::f32   DELTA_TIME      = .01f; // in s
 
-    constexpr const glm::u32   MAX_ENTITIES    = 20;
+     const glm::u32   MAX_ENTITIES    = 20;
 
-    constexpr const glm::u32   MAX_VERTICES    = 10;
+     const glm::u32   MAX_VERTICES    = 10;
     
-    constexpr const glm::u32   MAX_INDICES     = 10;
+     const glm::u32   MAX_INDICES     = 10;
     
-    constexpr const glm::u32   MAX_INPUT_MAP   = 10;
+     const glm::u32   MAX_INPUT_MAP   = 10;
     
-    constexpr const glm::f64   PI = 3.1415926535897932384626433832795f;
+     const glm::f64   PI = 3.1415926535897932384626433832795f;
     
-    constexpr const glm::f64   TO_RADS = PI / 180.0;
+     const glm::f64   TO_RADS = PI / 180.0;
 }
 /*
     typedef enum

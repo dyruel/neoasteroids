@@ -19,7 +19,13 @@
 #ifndef CUTILS_H
 #define CUTILS_H
 
+#ifdef WIN32
+#include <SDL.h>
+#elif __APPLE__
+#define GL3_PROTOTYPES 1
 #include <SDL2/SDL.h>
+#endif
+
 #include <glm/common.hpp>
 #include <cstdlib>
 #include <ctime>

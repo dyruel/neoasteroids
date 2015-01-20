@@ -19,7 +19,11 @@
 #ifndef CINPUTHANDLER_H
 #define CINPUTHANDLER_H
 
+#ifdef WIN32
+#include <SDL.h>
+#elif __APPLE__
 #include <SDL2/SDL.h>
+#endif
 
 #include "CMessenger.h"
 

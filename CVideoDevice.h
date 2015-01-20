@@ -21,17 +21,21 @@
 
 #ifdef WIN32
     #include <GL/glew.h>
+	#include <SDL.h>
+	#include <SDL_ttf.h>
+	#include <SDL_image.h>
 #elif __APPLE__
     #define GL3_PROTOTYPES 1
     #include <OpenGL/gl3.h>
+	#include <SDL2/SDL.h>
+	#include <SDL2_ttf/SDL_ttf.h>
+	#include <SDL2_image/SDL_image.h>
 #else
     #define GL3_PROTOTYPES 1
     #include <GL3/gl3.h>
 #endif
 
-#include <SDL2/SDL.h>
-#include <SDL2_ttf/SDL_ttf.h>
-#include <SDL2_image/SDL_image.h>
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 

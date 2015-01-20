@@ -19,7 +19,11 @@
 #ifndef CSOUND_H
 #define CSOUND_H
 
-#include <SDL2_mixer/SDL_mixer.h>
+#ifdef WIN32
+	#include <SDL_mixer.h>
+#elif __APPLE__
+	#include <SDL2_mixer/SDL_mixer.h>
+#endif
 
 class CSound
 {

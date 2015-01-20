@@ -19,7 +19,13 @@
 #ifndef CAUDIODEVICE_H
 #define CAUDIODEVICE_H
 
-#include <SDL2/SDL.h>
+#ifdef WIN32
+	#include <SDL.h>
+	#include <SDL_mixer.h>
+#elif __APPLE__
+	#include <SDL/SDL.h>
+	#include <SDL2_mixer/SDL_mixer.h>
+#endif
 
 #include "CSound.h"
 #include "CMusic.h"

@@ -19,6 +19,7 @@
 #ifndef CFILELOGGER_H
 #define CFILELOGGER_H
 
+#include <cstdarg>
 #include <fstream>
 
 class CFileLogger
