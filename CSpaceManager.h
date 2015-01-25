@@ -16,22 +16,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CGAMESTATEMANAGER_H
-#define CGAMESTATEMANAGER_H
+#ifndef CSPACEMANAGER_H
+#define CSPACEMANAGER_H
 
-#include "IReceiver.h"
+#include "CSpace.h"
 
-#include "IGameState.h"
-
-#include "CIntroGameState.h"
-
-
-class CGameStateManager : public IReceiver
+class CSpaceManager
 {
     
 public:
-    CGameStateManager() : m_currentState(-1) {};
-    ~CGameStateManager() {};
+	CSpaceManager() : m_currentSpace(-1) {};
+	~CSpaceManager() {};
     
 
     bool    init();
@@ -42,25 +37,25 @@ public:
     
     // IReceiver
     
-    void receive(const CMessage& msg);
+//    void receive(const CMessage& msg);
     
     // Game states management
     
-    void changeState(IGameState* state);
+	void changeSpace(CSpace* space);
     
-    void pushState(IGameState* state);
+	void pushSpace(CSpace* space);
     
-    void popState();
+	void popSpace();
     
-    IGameState* currentState();
+	CSpace* currentSpace();
     
-    bool hasStates();
+	bool hasSpaces();
     
-    void removeAllStates();
+	void removeAllSpaces();
     
 private:
     
-    glm::i32    m_currentState;
-    IGameState* m_states[CST::MAX_GAME_STATES];
+	glm::i32    m_currentSpace;
+	CSpace*		m_spaces[CST::MAX_GAME_SPACES];
 };
 #endif

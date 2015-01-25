@@ -16,35 +16,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CMENUSTATE_H
-#define CMENUSTATE_H
+#ifndef CINTROSPACE_H
+#define CINTROSPACE_H
 
-#include <iostream>
+#include "CSpace.h"
+#include "CFileLogger.h"
+#include "CUtils.h"
 
-#include "CGameStateManager.h"
 
-#include "IGameState.h"
-
-#include "CPlayGameState.h"
-
-class CMenuGameState : public IGameState
+class CIntroSpace : public CSpace
 {
 public:
     void init();
     void pause();
     void resume();
     void shutdown();
-    void receive(const CMessage& msg);
-
-    static CMenuGameState& instance()
+//    void update();
+//    void receive(const CMessage& msg);
+	/*
+    static CIntroGameState& instance()
     {
-        return m_menuGameState;
+        return m_introGameState;
     }
-
+    */
 private:
-    CMenuGameState() {}
-
-    static CMenuGameState m_menuGameState;
+  //  static CIntroGameState m_introGameState;
 };
 
 #endif

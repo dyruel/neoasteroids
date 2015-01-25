@@ -22,7 +22,7 @@
 #include "CAssets.h"
 #include "CEngine.h"
 
-#include "CGameStateManager.h"
+#include "CSpaceManager.h"
 
 #include "CMessenger.h"
 
@@ -38,7 +38,7 @@ public:
     
     virtual bool shutdown() = 0;
     
-    virtual void process(CSpace* space, CAssets* assets, CEngine* engine)  = 0;
+    virtual void process(CSpaceManager* spaceManager, CAssets* assets, CEngine* engine)  = 0;
 };
 
 #endif

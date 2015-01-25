@@ -35,14 +35,14 @@ bool CNeoAsteroids::init(int& argc, char** argv)
     
     m_inputProcessor.init();
     
-    m_transitionProcessor.init();
+//    m_transitionProcessor.init();
     
     // Init game
-    m_gameStateManager.init();
+	m_spaceManager.init();
     
-    m_transitionProcessor.registerReceiver( &m_gameStateManager );
+//    m_transitionProcessor.registerReceiver( &m_gameStateManager );
     
-    m_gameStateManager.changeState( &CIntroGameState::instance() );
+//	m_spaceManager.changeSpace(&CIntroGameState::instance());
     
     CUtils::initRandom();
     
@@ -51,13 +51,13 @@ bool CNeoAsteroids::init(int& argc, char** argv)
 
 void CNeoAsteroids::shutdown()
 {
-    m_gameStateManager.shutdown();
+	m_spaceManager.shutdown();
     
     m_physicsProcessor.shutdown();
     m_collisionProcessor.shutdown();
     m_graphicsProcessor.shutdown();
     m_inputProcessor.shutdown();
-    m_transitionProcessor.shutdown();
+//    m_transitionProcessor.shutdown();
     
     m_assets.freeAssets();
     
@@ -70,27 +70,27 @@ void CNeoAsteroids::run()
     glm::f32 lastTime = CUtils::getTime();
     glm::f32 presentTime = 0.f;
     const glm::f32 deltaTimeMs = CST::DELTA_TIME * 1000.f;
-    CSpace* currentSpace;
+//    CSpace* currentSpace;
 
-    while (m_gameStateManager.hasStates())
+	while (m_spaceManager.hasSpaces())
     {
         presentTime = CUtils::getTime();
-        currentSpace = m_gameStateManager.currentState()->getSpace();
+ //       currentSpace = m_gameStateManager.currentState()->getSpace();
         
         while (lastTime + deltaTimeMs <= presentTime)
         {
-            m_physicsProcessor.process( currentSpace, &m_assets, &m_engine );
+			m_physicsProcessor.process(&m_spaceManager, &m_assets, &m_engine);
             
-            m_collisionProcessor.process( currentSpace, &m_assets, &m_engine );
+			m_collisionProcessor.process(&m_spaceManager, &m_assets, &m_engine);
             
-            m_inputProcessor.process( currentSpace, &m_assets, &m_engine );
+			m_inputProcessor.process(&m_spaceManager, &m_assets, &m_engine);
             
-            m_transitionProcessor.process( currentSpace, &m_assets, &m_engine );
+//            m_transitionProcessor.process( currentSpace, &m_assets, &m_engine );
             
             lastTime += deltaTimeMs;
         }
 
-        m_graphicsProcessor.process( currentSpace, &m_assets, &m_engine );
+		m_graphicsProcessor.process(&m_spaceManager, &m_assets, &m_engine);
     }
 
 }

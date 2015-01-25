@@ -25,7 +25,7 @@
 // Constants list
 namespace CST
 {
-     const glm::u32   MAX_GAME_STATES = 3;
+     const glm::u32   MAX_GAME_SPACES = 3;
     
      const glm::u32   MAX_SYSTEMS     = 3;
     

@@ -19,7 +19,7 @@
 #ifndef CNEOASTEROIDS_H
 #define CNEOASTEROIDS_H
 
-#include "CGameStateManager.h"
+#include "CSpaceManager.h"
 
 #include "CGraphicsProcessor.h"
 #include "CCollisionProcessor.h"
@@ -53,10 +53,10 @@ private:
     CCollisionProcessor    m_collisionProcessor;
     CPhysicsProcessor      m_physicsProcessor;
     CInputProcessor        m_inputProcessor;
-    CTransitionProcessor   m_transitionProcessor;
+//    CTransitionProcessor   m_transitionProcessor;
     
     // Game state manager
-    CGameStateManager      m_gameStateManager;
+    CSpaceManager      m_spaceManager;
     
     // Game assets
     CAssets                m_assets;

@@ -16,41 +16,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CPLAYGAMESTATE_H
-#define CPLAYGAMESTATE_H
-
-#include <iostream>
+#ifndef CPLAYSPACE_H
+#define CPLAYSPACE_H
 
 //#include "CGameStateManager.h"
 //#include "SEntity.h"
 //#include "CMessageHandler.h"
 
-#include "IGameState.h"
+//#include "IGameState.h"
 
+#include "CSpace.h"
 #include "CFileLogger.h"
 #include "CUtils.h"
 
 
-class CPlayGameState : public IGameState
+class CPlaySpace : public CSpace
 {
 public:
-    
     void init();
     void pause();
     void resume();
     void shutdown();
     void update();
-    void receive(const CMessage& msg);
-    
+//    void receive(const CMessage& msg);
+  
+	/*
     static CPlayGameState& instance()
     {
         return m_playGameState;
     }
-    
+    */
 private:
-    CPlayGameState() {}
-
-        
+    
     glm::u32    m_level;
     glm::u32    m_lastTime;
     glm::u32    m_commandsStatus;
@@ -65,7 +62,7 @@ private:
 
     
     //
-    static CPlayGameState   m_playGameState;
+//    static CPlayGameState   m_playGameState;
     
     // Private methods
     void        prepareLevel(const glm::u32& level);

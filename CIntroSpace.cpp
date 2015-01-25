@@ -16,36 +16,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CIntroGameState.h"
+#include "CIntroSpace.h"
 
-CIntroGameState CIntroGameState::m_introGameState;
+#include <iostream>
 
-void CIntroGameState::init()
+//CIntroGameState CIntroGameState::m_introGameState;
+
+void CIntroSpace::init()
 {
     std::cout << "Intro init" << std::endl;
+	/*
     glm::u32 id = m_space.addEntity();
     
     m_space[id].components = TRANSITION_COMPONENT;
     m_space[id].gameState = &CMenuGameState::instance();
     m_space[id].op = CHANGE_STATE_MSG;
+	*/
 }
 
-void CIntroGameState::pause()
+void CIntroSpace::pause()
 {
     
 }
 
-void CIntroGameState::resume()
+void CIntroSpace::resume()
 {
     
 }
 
-void CIntroGameState::shutdown()
+void CIntroSpace::shutdown()
 {
     std::cout << "Intro shutdown" << std::endl;
 }
 
+/*
 void CIntroGameState::receive(const CMessage& msg)
 {
 
 }
+*/

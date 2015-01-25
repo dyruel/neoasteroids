@@ -39,8 +39,8 @@ struct SEntity
     glm::u32       components;
     
     // Render Component
-    glm::u8        texName[64];
-    glm::u32       texId;
+	GLuint      texId;
+
     
     // Position component
     glm::vec3      position;
@@ -64,8 +64,8 @@ struct SEntity
     glm::u32       ActionId[CST::MAX_INPUT_MAP];
     
     // Transition component
-    glm::u32       op;
-    void*          gameState;
+//    glm::u32       op;
+//    void*          gameState;
 };
 
 

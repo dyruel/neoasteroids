@@ -16,37 +16,43 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#ifndef CINTROGAMESTATE_H
-#define CINTROGAMESTATE_H
+#include "CMenuSpace.h"
 
 #include <iostream>
 
-#include "CGameStateManager.h"
+//CMenuGameState CMenuGameState::m_menuGameState;
 
-#include "IGameState.h"
-
-#include "CMenuGameState.h"
-
-
-class CIntroGameState : public IGameState
+void CMenuSpace::init()
 {
-public:
-    void init();
-    void pause();
-    void resume();
-    void shutdown();
-//    void update();
-    void receive(const CMessage& msg);
+    std::cout << "Menu init" << std::endl;
     
-    static CIntroGameState& instance()
-    {
-        return m_introGameState;
-    }
+	/*
+    glm::u32 id = m_space.addEntity();
     
-private:
-    CIntroGameState() {};
-    
-    static CIntroGameState m_introGameState;
-};
+    m_space[id].components = TRANSITION_COMPONENT;
+    m_space[id].gameState = &CPlayGameState::instance();
+    m_space[id].op = PUSH_STATE_MSG;
+	*/
+}
 
-#endif
+void CMenuSpace::pause()
+{
+    
+}
+
+void CMenuSpace::resume()
+{
+    
+}
+
+void CMenuSpace::shutdown()
+{
+std::cout << "Menu shutdown" << std::endl;
+}
+
+/*
+void CMenuSpace::receive(const CMessage& msg)
+{
+
+}
+*/

@@ -16,11 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CPlayGameState.h"
+#include "CPlaySpace.h"
 
-CPlayGameState CPlayGameState::m_playGameState;
+#include <iostream>
 
-void CPlayGameState::init()
+//CPlayGameState CPlayGameState::m_playGameState;
+
+void CPlaySpace::init()
 {
     std::cout << "Play init" << std::endl;
     m_level = 1;
@@ -32,39 +34,40 @@ void CPlayGameState::init()
     prepareLevel(m_level);
 }
 
-void CPlayGameState::pause()
+void CPlaySpace::pause()
 {
     
 }
 
-void CPlayGameState::resume()
+void CPlaySpace::resume()
 {
     
 }
 
-void CPlayGameState::shutdown()
+void CPlaySpace::shutdown()
 {
  std::cout << "Play shutdown" << std::endl;
 }
 
-void CPlayGameState::update()
+void CPlaySpace::update()
 {
     
 
 }
 
-void CPlayGameState::receive(const CMessage& msg)
+/*
+void CPlaySpace::receive(const CMessage& msg)
 {
 
 
 }
+*/
 
 
 
-
-void CPlayGameState::resetSpaceship()
+void CPlaySpace::resetSpaceship()
 {
-    SEntity* m_entities = m_space.getEntities();
+    SEntity* m_entities = getEntities();
     
     m_entities[m_spaceshipId].position.x = .0f;
     m_entities[m_spaceshipId].position.y = .0f;
@@ -83,10 +86,9 @@ void CPlayGameState::resetSpaceship()
 }
 
 
-void CPlayGameState::addAsteroid()
+void CPlaySpace::addAsteroid()
 {
-    glm::u32 id = m_space.addEntity();
-    SEntity* m_entities = m_space.getEntities();
+    glm::u32 id = addEntity();
     
     if (id == CST::MAX_ENTITIES)
     {
@@ -122,10 +124,9 @@ void CPlayGameState::addAsteroid()
 }
 
 
-void CPlayGameState::addSpaceship()
+void CPlaySpace::addSpaceship()
 {
-    glm::u32 id = m_space.addEntity();
-    SEntity* m_entities = m_space.getEntities();
+    glm::u32 id = addEntity();
     
     if (id == CST::MAX_ENTITIES)
     {
@@ -140,21 +141,21 @@ void CPlayGameState::addSpaceship()
 
 }
 
-void CPlayGameState::addUfo()
+void CPlaySpace::addUfo()
 {
 
 }
 
-void CPlayGameState::addBullet()
+void CPlaySpace::addBullet()
 {
 
 }
 
-void CPlayGameState::prepareLevel(const glm::u32& level)
+void CPlaySpace::prepareLevel(const glm::u32& level)
 {
     assert(level <= 200);
     
-    m_space.removeAllEntities();
+    removeAllEntities();
     
     addSpaceship();
     

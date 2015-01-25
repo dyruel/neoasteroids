@@ -16,38 +16,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CMenuGameState.h"
+#ifndef CMENUSPACE_H
+#define CMENUSPACE_H
 
-CMenuGameState CMenuGameState::m_menuGameState;
+#include "CSpace.h"
+#include "CFileLogger.h"
+#include "CUtils.h"
 
-void CMenuGameState::init()
+class CMenuSpace : public CSpace
 {
-    std::cout << "Menu init" << std::endl;
-    
-    glm::u32 id = m_space.addEntity();
-    
-    m_space[id].components = TRANSITION_COMPONENT;
-    m_space[id].gameState = &CPlayGameState::instance();
-    m_space[id].op = PUSH_STATE_MSG;
-}
+public:
+    void init();
+    void pause();
+    void resume();
+    void shutdown();
+//    void receive(const CMessage& msg);
+	/*
+    static CMenuGameState& instance()
+    {
+        return m_menuGameState;
+    }
+	*/
+private:
 
-void CMenuGameState::pause()
-{
-    
-}
+//    static CMenuGameState m_menuGameState;
+};
 
-void CMenuGameState::resume()
-{
-    
-}
-
-void CMenuGameState::shutdown()
-{
-std::cout << "Menu shutdown" << std::endl;
-}
-
-
-void CMenuGameState::receive(const CMessage& msg)
-{
-
-}
+#endif

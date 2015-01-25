@@ -43,7 +43,12 @@ public:
     void removeEntity(const glm::u32& id);
     
     void removeAllEntities();
-    
+
+	virtual void init() = 0;
+	virtual void pause() = 0;
+	virtual void resume() = 0;
+	virtual void shutdown() = 0;
+
 protected:
 
     SEntity  m_entities[CST::MAX_ENTITIES];

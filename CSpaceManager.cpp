@@ -16,19 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>. *
  *************************************************************************/
 
-#include "CGameStateManager.h"
+#include "CSpaceManager.h"
 
 
-bool CGameStateManager::init()
+bool CSpaceManager::init()
 {
     return true;
 }
 
-bool CGameStateManager::shutdown()
+bool CSpaceManager::shutdown()
 {
     return true;
 }
 
+/*
 void CGameStateManager::receive(const CMessage& msg)
 {
     switch (msg.getMessageId())
@@ -49,67 +50,68 @@ void CGameStateManager::receive(const CMessage& msg)
             break;
     }
 }
+*/
 
-void CGameStateManager::changeState(IGameState* state)
+void CSpaceManager::changeSpace(CSpace* space)
 {
-    if ( hasStates() )
+	if ( hasSpaces() )
     {
-        m_states[m_currentState]->shutdown();
+		m_spaces[m_currentSpace]->shutdown();
     }
     else
     {
-        ++m_currentState;
+		++m_currentSpace;
     }
     
-    m_states[m_currentState] = state;
-    state->attachGameStateManager(this);
+	m_spaces[m_currentSpace] = space;
+//    state->attachGameStateManager(this);
     state->init();
 }
 
-void CGameStateManager::pushState(IGameState* state)
+void CSpaceManager::pushSpace(CSpace* space)
 {
-    assert( (m_currentState + 1 < CST::MAX_GAME_STATES) && (state != nullptr) );
+	assert((m_currentSpace + 1 < CST::MAX_GAME_SPACES) && (space != nullptr));
     
-    if ( hasStates() )
+	if ( hasSpaces() )
     {
-        m_states[m_currentState]->pause();
+		m_spaces[m_currentSpace]->pause();
     }
     
-    ++m_currentState;
-    m_states[m_currentState] = state;
-    state->attachGameStateManager(this);
+	++m_currentSpace;
+	m_spaces[m_currentSpace] = space;
+ //   state->attachGameStateManager(this);
     state->init();
 }
 
-void CGameStateManager::popState()
+void CSpaceManager::popSpace()
 {
-    if ( hasStates() )
+	if ( hasSpaces() )
     {
-        m_states[m_currentState]->shutdown();
-        --m_currentState;
+		m_spaces[m_currentSpace]->shutdown();
+		--m_currentSpace;
     }
     
-    if ( hasStates() )
+	if ( hasSpaces() )
     {
-        m_states[m_currentState]->resume();
+		m_spaces[m_currentSpace]->resume();
     }
 }
 
-IGameState* CGameStateManager::currentState()
+CSpace* CSpaceManager::currentSpace()
 {
-    return m_states[m_currentState];
+	return m_spaces[m_currentSpace];
 }
 
-bool CGameStateManager::hasStates()
+bool CSpaceManager::hasSpaces()
 {
-    return m_currentState >= 0;
+	return m_currentSpace >= 0;
 }
 
-void CGameStateManager::removeAllStates()
+void CSpaceManager::removeAllSpaces()
 {
-    while ( m_currentState >= 0 ) {
-        m_states[m_currentState]->shutdown();
-        --m_currentState;
+	while (m_currentSpace >= 0) {
+		m_spaces[m_currentSpace]->shutdown();
+		--m_currentSpace;
     }
 }
 
