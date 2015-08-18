@@ -106,8 +106,10 @@ function ingame.update(dt)
 	worldObjects.ship.vertices = rotateTranslate(worldObjects.ship.angle, worldObjects.ship.posx, worldObjects.ship.posy, worldObjects.ship.shape)
 
 	-- Move asteroids
+	local allDestroyed = true
 	for key, asteroid in pairs(worldObjects.asteroids) do
 		if asteroid.alive then
+			allDestroyed = false
 			asteroid.velx = math.cos(asteroid.angle) * asteroid.speed
 			asteroid.vely = math.sin(asteroid.angle) * asteroid.speed
 
@@ -123,6 +125,10 @@ function ingame.update(dt)
 
 			clampObjectPosition(asteroid)
 		end
+	end
+
+	if allDestroyed then
+		
 	end
 
 	-- Move bullets
@@ -172,25 +178,19 @@ function ingame.draw()
 	love.graphics.pop()
 
 	-- Draw ship
-	--love.graphics.setColor(100, 0, 0)
-	glowEffect(255, 0, 0, "polygon", worldObjects.ship.vertices)
-	--love.graphics.polygon("line", worldObjects.ship.vertices)
+	glowShape(255, 0, 0, "polygon", worldObjects.ship.vertices)
 
 	-- Draw asteroids
-	--love.graphics.setColor(0, 100, 0)
 	for key, asteroid in pairs(worldObjects.asteroids) do
 		if asteroid.alive then
-			glowEffect(0, 255, 0, "polygon", asteroid.vertices)
+			glowShape(0, 255, 0, "polygon", asteroid.vertices)
 		end
-		--love.graphics.polygon("line", asteroid.vertices)
 	end
 
 	-- Draw bullets
-	--love.graphics.setColor(0, 100, 0)
 	for key, bullet in pairs(worldObjects.bullets) do
 		if bullet.alive then
-			glowEffect(0, 0, 255, "circle", bullet.posx, bullet.posy, bullet.radius)
-			--love.graphics.circle("line", bullet.posx, bullet.posy, bullet.radius)
+			glowShape(0, 0, 255, "circle", bullet.posx, bullet.posy, bullet.radius)
 		end
 	end	
 end
@@ -385,10 +385,9 @@ function rotate(angle, x, y)
 	return c*x - s*y, s*x + c*y
 end
 
-function glowEffect(r, g, b, type, ...)
+function glowShape(r, g, b, type, ...)
   love.graphics.setColor(r, g, b, 15)
   
-  --print("a")
   for i = 10, 2, -1 do
   	--print(i)
     if i == 2 then
@@ -404,5 +403,4 @@ function glowEffect(r, g, b, type, ...)
       love.graphics[type]("line", ...)
     end
   end
-  --print("b")
 end

@@ -31,13 +31,14 @@ function love.load()
 	love.graphics.setFont(font)
 	love.graphics.setLineWidth(0.005)
 	love.graphics.setLineStyle("smooth")
+	love.window.setFullscreen( false )
 
-    ingame.enter();
+	mainmenu.enter();
 end
  
 -- Increase the size of the rectangle every frame.
 function love.update(dt)
-	ingame.update(dt)
+	gamestates[state].update(dt)
 end
  
 -- Draw a coloured rectangle.
@@ -49,7 +50,7 @@ function love.draw()
 	love.graphics.scale(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
 	love.graphics.translate(1, 1)
 	love.graphics.scale(1, -1)
-	ingame.draw()
+	gamestates[state].draw()
 	love.graphics.pop()
 end
 
