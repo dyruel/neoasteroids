@@ -45,6 +45,7 @@ function ingame.enter()
 		worldObjects.bullets[i].speed = 1
 	end	
 
+	playMusic("xeon6", true)
 end
 
 function ingame.keypressed(key, isrepeat)
@@ -318,6 +319,8 @@ function generateBullet()
 	if worldObjects.ship.fireCd > 0 then
 		return
 	end
+
+	love.audio.play(snd["laser"])
 
 	for i = 1,4 do
 		if not worldObjects.bullets[i].alive then

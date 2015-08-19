@@ -1,4 +1,4 @@
---require("debug")
+require("assets")
 require("ingame")
 require("mainmenu")
 
@@ -32,6 +32,8 @@ function love.load()
 	love.graphics.setLineWidth(0.005)
 	love.graphics.setLineStyle("smooth")
 	love.window.setFullscreen( false )
+
+	loadAssets()
 
 	mainmenu.enter();
 end
