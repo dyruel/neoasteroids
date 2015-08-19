@@ -4,14 +4,21 @@ ingame={}
 local asteroidSize = {0.1, 0.06, 0.03}
 local worldObjects = {}
 
-local thrustFactor = 1
+local angularVelocity = 1.5 * math.pi
+local thrustFactor = 2
 local frictionFactor = 0.99
 local angleDir = 0
 local thrust = 0
 local hitCounter = 0
 
+local player = {}
+
 function ingame.enter()
 	state = STATE_INGAME
+
+	player.lives = 3
+	player.score = 0
+	player.ghostTimer = 3
 
 	worldObjects.ship = {}
 
@@ -22,7 +29,13 @@ function ingame.enter()
  	worldObjects.ship.vely = 0
     worldObjects.ship.accx = 0
  	worldObjects.ship.accy = 0
- 	worldObjects.ship.fireCd = 0 -- fire cooldown
+
+ 	worldObjects.ship.enginePower = 3
+ 	worldObjects.ship.weaponPower = 3
+ 	worldObjects.ship.shieldPower = 3
+ 	worldObjects.ship.weaponHeat = 0
+
+ 	--worldObjects.ship.fireCd = 0 -- fire cooldown
  	worldObjects.ship.shape = {-0.05, 0.05,  -0.05, -0.05,  0.05, 0}
  	worldObjects.ship.vertices = worldObjects.ship.shape
 
@@ -87,7 +100,7 @@ end
 function ingame.update(dt)
 
 	-- Move ship
-	worldObjects.ship.angle = worldObjects.ship.angle + angleDir * math.pi * dt
+	worldObjects.ship.angle = worldObjects.ship.angle + angleDir * angularVelocity * dt
 	worldObjects.ship.angle = worldObjects.ship.angle % (2*math.pi)
 
 	worldObjects.ship.accx = math.cos(worldObjects.ship.angle) * thrustFactor * thrust 
@@ -121,7 +134,7 @@ function ingame.update(dt)
 
 			-- Check for collisions
 			if shipAsteroidCollision(worldObjects.ship, asteroid) then
-				resetShip()
+				destroyShip()
 			end
 
 			clampObjectPosition(asteroid)
@@ -164,9 +177,9 @@ function ingame.update(dt)
 	end
 
 	-- logic
-	if worldObjects.ship.fireCd > 0 then
-		worldObjects.ship.fireCd = worldObjects.ship.fireCd - 0.1
-	end
+	--if worldObjects.ship.fireCd > 0 then
+	--	worldObjects.ship.fireCd = worldObjects.ship.fireCd - 0.1
+	--end
 
 end
 
@@ -198,8 +211,16 @@ end
 
 
 
-function resetShip()
-	hitCounter = hitCounter + 1
+function destroyShip()
+	--hitCounter = hitCounter + 1
+	player.lives = player.lives - 1
+
+	if player.lives < 0 then
+		gameOver()
+	end
+
+	player.ghostTimer = 3
+
   	worldObjects.ship.angle = 0
   	worldObjects.ship.posx = 0
  	worldObjects.ship.posy = 0
@@ -209,6 +230,10 @@ function resetShip()
  	worldObjects.ship.accy = 0
  	worldObjects.ship.fireCd = 0
  	worldObjects.ship.vertices = worldObjects.ship.shape
+end
+
+
+function gameOver()
 end
 
 function bulletAsteroidCollision(bullet, asteroid)
@@ -394,11 +419,11 @@ function glowShape(r, g, b, type, ...)
   for i = 10, 2, -1 do
   	--print(i)
     if i == 2 then
-    	i = 1
+    	--i = 1
     	love.graphics.setColor(r, g, b, 255)    
     end
     
-    love.graphics.setLineWidth(i * 0.001)
+    love.graphics.setLineWidth(2*i * 0.001)
     
     if type == "line" then
       love.graphics[type](...)
