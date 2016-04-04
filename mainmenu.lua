@@ -12,7 +12,7 @@ function mainmenu.enter()
 
 end
 
-function mainmenu.keypressed(key, isrepeat)
+function mainmenu.keypressed(key, scancode, isrepeat)
 	if isrepeat then
 		return
 	end

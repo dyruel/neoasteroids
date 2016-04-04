@@ -35,7 +35,7 @@ function ingame.enter()
  	worldObjects.ship.shieldPower = 3
  	worldObjects.ship.weaponHeat = 0
 
- 	--worldObjects.ship.fireCd = 0 -- fire cooldown
+ 	worldObjects.ship.fireCd = 0 -- fire cooldown
  	worldObjects.ship.shape = {-0.05, 0.05,  -0.05, -0.05,  0.05, 0}
  	worldObjects.ship.vertices = worldObjects.ship.shape
 
@@ -58,10 +58,10 @@ function ingame.enter()
 		worldObjects.bullets[i].speed = 1
 	end	
 
-	playMusic("xeon6", true)
+--	playMusic("xeon6", true)
 end
 
-function ingame.keypressed(key, isrepeat)
+function ingame.keypressed(key, scancode, isrepeat)
 	if isrepeat then
 		return
 	end
@@ -76,7 +76,7 @@ function ingame.keypressed(key, isrepeat)
 		angleDir = 1		
 	end
 
-	if key == " " then
+	if key == "space" then
 		generateBullet()
 	end	
 
@@ -345,7 +345,7 @@ function generateBullet()
 		return
 	end
 
-	love.audio.play(snd["laser"])
+--	love.audio.play(snd["laser"])
 
 	for i = 1,4 do
 		if not worldObjects.bullets[i].alive then

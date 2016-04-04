@@ -10,7 +10,7 @@ STATE_SPLASH, STATE_INGAME, STATE_MAINMENU = 0, 1, 2
 
 gamestates = {[STATE_SPLASH]=splash, [STATE_INGAME]=ingame, [STATE_MAINMENU]=mainmenu}
 
-function love.keypressed(key, isrepeat)
+function love.keypressed(key, scancode, isrepeat)
 	gamestates[state].keypressed(key, isrepeat)
 end
 
